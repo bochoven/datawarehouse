@@ -16,6 +16,14 @@
 
 	<?endforeach?>
 
+	<?$fco = new Fco();?>
+
+	<?foreach($fco->retrieve_many() as $obj):?>
+
+		<?print_r($obj->functieplaats)?>
+
+	<?endforeach?>
+
 </div>	<!-- /container -->
 
 
