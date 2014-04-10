@@ -29,7 +29,7 @@ class admin extends Controller
 		{
 			if( ! isset($_FILES['file']) OR $_FILES['file']['error'] != 0)
 			{
-				echo 'upload failed';
+				fatal('upload failed');
 				require(APP_PATH.'helpers/upload_helper'.EXT);
 				throw new UploadException($_FILES['file']['error']);
 				exit;

@@ -54,7 +54,7 @@ class Fco extends Model
         $dbh->beginTransaction();
 
         // Remove previous data
-        $dbh->exec('TRUNCATE TABLE fco');
+        $dbh->exec('TRUNCATE TABLE '.$this->tablename);
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -73,7 +73,6 @@ class Fco extends Model
         }
 
         $dbh->commit();
-    
     }
 
 }
