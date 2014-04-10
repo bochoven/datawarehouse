@@ -1,39 +1,35 @@
 <?php
 
-class Fco extends Model
+class Nbd extends Model
 {
     
-    function __construct($functieplaats='')
+    function __construct()
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['functieplaats'] = ''; $this->rt['functieplaats'] = 'VARCHAR(20) UNIQUE';
-        $this->rs['deurcode'] = ''; $this->rt['deurcode'] = 'VARCHAR(10)';
-        $this->rs['omschrijving'] = ''; $this->rt['omschrijving'] = 'VARCHAR(100)';
-        $this->rs['activiteitcode'] = ''; $this->rt['activiteitcode'] = 'CHAR(4)';
-        $this->rs['klantnaam'] = ''; $this->rt['klantnaam'] = 'VARCHAR(100)';
-        $this->rs['debiteur'] = ''; $this->rt['debiteur'] = 'char(10)';
-        $this->rs['gebruikerstatus'] = ''; $this->rt['gebruikerstatus'] = 'VARCHAR(10)';
-        $this->rs['lokale_info'] = ''; $this->rt['lokale_info'] = 'VARCHAR(100)';
-        $this->rs['in_gebruik_van'] = ''; $this->rt['in_gebruik_van'] = 'CHAR(10)';
-        $this->rs['hoofd_deb_code'] = ''; $this->rt['hoofd_deb_code'] = 'CHAR(10)';
+        $this->rs['port'] = ''; $this->rt['port'] = 'varchar(20)';
+        $this->rs['vlan'] = 0;
+        $this->rs['speed'] = 0;
+        $this->rs['status'] = ''; $this->rt['status'] = 'char(4)';
+        $this->rs['ip_address'] = ''; $this->rt['ip_address'] = 'char(15)';
+        $this->rs['hostname'] = ''; $this->rt['hostname'] = 'varchar(100)';
+        $this->rs['mac_address'] = ''; $this->rt['mac_address'] = 'char(17)';
+        $this->rs['room'] = ''; $this->rt['room'] = 'varchar(20)';
+        $this->rs['out_mb'] = 0.0;
+        $this->rs['in_mb'] = 0.0;
+        $this->rs['poe'] = $this->rt['poe'] = 'varchar(100)';
         $this->rs['timestamp'] = time();
 
+
         // Add indexes
-        $this->idx[] = array('functieplaats');
-        $this->idx[] = array('hoofd_deb_code');
+        $this->idx[] = array('room');
+        $this->idx[] = array('mac_address');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;
 
 		// Create table if it does not exist
         $this->create_table();
-        
-        if($functieplaats)
-        {
-            $this->retrieve_one('functieplaats=?', array($functieplaats));
-            $this->functieplaats = $functieplaats;
-        }
         
         return $this;
     }
@@ -71,6 +67,8 @@ class Fco extends Model
 
             $this->save();
         }
+
+        var_dump($data);
 
         $dbh->commit();
     

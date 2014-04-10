@@ -33,6 +33,27 @@
 			'Lokale Info',
 			'In gebruik van',
 			'Hoofd deb code'
+			),
+		'nbd' => array(
+			'Port',
+			'VLAN',
+			'Speed',
+			'Status',
+			'IP address',
+			'hostname',
+			'MAC address',
+			'Room',
+			'Out (MB)',
+			'In (MB)',
+			'PoE'
+			),
+		'outlet_room' => array(
+			'Datacom',
+			'Gebruikersnaam',
+			'Omschrijving',
+			'Ruimtenr',
+			'Verdiepingsnr',
+			''
 			)
 		);
 	
