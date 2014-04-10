@@ -30,7 +30,6 @@ class admin extends Controller
 			if( ! isset($_FILES['file']) OR $_FILES['file']['error'] != 0)
 			{
 				echo 'upload failed';
-				print_r(ini_get_all());
 				require(APP_PATH.'helpers/upload_helper'.EXT);
 				throw new UploadException($_FILES['file']['error']);
 				exit;
@@ -55,12 +54,13 @@ class admin extends Controller
 				if($header == $data)
 				{
 					$found = $model;
+					break;
 				}
 			}
 
 			if( ! $found)
 			{
-				throw new Exception(sprintf("Cannot determine type for this header: %s", print_r($data, TRUE)), 1);
+				throw new Exception(sprintf("Cannot determine type for this header: %s", var_export($data, TRUE)), 1);
 			}
 
 			// Instantiate model
@@ -75,7 +75,7 @@ class admin extends Controller
 	            $dbh = getdbh();
 	            $dbh->rollBack();
 	            $this->errors .= "Failed: " . $e->getMessage();
-	            echo "Failed: " . $e->getMessage();
+	            printf("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage());
 	            return FALSE;
 	        }
 

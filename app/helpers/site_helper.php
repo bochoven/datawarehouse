@@ -105,16 +105,21 @@ function __autoload( $classname )
 
 	if(substr($classname, -4) == '_api')
 	{
-		require_once( APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT );
+		$path = APP_PATH.'modules/'.substr($classname, 0, -4).'/api'.EXT;
 	}
 	elseif(substr($classname, -6) == '_model')
 	{
 		$module = substr($classname, 0, -6);
-		require_once( APP_PATH."modules/${module}/${module}_model".EXT );
+		$path = APP_PATH."modules/${module}/${module}_model".EXT;
 	}
 	else
 	{
-		require_once( APP_PATH.'models/'.$classname.EXT );
+		$path = APP_PATH.'models/'.$classname.EXT;
+	}
+
+	if ((@include_once $path) !== 1)
+	{
+		fatal(sprintf('failed to load model at %s', $path), 1);
 	}
 }
 
