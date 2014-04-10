@@ -68,8 +68,6 @@ class Fco extends Model {
             }
             $this->rs['timestamp'] = time();
 
-            print_r($this->rs);
-
             $this->save();
         }
 

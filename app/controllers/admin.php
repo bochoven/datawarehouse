@@ -60,8 +60,7 @@ class admin extends Controller
 
 			if( ! $found)
 			{
-				throw new Exception("Cannot determine type", 1);
-				
+				throw new Exception(sprintf("Cannot determine type for this header: %s", print_r($data, TRUE)), 1);
 			}
 
 			// Instantiate model
