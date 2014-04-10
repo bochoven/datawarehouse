@@ -13,6 +13,31 @@
 	
 	/*
 	|===============================================
+	| csv formats
+	|===============================================
+	|  
+	| description of csv file headers
+	| if the header matches, the data will be associated with the correct model
+	| 
+	|
+	*/
+	$conf['csv_formats'] = array(
+		'fco' => array(
+			'Functieplaats',
+			'Deurcode',
+			'Omschrijving',
+			'Activiteitcode',
+			'Klantnaam',
+			'Debiteur',
+			'Gebruikerstatus',
+			'Lokale Info',
+			'In gebruik van',
+			'Hoofd deb code'
+			)
+		);
+	
+	/*
+	|===============================================
 	| Index page
 	|===============================================
 	|  
