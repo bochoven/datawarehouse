@@ -20,6 +20,30 @@
 		
 		<div class="col-lg-12">
 			
+			<?$fco = new Fco(); $sql = "SELECT COUNT(1) as count, omschrijving FROM fco GROUP BY omschrijving"?>
+			
+			<table class="table table-striped">
+				
+			<thead>
+				<tr>
+					<th>Omschrijving</th>
+					<th>Aantal</th>
+				</tr>
+			</thead>
+			
+			<?foreach($fco->query($sql) AS $obj):?>
+				<tr>
+					<td><?=$obj->omschrijving?></td>
+					<td><?=$obj->count?></td>
+				</tr>
+			<?endforeach?>
+			
+			</table>
+			
+		</div>
+		
+		<div class="col-lg-12">
+			
 			<?$fco = new Fco();?>
 
 			<table class="table table-striped">
@@ -43,16 +67,16 @@
 
 				<tr>
 
-					<td><?print_r($obj->functieplaats)?></td>
-					<td><?print_r($obj->deurcode)?></td>
-					<td><?print_r($obj->omschrijving)?></td>
-					<td><?print_r($obj->activiteitcode)?></td>
-					<td><?print_r($obj->klantnaam)?></td>
-					<td><?print_r($obj->debiteur)?></td>
-					<td><?print_r($obj->gebruikerstatus)?></td>
-					<td><?print_r($obj->lokale_info)?></td>
-					<td><?print_r($obj->in_gebruik_van)?></td>
-					<td><?print_r($obj->hoofd_deb_code)?></td>
+					<td><?=$obj->functieplaats?></td>
+					<td><?=$obj->deurcode?></td>
+					<td><?=$obj->omschrijving?></td>
+					<td><?=$obj->activiteitcode?></td>
+					<td><?=$obj->klantnaam?></td>
+					<td><?=$obj->debiteur?></td>
+					<td><?=$obj->gebruikerstatus?></td>
+					<td><?=$obj->lokale_info?></td>
+					<td><?=$obj->in_gebruik_van?></td>
+					<td><?=$obj->hoofd_deb_code?></td>
 
 				</tr>
 
