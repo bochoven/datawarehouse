@@ -52,31 +52,10 @@ new Nbd;
 			        	var sn=$('td:eq(1)', nRow).html();
 			        	var link = get_client_detail_link(name, sn, '<?=url()?>/');
 			        	$('td:eq(0)', nRow).html(link);
-			        	
-			        	// is SSD ?
-			        	var status=$('td:eq(4)', nRow).html();
-			        	status = status == 1 ? '<span class="label label-success">Yes</span>' : 
-			        		(status === '0' ? 'No' : '')
-			        	$('td:eq(4)', nRow).html(status)
 
-			        	// Format disk usage
-			        	var disk=$('td:eq(5)', nRow).html();
-			        	var cls = disk > 90 ? 'danger' : (disk > 80 ? 'warning' : 'success');
-			        	$('td:eq(5)', nRow).html('<div class="progress"><div class="progress-bar progress-bar-'+cls+'" style="width: '+disk+'%;">'+disk+'%</div></div>');
-			        	
-			        	// Format filesize
-			        	var fs=$('td:eq(6)', nRow).html();
-			        	$('td:eq(6)', nRow).addClass('text-right').html(fileSize(fs, 0));
-
-			        	// Format filesize
-			        	var fs=$('td:eq(7)', nRow).html();
-			        	$('td:eq(7)', nRow).addClass('text-right').html(fileSize(fs, 0));
-			        	
-			        	// Alert on SMART failures
-			        	var smartstatus=$('td:eq(8)', nRow).html();
-			        	smartstatus = smartstatus == 'Failing' ? '<span class="label label-danger">Failing</span>' : 
-			        		(smartstatus)
-			        	$('td:eq(8)', nRow).html(smartstatus)
+			        	// Format date
+			        	var date = new Date($('td:eq(11)', nRow).html() * 1000);
+			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -126,20 +105,23 @@ new Nbd;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='nbd#computer_name'>Name</th>
-		        <th data-colname='machine#serial_number'>Serial</th>
-		        <th data-colname='reportdata#long_username'>Username</th>
-		        <th data-colname='machine#machine_name'>Type</th>
-		        <th data-colname='diskreport#SolidState'>Solid state</th>
-		        <th data-sort='desc' data-colname='diskreport#Percentage'>Disk</th>
-		        <th data-colname='diskreport#FreeSpace'>Free</th>
-		        <th data-colname='diskreport#TotalSize'>Size</th>
-		    	<th data-colname='diskreport#SMARTStatus'>SMART</th>
+		      	<th data-colname='nbd#port'>Port</th>
+		        <th data-colname='nbd#vlan'>vlan</th>
+		        <th data-colname='nbd#speed'>Speed</th>
+		        <th data-colname='nbd#status'>Status</th>
+		        <th data-colname='nbd#ip_address'>IP Adress</th>
+		        <th data-sort='desc' data-colname='nbd#hostname'>Hostname</th>
+		        <th data-colname='nbd#mac_address'>MAC Address</th>
+		        <th data-colname='nbd#room'>Room</th>
+		    	<th data-colname='nbd#out_mb'>Out (MB)</th>
+		    	<th data-colname='nbd#in_mb'>In (MB)</th>
+		    	<th data-colname='nbd#poe'>POE</th>
+		    	<th data-colname='nbd#timestamp'>Timestamp</th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="5" class="dataTables_empty">Loading data from server</td>
+					<td colspan="12" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>
