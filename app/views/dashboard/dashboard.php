@@ -18,71 +18,40 @@
 	
 	<div class="row">
 		
-		<div class="col-lg-12">
-			
-			<?$fco = new Fco(); $sql = "SELECT COUNT(1) as count, omschrijving FROM fco GROUP BY omschrijving"?>
-			
-			<table class="table table-striped">
-				
-			<thead>
-				<tr>
-					<th>Omschrijving</th>
-					<th>Aantal</th>
-				</tr>
-			</thead>
-			
-			<?foreach($fco->query($sql) AS $obj):?>
-				<tr>
-					<td><?=$obj->omschrijving?></td>
-					<td><?=$obj->count?></td>
-				</tr>
-			<?endforeach?>
-			
-			</table>
-			
-		</div>
+<div class="col-sm-6">
+
+	<div class="panel panel-default">
+
+		<div class="panel-heading">
+
+			<h3 class="panel-title"><i class="fa fa-clock-o"></i> Data age</h3>
 		
-		<div class="col-lg-12">
+		</div>
+
+		<div class="panel-body">
 			
-			<?$fco = new Fco();?>
+			<table class="table">
 
-			<table class="table table-striped">
-				
-				<thead>
-					<tr>
-						<th>Functieplaats</th>
-						<th>Deurcode</th>
-						<th>Omschrijving</th>
-						<th>Activiteitcode</th>
-						<th>Klantnaam</th>
-						<th>Debiteur</th>
-						<th>Gebruikersstatus</th>
-						<th>Lokale Info</th>
-						<th>In gebruik van</th>
-						<th>Hoofd deb code</th>
-					</tr>
-				</thead>
+			<?foreach(array('fco', 'nbd', 'outlet_room') AS $tbl):?>
 
-				<?foreach($fco->retrieve_many() as $obj):?>
+			<?$sql = "SELECT '$tbl' AS tbl, MAX(timestamp) as timestamp FROM $tbl";
+			$dbh = getdbh(); $stmt = $dbh->query($sql);?>
+			<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-				<tr>
+			<tr>
+				<td><?=$obj->tbl?></td><td><time datetime="<?=$obj->timestamp?>">...</time></td>
+			</tr>
 
-					<td><?=$obj->functieplaats?></td>
-					<td><?=$obj->deurcode?></td>
-					<td><?=$obj->omschrijving?></td>
-					<td><?=$obj->activiteitcode?></td>
-					<td><?=$obj->klantnaam?></td>
-					<td><?=$obj->debiteur?></td>
-					<td><?=$obj->gebruikerstatus?></td>
-					<td><?=$obj->lokale_info?></td>
-					<td><?=$obj->in_gebruik_van?></td>
-					<td><?=$obj->hoofd_deb_code?></td>
+			<?endif?>
 
-				</tr>
-
-				<?endforeach?>
-
+			<?endforeach?>
 			</table>
+		</div>
+
+	</div><!-- /panel -->
+
+</div><!-- /col-lg-4 -->		
+		<div class="col-lg-12">
 			
 			
 		</div>
@@ -97,8 +66,9 @@
 	// Add tooltips
 	$(document).ready(function() {
 		$('[title]').tooltip();
-		 $('table').dataTable();
+		update_time();
 	});
+
 </script>
 
 

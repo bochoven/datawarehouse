@@ -10,6 +10,15 @@ function get_client_detail_link(name, sn, baseurl, hash)
     		<i class="fa fa-times"></i></a></div>';
 }
 
+// Update time in <time> tags
+function update_time()
+{
+	$( "time" ).each(function( index ) {
+		var date = new Date($(this).attr('datetime') * 1000);
+		$(this).html(moment(date).fromNow());
+	});
+}
+
 // Delete machine ajax call
 function delete_machine(obj)
 {

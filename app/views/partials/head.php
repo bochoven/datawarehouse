@@ -91,7 +91,9 @@
                 </ul>
 
               </li>
-
+              <li <?=$page==$url?'class="active"':''?>>
+                <a href="<?=url('admin')?>"><i class="fa fa-cogs"></i> Admin</a>
+              </li>
           </ul>
           <?$auth = conf('auth'); // Hide logout button if auth_noauth
             if( ! array_key_exists('auth_noauth', $auth)):?>
