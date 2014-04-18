@@ -56,9 +56,14 @@ class Outlet_room extends Model
             {
               $value = next($data);
             }
-            $this->rs['timestamp'] = time();
 
-            $this->save();
+            // Check if this is a valid entry
+            if($this->rs['omschrijving'] == 'Aansluitpunt data bedraad')
+            {
+                $this->rs['timestamp'] = time();
+                $this->save();
+            }
+
         }
 
         $dbh->commit();
