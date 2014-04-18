@@ -54,7 +54,39 @@
 			'Ruimtenr',
 			'Verdiepingsnr',
 			''
-			)
+			),
+		'topdesk' => array(
+			'afschrijftermijn',
+			'macadres',
+			'ref_soort',
+			'ref_leverancier',
+			'ref_vestiging',
+			'ref_finbudgethouder',
+			'aanschafdatum',
+			'ref_lokatie',
+			'serienummer',
+			'opmerking',
+			'specificatie',
+			'ref_merk',
+			'datwijzig',
+			'dataanmk',
+			'ipadres',
+			'hostnaam',
+			'vrijetekst1',
+			'objecttype',
+			'aankoopbedrag',
+			'naam',
+			'garantiedatum',
+			'onderhoudtot',
+			'persoonid_naam',
+			'uidaanmk_naam',
+			'vrijeopzoek2_naam',
+			'vrijeopzoek1_naam',
+			'statusid_naam',
+			'onderhoudsoortid_tekst',
+			'persoonid_loginnaamnetwerk',
+			'uidwijzig_naam',
+			'attentieid_naam')
 		);
 	
 	/*
