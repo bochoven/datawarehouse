@@ -12,13 +12,13 @@ class UploadException extends Exception
             case UPLOAD_ERR_INI_SIZE:
                 $post_max_size = convertPHPSizeToBytes(ini_get('post_max_size'));
                 $upload_max_filesize = convertPHPSizeToBytes(ini_get('upload_max_filesize'));
-                if($post_max_size > $upload_max_filesize)
+                if($post_max_size < $upload_max_filesize)
                 {
-                    $message = "The uploaded file exceeds the post_max_size directive in php.ini ($post_max_size Bytes)";
+                    $message = "The uploaded file exceeds the post_max_size directive in php.ini (".ini_get('post_max_size').")";
                 }
                 else
                 {
-                    $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini ($upload_max_filesize Bytes)";
+                    $message = "The uploaded file exceeds the upload_max_filesize directive in php.ini (".ini_get('upload_max_filesize').")";
                 }
                 break; 
             case UPLOAD_ERR_FORM_SIZE: 
