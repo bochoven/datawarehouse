@@ -271,7 +271,7 @@
 	*/
     $conf['dashboard_layout'] = array(
 		array('data_age', 'data_integrity'),
-		array('topdesk_budget')
+		array('topdesk_budget', 'topdesk_soort')
 	);
 
 	/*
