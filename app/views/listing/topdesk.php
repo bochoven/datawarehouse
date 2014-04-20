@@ -100,11 +100,15 @@ new fco;
 		    <thead>
 		      <tr>
 		      	<th data-colname='topdesk#naam'>Naam</th>
+		      	<th data-colname='topdesk#serienummer'>Serienummer</th>
 		      	<th data-colname='topdesk#ref_soort'>Soort</th>
 		      	<th data-colname='topdesk#macadres'>MAC adres</th>
+		      	<th data-colname='topdesk#hostnaam'>Hostnaam</th>
 		      	<th data-colname='topdesk#attentieid_naam'>Attentie</th>
 		      	<th data-colname='topdesk#statusid_naam'>Status</th>
+		      	<th data-colname='topdesk#persoonid_loginnaamnetwerk'>Vunet-id</th>
 		      	<th data-colname='topdesk#ref_finbudgethouder'>Budget</th>
+		      	<th data-colname='topdesk#vrijeopzoek2_naam'>Budgetnr</th>
 
 		    	<th data-colname='topdesk#timestamp'>Timestamp</th>
 		      </tr>
