@@ -43,7 +43,7 @@ class Outlet_room extends Model
         $dbh->beginTransaction();
 
         // Remove previous data
-        $dbh->exec('TRUNCATE TABLE '.$this->tablename);
+        $dbh->exec('DELETE FROM '.$this->tablename);
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
