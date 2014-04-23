@@ -43,7 +43,18 @@
 <?$this->view('partials/foot')?>
 
 <script>
-  
+  $(function(){
+
+    $('input[name=file]').change(function(e){
+      $('p.uploadbutton').removeClass('hide');
+    })
+
+    $('form#uploadForm').submit(function(e)
+    {
+      $('button[type=submit]').addClass('btn-success').text('Uploading...');
+    })
+
+  });
 </script> 
 
   </body>
