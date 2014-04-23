@@ -1,10 +1,10 @@
 		<div class="col-sm-6">
 
-			<div class="panel panel-default">
+			<div class="panel panel-danger">
 
 				<div class="panel-heading">
 
-					<h3 class="panel-title"><i class="fa fa-clock-o"></i> Data integrity</h3>
+					<h3 class="panel-title"><i class="fa fa-exclamation-triangle "></i> Data integrity</h3>
 				
 				</div>
 
