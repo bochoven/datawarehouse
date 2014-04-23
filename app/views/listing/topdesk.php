@@ -48,8 +48,8 @@ new fco;
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
 			        	// Format date
-			        	var date = new Date($('td:eq(10)', nRow).html() * 1000);
-			        	$('td:eq(10)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
+			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -102,6 +102,7 @@ new fco;
 		      	<th data-colname='topdesk#naam'>Naam</th>
 		      	<th data-colname='topdesk#serienummer'>Serienummer</th>
 		      	<th data-colname='topdesk#ref_soort'>Soort</th>
+		      	<th data-colname='topdesk#ref_merk'>Merk</th>
 		      	<th data-colname='topdesk#macadres'>MAC adres</th>
 		      	<th data-colname='topdesk#hostnaam'>Hostnaam</th>
 		      	<th data-colname='topdesk#attentieid_naam'>Attentie</th>
@@ -110,7 +111,7 @@ new fco;
 		      	<th data-colname='topdesk#ref_finbudgethouder'>Budget</th>
 		      	<th data-colname='topdesk#vrijeopzoek2_naam'>Budgetnr</th>
 
-		    	<th data-colname='topdesk#timestamp'>Timestamp</th>
+		    	<th data-colname='topdesk#datwijzig'>Gewijzigd</th>
 		      </tr>
 		    </thead>
 		    <tbody>
