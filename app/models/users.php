@@ -64,14 +64,14 @@ class Users extends Model
         // Remove previous data
         $dbh->exec('DELETE FROM '.$this->tablename);
 
-        $ldap_conn = @ldap_connect($conf('ldap_server'), $conf('ldap_port'));
+        $ldap_conn = @ldap_connect(conf('ldap_server'), conf('ldap_port'));
 
-        if ( ! @ldap_bind($ldap_conn, $conf('ldap_bind_dn'), $conf('ldap_pwd')))
+        if ( ! @ldap_bind($ldap_conn, conf('ldap_bind_dn'), conf('ldap_pwd')))
         { 
             throw new Exception(ldap_error($ldap_conn), 1);            
         }
 
-        if (! ($ldap_res = @ldap_search($ldap_conn, $conf('ldap_base_dn'), $conf('ldap_filter'))))
+        if (! ($ldap_res = @ldap_search($ldap_conn, conf('ldap_base_dn'), conf('ldap_filter'))))
         {
             throw new Exception(ldap_error($ldap_conn), 1);   
         }

@@ -24,7 +24,7 @@ class admin extends Controller
 
 	function get_users()
 	{
-		$model_obj = new Users;
+		$model_obj = new Users();
 		
 		try
 		{
