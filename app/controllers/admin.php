@@ -22,6 +22,27 @@ class admin extends Controller
 
 	//===============================================================
 
+	function get_users()
+	{
+		$model_obj = new Users;
+		
+		try
+		{
+			$model_obj->process();
+        }
+        catch (Exception $e) 
+        {
+            $dbh = getdbh();
+            $dbh->rollBack();
+            $this->errors .= "Failed: " . $e->getMessage();
+            printf("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage());
+            return FALSE;
+        }
+
+        echo 'Success';
+	}
+	//===============================================================
+
 	function submit()
 	{
 		try
