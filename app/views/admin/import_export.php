@@ -23,6 +23,18 @@
 
         </div>  
 
+        <div class="col-md-4">
+
+          <p class="well">
+
+            <a href="<?=url('admin/get_users')?>" class="btn btn-primary" >Get LDAP Users</a>
+
+          </p>
+
+
+        </div>  
+
+
       </div>
        
 
@@ -31,18 +43,7 @@
 <?$this->view('partials/foot')?>
 
 <script>
-  $(function(){
-
-$('input[name=file]').change(function(e){
-      $('p.uploadbutton').removeClass('hide');
-    })
-
-    $('form#uploadForm').submit(function(e)
-    {
-      $('button[type=submit]').addClass('btn-success').text('Uploading...');
-    })
-
-});
+  
 </script> 
 
   </body>
