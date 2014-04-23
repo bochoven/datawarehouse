@@ -3,7 +3,7 @@
 class Users extends Model
 {
     
-    function __construct($vunetid='')
+    function __construct($uid='')
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
@@ -13,9 +13,6 @@ class Users extends Model
         $this->rs['vueenheidcode'] = ''; $this->rt['vueenheid'] = 'CHAR(4)';
         $this->rs['comment'] = ''; // Gebruik voor comments
         $this->rs['timestamp'] = time();
-
-        $conf['ldap_attrs']     = array('uid', 'displayname', 'departmentnumber', 'vueenheidcode');
-
 
         // Add indexes
         $this->idx[] = array('displayname');
@@ -27,10 +24,10 @@ class Users extends Model
 		// Create table if it does not exist
         $this->create_table();
         
-        if($vunetid)
+        if($uid)
         {
-            $this->retrieve_one('vunetid=?', array($vunetid));
-            $this->vunetid = $vunetid;
+            $this->retrieve_one('uid=?', array($uid));
+            $this->uid = $uid;
         }
         
         return $this;
