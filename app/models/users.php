@@ -66,17 +66,64 @@ class Users extends Model
 
         $ldap_conn = @ldap_connect(conf('ldap_server'), conf('ldap_port'));
 
+        $attrs = conf('ldap_attrs', array());
+
         if ( ! @ldap_bind($ldap_conn, conf('ldap_bind_dn'), conf('ldap_pwd')))
         { 
             throw new Exception(ldap_error($ldap_conn), 1);            
         }
 
-        if (! ($ldap_res = @ldap_search($ldap_conn, conf('ldap_base_dn'), conf('ldap_filter'))))
+        if ( ! $ldap_res = @ldap_search($ldap_conn, conf('ldap_base_dn'), conf('ldap_filter'), $attrs))
         {
             throw new Exception(ldap_error($ldap_conn), 1);   
         }
 
+        $entry = ldap_first_entry($ldap_conn, $ldap_res);
+        while ($entry)
+        {
+            foreach( $attrs AS $attr)
+            {
+                echo get_clean_attr($ldap_conn, $entry, $attr);
+            }
+
+            $entry = ldap_next_entry($ldap_conn, $entry);
+        }
+
         $dbh->commit();
+    }
+
+    /**
+     * Clean attribute
+     *
+     * @return string attribute
+     * @author 
+     **/
+    function get_clean_attr( $ldap_conn, $entry, $attr )
+    {
+        
+        if($values = @ldap_get_values_len($ldap_conn, $entry, $attr))
+        {
+            $out = '';
+
+            if ( $values['count'] == 1 )
+            {
+                $out = $values[0];
+            } 
+            else
+            {
+                unset($values['count']);
+                $out = implode(', ', $values);
+            }
+
+        }
+        else
+        {
+            $out = '0000';
+        }
+
+
+        return $out;
+
     }
 
 }
