@@ -83,7 +83,7 @@ class Users extends Model
         {
             foreach( $attrs AS $attr)
             {
-                echo get_clean_attr($ldap_conn, $entry, $attr);
+                echo $this->get_clean_attr($ldap_conn, $entry, $attr);
             }
 
             $entry = ldap_next_entry($ldap_conn, $entry);
