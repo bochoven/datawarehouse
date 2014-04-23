@@ -86,7 +86,18 @@
 			'onderhoudsoortid_tekst',
 			'persoonid_loginnaamnetwerk',
 			'uidwijzig_naam',
-			'attentieid_naam')
+			'attentieid_naam'),
+		'orgeen' => array(
+		 	'org_code',
+		 	'parentcode',
+		 	'SAPHR',
+		 	'naam_organisatie',
+		 	'afkorting',
+		 	'begindatum',
+		 	'einddatum',
+		 	'ind_mail',
+		 	'domein_empl',
+		 	'domein_student')
 		);
 	
 	/*
