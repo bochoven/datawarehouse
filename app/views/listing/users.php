@@ -1,7 +1,7 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new fco;
+new Users;
 ?>
 
 <div class="container">
@@ -104,7 +104,7 @@ new fco;
 		      	<th data-colname='users#departmentnumber'>Afdelingscode</th>
 		      	<th data-colname='users#vueenheidcode'>Eenheidscode</th>
 		      	<th data-colname='users#comment'>Opmerkingen</th>
-		    	<th data-colname='topdesk#timestamp'>Gewijzigd</th>
+		    	<th data-colname='users#timestamp'>Gewijzigd</th>
 		      </tr>
 		    </thead>
 		    <tbody>
