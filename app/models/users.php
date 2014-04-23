@@ -16,7 +16,7 @@ class Users extends Model
 
         // Add indexes
         $this->idx[] = array('displayname');
-        $this->idx[] = array('department');
+        $this->idx[] = array('departmentnumber');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;
