@@ -9,10 +9,13 @@ class Users extends Model
         $this->rs['id'] = '';
         $this->rs['uid'] = ''; $this->rt['uid'] = 'CHAR(6) UNIQUE';
         $this->rs['displayname'] = ''; $this->rt['displayname'] = 'VARCHAR(100)';
-        $this->rs['department'] = ''; $this->rt['department'] = 'CHAR(4)';
-        $this->rs['vueenheid'] = ''; $this->rt['vueenheid'] = 'CHAR(4)';
+        $this->rs['departmentnumber'] = ''; $this->rt['department'] = 'CHAR(4)';
+        $this->rs['vueenheidcode'] = ''; $this->rt['vueenheid'] = 'CHAR(4)';
         $this->rs['comment'] = ''; // Gebruik voor comments
         $this->rs['timestamp'] = time();
+
+        $conf['ldap_attrs']     = array('uid', 'displayname', 'departmentnumber', 'vueenheidcode');
+
 
         // Add indexes
         $this->idx[] = array('displayname');
@@ -81,10 +84,24 @@ class Users extends Model
         $entry = ldap_first_entry($ldap_conn, $ldap_res);
         while ($entry)
         {
+            $this->rs['comment'] = '';
+            $this->rs['id'] = 0;
+
             foreach( $attrs AS $attr)
             {
-                echo $this->get_clean_attr($ldap_conn, $entry, $attr);
+                $clean = $this->get_clean_attr($ldap_conn, $entry, $attr);
+                if(strpos($clean, ','))
+                {
+                    $this->rs['comment'] .= "$attr: $clean;";
+                    $this->rs[$attr] = strtok($clean, ',');
+                }
+                else
+                {
+                    $this->rs[$attr] = $clean;
+                }
             }
+
+            $this->save();
 
             $entry = ldap_next_entry($ldap_conn, $entry);
         }
