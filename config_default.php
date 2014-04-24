@@ -97,7 +97,11 @@
 		 	'einddatum',
 		 	'ind_mail',
 		 	'domein_empl',
-		 	'domein_student')
+		 	'domein_student'),
+		'prijs' => array (
+			'Soort',
+			'Prijs',
+			'')
 		);
 	
 	/*
