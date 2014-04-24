@@ -122,6 +122,18 @@ class admin extends Controller
 		//redirect('admin/dashboard');
 	}
 
-	
+	/**
+	 * Dump csv
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function dump($what = 'topdesk')
+	{
+		$data = array();
+		$obj = new View();
+		$obj->view('topdesk/export', $data);
+
+	}
 
 }
