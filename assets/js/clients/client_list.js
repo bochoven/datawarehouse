@@ -64,14 +64,6 @@ $(document).ready(function() {
 	// Modify lengthmenu
 	$.fn.dataTable.defaults.aLengthMenu = [[10,25,50,100,-1], [10,25,50,100,"All"]];
 
-    // Add edit button in list view
-    $('#total-count').after(' <a id="edit" class="btn btn-xs btn-default" href="#">edit</a>');
-
-    $('#edit').click(function(event){
-    	event.preventDefault()
-    	$(this).toggleClass('btn-danger');
-    	$('.machine').toggleClass('edit btn-group');
-    });
 
 } );
 
