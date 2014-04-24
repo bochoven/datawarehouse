@@ -12,6 +12,8 @@
 					
 					<?foreach(array('fco', 'nbd', 'outlet_room', 'topdesk') AS $tbl):?>
 
+					<?new $tbl?>
+
 					<?$sql = "SELECT '$tbl' AS tbl, MAX(timestamp) as timestamp FROM $tbl";
 					$dbh = getdbh(); $stmt = $dbh->query($sql);?>
 					<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>

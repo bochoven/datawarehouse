@@ -1,7 +1,7 @@
 <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
-new fco;
+new Topdesk; new Users; new Orgeen;
 ?>
 
 <div class="container">
