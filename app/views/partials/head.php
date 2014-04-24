@@ -91,8 +91,23 @@
                 </ul>
 
               </li>
-              <li <?=$page==$url?'class="active"':''?>>
-                <a href="<?=url('admin')?>"><i class="fa fa-cogs"></i> Admin</a>
+              <?$url = 'admin/panel/'?>
+              <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> Admin <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+
+                  <?foreach(scandir(conf('view_path').'admin') AS $list_url):?>
+
+                    <?if( strpos($list_url, 'php')):?>
+
+                    <li><a href="<?=url($url.strtok($list_url, '.'))?>"><?=ucfirst(strtok($list_url, '.'))?></a></li>
+
+                    <?endif?>
+
+                  <?endforeach?>
+
+                </ul>
+
               </li>
           </ul>
           <?$auth = conf('auth'); // Hide logout button if auth_noauth

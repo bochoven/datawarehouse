@@ -2,7 +2,7 @@
 
 <div class="container">
       <div class="row">
-          <h2 class="col-lg-12"><i class="icon-wrench"></i> Administration</h2>
+          <h2 class="col-lg-12"><i class="icon-wrench"></i> Data import</h2>
       </div><!--/row-->
 
 

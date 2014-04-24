@@ -22,6 +22,27 @@ class admin extends Controller
 
 	//===============================================================
 
+
+	function panel($which = '')
+	{
+		if($which)
+		{
+			$data['page'] = 'clients';
+			$data['scripts'] = array("clients/client_list.js");
+			$view = 'admin/'.$which;
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+		}
+
+		$obj = new View();
+		$obj->view($view, $data);
+	}
+
+	//===============================================================
+
 	function get_users()
 	{
 		$model_obj = new Users();
