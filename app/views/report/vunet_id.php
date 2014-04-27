@@ -34,7 +34,7 @@ new Topdesk; new Users; new Orgeen;
 			} );
 		</script>
 
-		  <h3>FCO report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3>Orgeen report <span id="total-count" class='label label-primary'>…</span> <a href="" class="btn btn-default">Fix Orgeencode</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -54,18 +54,8 @@ new Topdesk; new Users; new Orgeen;
 		    	<? $model = new Users;
 		    	// Lijst van machines die op vunetid staan
 		    	// en waarvan het vunetid maar 1 orgeencode heeft
-		    	// en department matcht, maar dept is niet ingevuld
-		    	$sql = 
-		    	"SELECT naam, hostnaam, ref_soort, persoonid_loginnaamnetwerk, comment,
-		    		ref_finbudgethouder, vrijeopzoek2_naam, departmentnumber, 
-		    		o.afkorting 
-		    	FROM topdesk t 
-		    	LEFT JOIN users u ON (t.persoonid_loginnaamnetwerk = u.uid)
-		    	LEFT JOIN orgeen o ON (u.departmentnumber = o.org_code) 
-		    	WHERE t.persoonid_loginnaamnetwerk != ''
-		    	AND u.comment = ''
-		    	AND ref_finbudgethouder = afkorting
-		    	AND vrijeopzoek2_naam = ''";
+		    	// en department matcht, maar orgeen is niet ingevuld
+		    	$sql = conf('queries')['orgeen_fix'];
 		    	?>
 
 		    	<?foreach ($model->query($sql) as $obj):?>
