@@ -41,6 +41,7 @@ class show extends Controller
 		if($which)
 		{
 			$data['page'] = 'clients';
+			$data['scripts'] = array("clients/client_list.js");
 			$view = 'report/'.$which;
 		}
 		else
