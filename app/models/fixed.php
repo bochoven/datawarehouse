@@ -26,7 +26,7 @@ class Fixed extends Model
 		$this->rs['vrijetekst1'] = '';
 		$this->rs['objecttype'] = '';
 		$this->rs['aankoopbedrag'] = '';
-		$this->rs['naam'] = '';
+        $this->rs['naam'] = ''; $this->rt['naam'] = 'CHAR(6) UNIQUE'; //object-id
 		$this->rs['garantiedatum'] = '';
 		$this->rs['onderhoudtot'] = '';
 		$this->rs['persoonid_naam'] = '';
@@ -35,12 +35,15 @@ class Fixed extends Model
 		$this->rs['vrijeopzoek1_naam'] = '';
 		$this->rs['statusid_naam'] = '';
 		$this->rs['onderhoudsoortid_tekst'] = '';
-		$this->rs['persoonid_loginnaamnetwerk'] = '';
+        $this->rs['persoonid_loginnaamnetwerk'] = '';  $this->rt['persoonid_loginnaamnetwerk'] = 'CHAR(6)'; //vunet-id
 		$this->rs['uidwijzig_naam'] = '';
 		$this->rs['attentieid_naam'] = '';
 		$this->rs['timestamp'] = time();
 
         // Add indexes
+        $this->idx[] = array('persoonid_loginnaamnetwerk');
+        $this->idx[] = array('ref_finbudgethouder');
+        $this->idx[] = array('vrijeopzoek2_naam');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;

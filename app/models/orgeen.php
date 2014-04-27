@@ -21,9 +21,10 @@ class Orgeen extends Model
 
 
         // Add indexes
+        $this->idx[] = array('org_code');
 
         // Table version. Increment when creating a db migration
-        $this->schema_version = 0;
+        $this->schema_version = 1;
 
 		// Create table if it does not exist
         $this->create_table();
