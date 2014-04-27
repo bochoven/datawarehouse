@@ -104,6 +104,22 @@
 			'')
 		);
 	
+	// Lijst van machines die op vunetid staan
+	// en waarvan het vunetid maar 1 orgeencode heeft
+	// en department matcht, maar orgeen is niet ingevuld
+	$conf['queries']['orgeen_fix'] = 
+		"SELECT t.naam, t.hostnaam, t.ref_soort, t.persoonid_loginnaamnetwerk, 
+				comment, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
+				departmentnumber, 
+			o.afkorting 
+		FROM topdesk t 
+		LEFT JOIN users u ON (t.persoonid_loginnaamnetwerk = u.uid)
+		LEFT JOIN orgeen o ON (u.departmentnumber = o.org_code)
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE t.persoonid_loginnaamnetwerk != ''
+		AND u.comment = ''
+		AND t.ref_finbudgethouder = afkorting
+		AND t.vrijeopzoek2_naam = ''";
 	/*
 	|===============================================
 	| Index page
