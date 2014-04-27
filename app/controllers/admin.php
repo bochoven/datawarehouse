@@ -41,6 +41,67 @@ class admin extends Controller
 		$obj->view($view, $data);
 	}
 
+	/**
+	 * Apply fixes
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function fix($what)
+	{
+		// Fix array key = fixed field, value = query field.
+		$fix_array = array();
+		switch ($what)
+		{
+			case 'orgeencode':
+
+				// Get the orgeen_fix query
+				$sql = conf('queries')['orgeen_fix'];
+
+				// Replace fixed.vrijeopzoek2_naam with user.departmentnumber
+				$fix_array = array('vrijeopzoek2_naam' => 'departmentnumber');
+
+				break;
+			
+			default:
+				return;
+				break;
+		}
+
+		$model = new Fixed;
+		$fixed = new Fixed;
+		$topdesk = new Topdesk;
+		foreach ($model->query($sql) as $obj)
+		{
+			// Reset id
+			$fixed->id = '';
+
+			// Load record from fixed array;
+			$fixed->retrieve_one('naam=?', $obj->naam);
+
+			if( ! $fixed->id)
+			{
+				// Record does not exist, load record from topdesk table
+				$topdesk->retrieve_one('naam=?', $obj->naam);
+				// Copy values to fixed;
+				$fixed->rs = $topdesk->rs;
+
+				// Reset id
+				$fixed->id = '';
+			}
+
+			// Apply fixes
+			foreach ($fix_array as $target => $source) {
+				$fixed->$target = $obj->$source;
+			}
+
+			// Save to db
+			$fixed->save();
+		}
+
+		// Return something ajax
+	}
+
 	//===============================================================
 
 	function get_users()
