@@ -115,10 +115,12 @@
 		FROM topdesk t 
 		LEFT JOIN users u ON (t.persoonid_loginnaamnetwerk = u.uid)
 		LEFT JOIN orgeen o ON (u.departmentnumber = o.org_code)
+		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE t.persoonid_loginnaamnetwerk != ''
 		AND u.comment = ''
 		AND t.ref_finbudgethouder = afkorting
-		AND t.vrijeopzoek2_naam = ''";
+		AND t.vrijeopzoek2_naam = ''
+		AND f.vrijeopzoek2_naam IS NULL";
 	/*
 	|===============================================
 	| Index page

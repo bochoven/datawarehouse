@@ -48,8 +48,8 @@ new Topdesk;
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
 			        	// Format date
-			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
-			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:eq(12)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
+			        	$('td:eq(12)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -105,6 +105,7 @@ new Topdesk;
 		      	<th data-colname='topdesk#ref_merk'>Merk</th>
 		      	<th data-colname='topdesk#macadres'>MAC adres</th>
 		      	<th data-colname='topdesk#hostnaam'>Hostnaam</th>
+		      	<th data-colname='topdesk#aankoopbedrag'>Aankoopbedrag</th>
 		      	<th data-colname='topdesk#attentieid_naam'>Attentie</th>
 		      	<th data-colname='topdesk#statusid_naam'>Status</th>
 		      	<th data-colname='topdesk#persoonid_loginnaamnetwerk'>Vunet-id</th>

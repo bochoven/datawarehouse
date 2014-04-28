@@ -34,7 +34,7 @@ new Topdesk; new Users; new Orgeen;
 			} );
 		</script>
 
-		  <h3>Orgeen report <span id="total-count" class='label label-primary'>…</span> <a href="" class="btn btn-default">Fix Orgeencode</a></h3>
+		  <h3>Orgeen report <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/fix/orgeencode')?>" class="btn btn-default ajax">Fix Orgeencode</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -77,5 +77,30 @@ new Topdesk; new Users; new Orgeen;
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
+
+<script>
+	// Make ajax buttons
+	$(document).ready(function() {
+		$('a.ajax').click(function(e){
+			// store ref to button
+			var me = this
+			e.preventDefault();
+			$.getJSON( this.href, function() {
+				// JSON request sent
+			})
+			  .done(function(data) {
+			    alert( data.info);
+			    $(me).addClass('btn-success');
+			  })
+			  .fail(function() {
+			    alert( "error" );
+			  })
+			  .always(function() {
+			    // Run always when done
+			  });
+		});
+	});
+
+</script>
 
 <?$this->view('partials/foot')?>

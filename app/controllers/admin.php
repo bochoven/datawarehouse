@@ -42,6 +42,53 @@ class admin extends Controller
 	}
 
 	/**
+	 * Get count of objects
+	 *
+	 * @param string 
+	 * @author 
+	 **/
+	function get_count($what = '')
+	{
+		switch ($what)
+		{
+			case 'fixed':
+				$sql = "SELECT COUNT(*) AS count fROM fixed";
+				break;
+			
+			default:
+				if(isset(conf('queries')[$what]))
+				{
+					$sql = str_replace('SELECT', 'SELECT COUNT(*) AS count,', conf('queries')[$what]);
+				}
+				else
+				{
+					$sql = "SELECT COUNT(*) AS count fROM fixed";
+				}
+		}
+
+		try
+		{
+			$model = new Fixed;
+		
+			if($res = $model->query($sql))
+			{
+				$msg['count'] = (int) $res[0]->count;
+			}
+		}
+		catch (Exception $e)
+		{
+			// TODO: generate an error
+		}
+		
+
+		
+		$obj = new View();
+		$obj->view('json', array('msg' => $msg));
+
+
+	}
+
+	/**
 	 * Apply fixes
 	 *
 	 * @return void
@@ -71,6 +118,7 @@ class admin extends Controller
 		$model = new Fixed;
 		$fixed = new Fixed;
 		$topdesk = new Topdesk;
+		$cnt = 0;
 		foreach ($model->query($sql) as $obj)
 		{
 			// Reset id
@@ -95,11 +143,40 @@ class admin extends Controller
 				$fixed->$target = $obj->$source;
 			}
 
+			// Set modified time
+			$fixed->datwijzig = date('Y-m-d H:i:s');
+
 			// Save to db
 			$fixed->save();
+
+			$cnt++;
 		}
 
-		// Return something ajax
+		// Return json
+		$msg['info'] = "$cnt fixes applied";
+		$obj = new View();
+		$obj->view('json', array('msg' => $msg));
+
+	}
+
+	/**
+	 * Reset table
+	 * 
+	 * Drop and recreate table
+	 *
+	 * @param string table name
+	 * @author 
+	 **/
+	function reset($table = 'fixed')
+	{
+		$sql = "DROP table $table";
+		$model = new $table;
+		$model->query($sql);
+
+		$msg['info'] = "Table '$table' reset successfully";
+		$obj = new View();
+		$obj->view('json', array('msg' => $msg));
+
 	}
 
 	//===============================================================
