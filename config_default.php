@@ -101,6 +101,15 @@
 		'prijs' => array (
 			'Soort',
 			'Prijs',
+			''),
+		'ruimte_correctie' => array ( 
+			'Ruimte_special',
+			'Kostenplaats_Special',
+			'Eigenaar',
+			'Type',
+			'',
+			'',
+			'',
 			'')
 		);
 	
