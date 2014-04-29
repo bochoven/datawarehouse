@@ -105,7 +105,8 @@ class admin extends Controller
 			case 'orgeencode':
 
 				// Get the orgeen_fix query
-				$sql = conf('queries')['orgeen_fix'];
+				$queries = conf('queries');
+				$sql = $queries['orgeen_fix'];
 
 				// Replace fixed.vrijeopzoek2_naam with user.departmentnumber
 				$fix_array = array('vrijeopzoek2_naam' => 'departmentnumber');
