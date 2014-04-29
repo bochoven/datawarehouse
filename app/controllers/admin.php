@@ -60,7 +60,7 @@ class admin extends Controller
 				$queries = conf('queries');
 				if(isset($queries[$what]))
 				{
-					$sql = str_replace('SELECT', 'SELECT COUNT(*) AS count,', conf('queries')[$what]);
+					$sql = str_replace('SELECT', 'SELECT COUNT(*) AS count,', $queries[$what]);
 				}
 				else
 				{
