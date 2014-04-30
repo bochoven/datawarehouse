@@ -119,7 +119,7 @@ function __autoload( $classname )
 
 	if ((@include_once $path) !== 1)
 	{
-		fatal(sprintf('failed to load model at %s', $path), 1);
+		return; //fatal(sprintf('failed to load model at %s', $path), 1);
 	}
 }
 
