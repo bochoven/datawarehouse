@@ -298,4 +298,18 @@ class admin extends Controller
 
 	}
 
+		/**
+	 * Dump csv
+	 *
+	 * @return void
+	 * @author 
+	 **/
+	function dump_xls($what = 'topdesk')
+	{
+		$data = array();
+		$obj = new View();
+		$obj->view('topdesk/export_xls', $data);
+
+	}
+
 }

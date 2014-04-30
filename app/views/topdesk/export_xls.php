@@ -1,46 +1,89 @@
 <?
-	$filename = sprintf('Topdesk_fixed_%s.csv', date("Ymd_Hi"));
-
-	header( 'Content-Type: text/csv' );
-	header( 'Content-Disposition: attachment;filename='.$filename);
-	
-	$fp = fopen('php://output', 'w');
+	$filename = sprintf('Topdesk_fixed_%s.xls', date("Ymd_Hi"));	
 
 	$fixed = new Fixed();
 	$sql = 
-	"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
-	 objecttype AS Type, specificatie AS Specificatie, 
-	 serienummer AS Serienummer, serienummer AS Serial, 
-	 ref_finbudgethouder AS Klant_gebruik, ref_leverancier AS Leverancier,
-	 aanschafdatum AS Aanschafdatum, 
-	 garantiedatum AS Garantie_tot, 
-	 aankoopbedrag AS Aankoopbedrag, 
-	 afschrijftermijn AS Afschrijftermijn, 
-	 ref_vestiging AS Gebouw, ref_lokatie AS Kamer, statusid_naam AS Status, 
-	 onderhoudsoortid_tekst AS Soort_onderhoud, 
-	 onderhoudtot AS Onderhoud_tot, 
-	 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 
-	 hostnaam AS Hostname, ipadres AS IP_adres, macadres AS MAC_adres, 
-	 macadres AS MAC, vrijeopzoek1_naam AS Eigenaar, 
-	 vrijeopzoek2_naam AS Kostenplaats, vrijetekst1 AS Wall_Outlet, 
-	 persoonid_loginnaamnetwerk AS Persoon, persoonid_naam AS Persoon_afdeling, 
-	 datwijzig AS Datum_wijziging, uidwijzig_naam AS Wijziger_kaart, 
-	 dataanmk AS Datum_aanmaak, uidaanmk_naam AS Aanmaker_kaart 
-	 FROM fixed";
+	"SELECT naam,
+		persoonid_loginnaamnetwerk AS koppelid5,
+		hostnaam,
+		ref_finbudgethouder AS budgethouderid,
+		ref_soort AS soortid, ref_merk AS merkid,
+		objecttype AS objecttype, specificatie, 
+		serienummer, macadres,
+		'' AS aanspreekpuntid, '' AS ordernummer,
+		ref_leverancier AS leverancierid,
+		aanschafdatum, statusid_naam AS statusid,
+		attentieid_naam AS 'Type attentie',
+		opmerking AS 'Opmerking bij attentie',
+		vrijetekst1 AS 'Wall outlet',
+		vrijeopzoek1_naam AS Eigenaar,
+		vrijeopzoek2_naam AS Kostenplaats,
+		'' AS 'netwerkslot 1',
+		'' AS 'netwerkslot 2',
+		'' AS 'netwerkslot 3',
+		'' AS 'vrijegetal1',
+		'' AS 'vrijegetal2',
+		'' AS 'vrijegetal3',
+		'' AS 'vrijedatum1',
+		'' AS 'vrijedatum2',
+		'' AS 'vrijedatum3',
+		'' AS 'heeft attentie?',
+		'' AS 'vrijelogisch2',
+		'' AS 'vrijelogisch3',
+		'' AS 'vrijememo1',
+		'' AS 'Geheugen',
+		'' AS 'Besturingssysteem'
+		FROM fixed";
+
+	require_once conf('application_path') . 'lib/PHPExcel/PHPExcel.php';
+
+	// Create new PHPExcel object
+	$objPHPExcel = new PHPExcel();
+
+	// Get sheet
+	$sheet = $objPHPExcel->getActiveSheet();
 
 	$stmt = $fixed->prepare( $sql );
 	$fixed->execute( $stmt );
 	$header = FALSE;
+	$tablerow = 1; // 1-based index
 	while ( $row = $stmt->fetch( PDO::FETCH_ASSOC ) )
 	{
+	    $tablecol = 0;
 		if(! $header)
 		{
-			fputcsv($fp, array_keys($row), ';', '"');
+			foreach(array_keys($row) AS $value)
+			{
+				$sheet->setCellValueByColumnAndRow($tablecol, $tablerow, $value);
+				$tablecol++;
+			}
+			$tablerow++;
+			$tablecol = 0;
 			$header = TRUE;
 		}
-		fputcsv($fp, $row, ';', '"');
+		foreach($row AS $value)
+		{
+			$sheet->setCellValueExplicitByColumnAndRow($tablecol, $tablerow, $value, PHPExcel_Cell_DataType::TYPE_STRING);
+			$tablecol++;
+		}
+		$tablerow++;
 	}
 
-	fclose($fp);
+	// Write to output 
+	header('Content-Type: application/vnd.ms-excel');
+	header('Content-Disposition: attachment;filename="'.$filename.'"');
+	header('Cache-Control: max-age=0');
+	// If you're serving to IE 9, then the following may be needed
+	header('Cache-Control: max-age=1');
+
+	// If you're serving to IE over SSL, then the following may be needed
+	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header ('Pragma: public'); // HTTP/1.0
+
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	$objWriter->save('php://output');
+
 
 
