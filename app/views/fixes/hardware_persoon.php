@@ -68,7 +68,7 @@ new Fixed;
 			} );
 		</script>
 
-		  <h3>Fixed entries report <span id="total-count" class='label label-primary'>…</span> </h3>
+		  <h3>Hardware persoon correcties <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/dump_xls')?>" class="btn btn-default">Create export</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

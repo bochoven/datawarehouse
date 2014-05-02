@@ -36,6 +36,24 @@ class show extends Controller
 		$obj->view($view, $data);
 	}
 
+	function fixes($which = '')
+	{
+		if($which)
+		{
+			$data['page'] = 'fixes';
+			$data['scripts'] = array("clients/client_list.js");
+			$view = 'fixes/'.$which;
+		}
+		else
+		{
+			$data = array('status_code' => 404);
+			$view = 'error/client_error';
+		}
+
+		$obj = new View();
+		$obj->view($view, $data);
+	}
+
 	function reports($which = 'default')
 	{
 		if($which)
