@@ -261,10 +261,10 @@ class Model extends KISS_Model
 	 * @return boolean TRUE on success, FALSE if failed
 	 * @author bochoven
 	 **/
-	function create_table()
+	function create_table($force = FALSE)
 	{
 		// Check if we instantiated this table before
-		if(isset($GLOBALS['tables'][$this->tablename]))
+		if( ! $force AND isset($GLOBALS['tables'][$this->tablename]))
 		{
 			return TRUE;
 		}

@@ -175,6 +175,7 @@ class admin extends Controller
 		$sql = "DROP table $table";
 		$model = new $table;
 		$model->query($sql);
+		$model->create_table($force = TRUE);
 
 		$msg['info'] = "Table '$table' reset successfully";
 		$obj = new View();
