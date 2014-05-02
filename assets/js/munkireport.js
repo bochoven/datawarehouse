@@ -1,13 +1,10 @@
 // Global functions
 
-// Get client detail link
-function get_client_detail_link(name, sn, baseurl, hash)
+// Get topdesk link
+function get_topdesk_link(name, server)
 {
-	hash = (typeof hash === "undefined") ? "" : hash;
-	return '<div class="machine">\
-    		<a class="btn btn-default btn-xs" href="'+baseurl+'clients/detail/'+sn+hash+'">'+name+'</a>\
-    		<a href="'+baseurl+'admin/delete_machine/'+sn+'" class="btn btn-xs btn-danger">\
-    		<i class="fa fa-times"></i></a></div>';
+	var hwpart = '/tas/secure/hardware?lookup=naam&lookupValue=';
+	return '<a target="_blank" class="btn btn-xs btn-default" href="' + server + hwpart + name + '">' + name + '</a>';
 }
 
 // Update time in <time> tags

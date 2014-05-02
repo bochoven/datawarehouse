@@ -47,6 +47,10 @@ new Fixed;
 					],
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
+			        	var name=$('td:eq(0)', nRow).html();
+			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>")
+			        	$('td:eq(0)', nRow).html(link);
+
 			        	// Format date
 			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
 			        	$('td:eq(11)', nRow).html(moment(date).fromNow());

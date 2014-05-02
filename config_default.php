@@ -130,6 +130,19 @@
 		AND t.ref_finbudgethouder = afkorting
 		AND t.vrijeopzoek2_naam = ''
 		AND f.vrijeopzoek2_naam IS NULL";
+
+	/*
+	|===============================================
+	| Topdesk server url
+	|===============================================
+	|  
+	| Write the topdesk server url for example
+	| https://topdesk.my.org 
+	|
+	*/
+	$conf['topdesk_server'] = "";
+
+
 	/*
 	|===============================================
 	| Index page
