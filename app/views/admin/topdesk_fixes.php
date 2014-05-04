@@ -20,14 +20,14 @@
                   <th>Uitleg</th>
               </thead>
               <tbody>
-                <tr class="orgeen_fix">
+                <tr class="orgeen_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/orgeencode')?>" class="btn btn-default ajax">Fix Orgeencode</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
                   <td>Voeg orgeencodes toe aan objecten die aan een vunet-id gekoppeld zijn.<br>
                     Alleen voor vunet-id's die maar onder 1 orgeencode vallen.<br>
             Afdelingsafkorting moet matchen met de afkorting in topdesk.</td>
                 </tr>
-                <tr class="fixed">
+                <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>
                   <td>Maak de fixed tabel leeg.<br>
@@ -80,6 +80,7 @@
         var url = "<?=url('admin/get_count/')?>" + this.className
         var me = this
         var counter = $(this).find('.badge');
+        $(this).hide();
         $.getJSON( url, function() {
           // JSON request sent
         })
@@ -87,11 +88,7 @@
             if(data.count)
             {
               $(counter).html(data.count);
-              $(me).show();
-            }
-            else
-            {
-              $(me).hide();
+              $(me).show(500);
             }
           })
           .fail(function() {
