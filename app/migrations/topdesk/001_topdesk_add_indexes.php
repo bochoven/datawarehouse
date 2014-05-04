@@ -14,6 +14,10 @@ class Migration_topdesk_add_indexes extends Model
 	{
 		parent::__construct('id', 'topdesk'); //primary key, tablename
 
+		$this->idx[] = array('persoonid_loginnaamnetwerk');
+        $this->idx[] = array('ref_finbudgethouder');
+        $this->idx[] = array('vrijeopzoek2_naam');
+
 	}
 
 	/**

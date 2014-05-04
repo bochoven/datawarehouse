@@ -14,6 +14,8 @@ class Migration_orgeen_add_indexes extends Model
 	{
 		parent::__construct('id', 'orgeen'); //primary key, tablename
 
+		$this->idx[] = array('org_code');
+
 	}
 
 	/**
