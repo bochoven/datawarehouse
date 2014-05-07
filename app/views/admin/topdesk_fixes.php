@@ -27,6 +27,11 @@
                     Alleen voor vunet-id's die maar onder 1 orgeencode vallen.<br>
             Afdelingsafkorting moet matchen met de afkorting in topdesk.</td>
                 </tr>
+                <tr class="macadres_fix" style="display: none">
+                  <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Fix Mac adres</a></td>
+                  <td class=""><span class="badge alert-info"></span></td>
+                  <td>Maak uppercase mac adressen lowercase.</td>
+                </tr>
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>
@@ -89,6 +94,10 @@
             {
               $(counter).html(data.count);
               $(me).show(500);
+            }
+            if(data.error)
+            {
+              alert(data.error)
             }
           })
           .fail(function() {
