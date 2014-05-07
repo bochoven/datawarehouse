@@ -131,6 +131,15 @@
 		AND t.vrijeopzoek2_naam = ''
 		AND f.vrijeopzoek2_naam IS NULL";
 
+	$conf['queries']['macadres_fix'] = 
+		"SELECT t.naam, t.hostnaam, t.ref_soort, LOWER(t.macadres) AS macadres
+		FROM topdesk t
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE t.macadres IS NOT NULL
+		AND t.macadres != ''
+		AND t.macadres != LOWER(t.macadres)
+		AND (f.macadres IS NULL OR f.macadres != LOWER(t.macadres))";
+
 	/*
 	|===============================================
 	| Topdesk server url

@@ -41,6 +41,8 @@ class admin extends Controller
 		$obj->view($view, $data);
 	}
 
+	//===============================================================
+
 	/**
 	 * Get count of objects
 	 *
@@ -52,7 +54,7 @@ class admin extends Controller
 		switch ($what)
 		{
 			case 'fixed':
-				$sql = "SELECT COUNT(*) AS count fROM fixed";
+				$sql = "SELECT COUNT(*) AS count FROM fixed";
 				break;
 			
 			default:
@@ -64,9 +66,13 @@ class admin extends Controller
 				}
 				else
 				{
-					$sql = "SELECT COUNT(*) AS count fROM fixed";
+					// Query does not exist
+					$sql = "SELECT 0 AS count";
+					$msg['error'] = 'Cannot find query for :' . $what;
 				}
 		}
+
+		$msg['count'] = 0;
 
 		try
 		{
@@ -80,6 +86,7 @@ class admin extends Controller
 		catch (Exception $e)
 		{
 			// TODO: generate an error
+			$msg['error'] = $e->getMessage();
 		}
 		
 
@@ -112,6 +119,16 @@ class admin extends Controller
 				$fix_array = array('vrijeopzoek2_naam' => 'departmentnumber');
 
 				break;
+
+			case 'mac':
+				// Get the macadres_fix query
+				$queries = conf('queries');
+				$sql = $queries['macadres_fix'];
+
+				// Replace fixed.macadres with lowercase macadres
+				$fix_array = array('macadres' => 'macadres');
+
+				break;
 			
 			default:
 				return;
@@ -121,6 +138,11 @@ class admin extends Controller
 		$model = new Fixed;
 		$fixed = new Fixed;
 		$topdesk = new Topdesk;
+
+		$dbh = getdbh();
+
+		$dbh->beginTransaction();
+
 		$cnt = 0;
 		foreach ($model->query($sql) as $obj)
 		{
@@ -154,6 +176,8 @@ class admin extends Controller
 
 			$cnt++;
 		}
+
+		$dbh->commit();
 
 		// Return json
 		$msg['info'] = "$cnt fixes applied";
@@ -291,11 +315,33 @@ class admin extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	function dump($what = 'topdesk')
+	function dump_csv($what = 'hardware_gebouw')
 	{
-		$data = array();
+		
+
+		$data['sql'] = 
+			"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
+			 objecttype AS Type, specificatie AS Specificatie, 
+			 serienummer AS Serienummer, serienummer AS Serial, 
+			 ref_finbudgethouder AS Klant_gebruik, ref_leverancier AS Leverancier,
+			 aanschafdatum AS Aanschafdatum, 
+			 garantiedatum AS Garantie_tot, 
+			 aankoopbedrag AS Aankoopbedrag, 
+			 afschrijftermijn AS Afschrijftermijn, 
+			 ref_vestiging AS Gebouw, ref_lokatie AS Kamer, statusid_naam AS Status, 
+			 onderhoudsoortid_tekst AS Soort_onderhoud, 
+			 onderhoudtot AS Onderhoud_tot, 
+			 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 
+			 hostnaam AS Hostname, ipadres AS IP_adres, macadres AS MAC_adres, 
+			 vrijeopzoek1_naam AS Eigenaar, 
+			 vrijeopzoek2_naam AS Kostenplaats, vrijetekst1 AS Wall_Outlet
+			 FROM fixed
+			 WHERE persoonid_loginnaamnetwerk = ''";
+
+		$data['filename'] = $what;
+
 		$obj = new View();
-		$obj->view('topdesk/export', $data);
+		$obj->view('topdesk/export_csv', $data);
 
 	}
 
@@ -305,9 +351,29 @@ class admin extends Controller
 	 * @return void
 	 * @author 
 	 **/
-	function dump_xls($what = 'topdesk')
+	function dump_xls($what = 'hardware_persoon')
 	{
-		$data = array();
+		$data['sql'] = 
+			"SELECT naam,
+			persoonid_loginnaamnetwerk AS koppelid5,
+			hostnaam,
+			ref_finbudgethouder AS budgethouderid,
+			ref_soort AS soortid, ref_merk AS merkid,
+			objecttype AS objecttype, specificatie, 
+			serienummer, macadres,
+			'' AS aanspreekpuntid, '' AS ordernummer,
+			ref_leverancier AS leverancierid,
+			aanschafdatum, statusid_naam AS statusid,
+			attentieid_naam AS 'Type attentie',
+			opmerking AS 'Opmerking bij attentie',
+			vrijetekst1 AS 'Wall outlet',
+			vrijeopzoek1_naam AS Eigenaar,
+			vrijeopzoek2_naam AS Kostenplaats
+			FROM fixed
+			WHERE persoonid_loginnaamnetwerk != ''";
+
+		$data['filename'] = $what;
+
 		$obj = new View();
 		$obj->view('topdesk/export_xls', $data);
 
