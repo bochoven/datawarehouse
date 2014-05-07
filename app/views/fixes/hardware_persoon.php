@@ -55,6 +55,11 @@ new Fixed;
 			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
 			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
 
+				    },
+				    "fnServerParams": function ( aoData ) {
+
+				      	// Hook in serverparams to change search
+				      	aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk != ''" } );
 				    }
 				   
 			    } );
@@ -68,7 +73,7 @@ new Fixed;
 			} );
 		</script>
 
-		  <h3>Hardware persoon correcties <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/dump_xls')?>" class="btn btn-default">Create export</a></h3>
+		  <h3>Hardware persoon correcties <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/dump_xls/hardware_persoon')?>" class="btn btn-default">Create persoon export</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

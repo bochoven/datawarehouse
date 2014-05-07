@@ -18,7 +18,8 @@ class datatables extends Controller
 			'sEcho' => 0, // Identifier, just return
 			'iColumns' => 0, // Number of columns
 			'iSortingCols' => 0, // Amount of sort columns
-			'sSearch' => '' // Search query
+			'sSearch' => '', // Search query
+			'xWhere' => '' // Optional where clause
 		);
 
 		$cols = $sortcols = $searchcols = array();
