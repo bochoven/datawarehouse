@@ -20,6 +20,7 @@
                   <th>Uitleg</th>
               </thead>
               <tbody>
+
                 <tr class="orgeen_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/orgeencode')?>" class="btn btn-default ajax">Fix Orgeencode</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
@@ -27,11 +28,19 @@
                     Alleen voor vunet-id's die maar onder 1 orgeencode vallen.<br>
             Afdelingsafkorting moet matchen met de afkorting in topdesk.</td>
                 </tr>
+
                 <tr class="macadres_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Fix Mac adres</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
                   <td>Maak uppercase mac adressen lowercase.</td>
+                </tr>                
+
+                <tr class="ruimte_correctie" style="display: none">
+                  <td><a href="<?=url('admin/fix/ruimte_correctie')?>" class="btn btn-default ajax">Ruimte correctie</a></td>
+                  <td class=""><span class="badge alert-info"></span></td>
+                  <td>Zoek hardware in de ruimtecorrectie tabel.</td>
                 </tr>
+
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>

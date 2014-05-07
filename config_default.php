@@ -131,6 +131,7 @@
 		AND t.vrijeopzoek2_naam = ''
 		AND f.vrijeopzoek2_naam IS NULL";
 
+	// Find Uppercase macadresses
 	$conf['queries']['macadres_fix'] = 
 		"SELECT t.naam, t.hostnaam, t.ref_soort, LOWER(t.macadres) AS macadres
 		FROM topdesk t
@@ -139,6 +140,15 @@
 		AND t.macadres != ''
 		AND t.macadres != LOWER(t.macadres)
 		AND (f.macadres IS NULL OR f.macadres != LOWER(t.macadres))";
+
+	// Find hardware in the ruimte_correctie table
+	$conf['queries']['ruimte_correctie'] = 
+		"SELECT naam, ref_lokatie, ref_finbudgethouder, vrijeopzoek2_naam, 
+			r.eigenaar, r.kostenplaats_special 
+		FROM topdesk t 
+		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special) 
+		WHERE ref_finbudgethouder IS NOT NULL 
+		AND (vrijeopzoek2_naam != kostenplaats_special OR ref_finbudgethouder != eigenaar)";
 
 	/*
 	|===============================================

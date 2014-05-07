@@ -129,6 +129,19 @@ class admin extends Controller
 				$fix_array = array('macadres' => 'macadres');
 
 				break;
+
+			case 'ruimte_correctie':
+				// Get the ruimte_correctie query
+				$queries = conf('queries');
+				$sql = $queries['ruimte_correctie'];
+
+				// Replace fixed.macadres with lowercase macadres
+				$fix_array = array(
+					'ref_finbudgethouder' => 'eigenaar',
+					'vrijeopzoek2_naam' => 'kostenplaats_special'
+				);
+
+				break;				
 			
 			default:
 				return;
