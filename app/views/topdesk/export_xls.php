@@ -1,39 +1,7 @@
 <?
-	$filename = sprintf('Topdesk_fixed_%s.xls', date("Ymd_Hi"));	
+	$filename = sprintf('Topdesk_%s_%s.xls', $filename, date("Ymd_Hi"));	
 
 	$fixed = new Fixed();
-	$sql = 
-	"SELECT naam,
-		persoonid_loginnaamnetwerk AS koppelid5,
-		hostnaam,
-		ref_finbudgethouder AS budgethouderid,
-		ref_soort AS soortid, ref_merk AS merkid,
-		objecttype AS objecttype, specificatie, 
-		serienummer, macadres,
-		'' AS aanspreekpuntid, '' AS ordernummer,
-		ref_leverancier AS leverancierid,
-		aanschafdatum, statusid_naam AS statusid,
-		attentieid_naam AS 'Type attentie',
-		opmerking AS 'Opmerking bij attentie',
-		vrijetekst1 AS 'Wall outlet',
-		vrijeopzoek1_naam AS Eigenaar,
-		vrijeopzoek2_naam AS Kostenplaats,
-		'' AS 'netwerkslot 1',
-		'' AS 'netwerkslot 2',
-		'' AS 'netwerkslot 3',
-		'' AS 'vrijegetal1',
-		'' AS 'vrijegetal2',
-		'' AS 'vrijegetal3',
-		'' AS 'vrijedatum1',
-		'' AS 'vrijedatum2',
-		'' AS 'vrijedatum3',
-		'' AS 'heeft attentie?',
-		'' AS 'vrijelogisch2',
-		'' AS 'vrijelogisch3',
-		'' AS 'vrijememo1',
-		'' AS 'Geheugen',
-		'' AS 'Besturingssysteem'
-		FROM fixed";
 
 	require_once conf('application_path') . 'lib/PHPExcel/PHPExcel.php';
 
