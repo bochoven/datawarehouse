@@ -59,10 +59,18 @@ class Tablequery {
             $from .= " LEFT JOIN $name USING (serial_number)";
         }
 
+        // Global where
+        $xWhere = '';
+        if($cfg['xWhere'])
+        {
+            $xWhere = 'WHERE ' . $cfg['xWhere'];
+        }
+
         // Get total records
         $sql = "
             SELECT COUNT(1) as count
-            $from";
+            $from $xWhere";
+
         if( ! $stmt = $dbh->prepare( $sql ))
         {
             $err = $dbh->errorInfo();
@@ -137,6 +145,19 @@ class Tablequery {
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
+        }
+
+        // Add global filter
+        if($cfg['xWhere'])
+        {
+            if($sWhere)
+            {
+                $sWhere .= ' AND ' . $cfg['xWhere'];
+            }
+            else
+            {
+                $sWhere = $xWhere;
+            }
         }
 
         // Get filtered results count
