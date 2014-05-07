@@ -8,7 +8,7 @@ class Fixed extends Model
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
 		$this->rs['afschrijftermijn'] = '';
-		$this->rs['macadres'] = '';
+        $this->rs['macadres'] = ''; $this->rt['macadres'] = 'CHAR(20)';
 		$this->rs['ref_soort'] = '';
 		$this->rs['ref_leverancier'] = '';
 		$this->rs['ref_vestiging'] = '';
@@ -44,6 +44,7 @@ class Fixed extends Model
         $this->idx[] = array('persoonid_loginnaamnetwerk');
         $this->idx[] = array('ref_finbudgethouder');
         $this->idx[] = array('vrijeopzoek2_naam');
+        $this->idx[] = array('macadres');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;

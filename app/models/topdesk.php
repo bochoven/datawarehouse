@@ -8,7 +8,7 @@ class Topdesk extends Model
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
 		$this->rs['afschrijftermijn'] = '';
-		$this->rs['macadres'] = '';
+		$this->rs['macadres'] = ''; $this->rt['macadres'] = 'CHAR(20)';
 		$this->rs['ref_soort'] = '';
 		$this->rs['ref_leverancier'] = '';
 		$this->rs['ref_vestiging'] = '';
@@ -44,6 +44,7 @@ class Topdesk extends Model
         $this->idx[] = array('persoonid_loginnaamnetwerk');
         $this->idx[] = array('ref_finbudgethouder');
         $this->idx[] = array('vrijeopzoek2_naam');
+        $this->idx[] = array('macadres');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 1;
@@ -65,12 +66,17 @@ class Topdesk extends Model
         // Get database handle
         $dbh = $this->getdbh();
 
+        // Drop and recreate table
+        $dbh->exec("DROP table $this->tablename");
+        $this->create_table($force = TRUE);
+
+        // Drop and recreate fixed table
+        $fixed = new Fixed;
+        $dbh->exec("DROP table fixed");
+        $fixed->create_table($force = TRUE);
 
         // Wrap in transaction
         $dbh->beginTransaction();
-
-        // Remove previous data
-        $dbh->exec('DELETE FROM '.$this->tablename);
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -89,6 +95,39 @@ class Topdesk extends Model
         }
 
         $dbh->commit();
+    }
+
+    /**
+     * Select uppercase mac addresses
+     *
+     * @return void
+     * @author 
+     **/
+    function get_uppercase_mac_adresses()
+    {
+        // Get database handle
+        $dbh = $this->getdbh();
+
+        // Make sure the fixed table exists
+        $fixed = new Fixed;
+
+        // MySQL has default case insensitive collation
+        if($this->get_driver() == 'mysql')
+        {
+            $binary = 'BINARY';
+        }
+        else
+        {
+            $binary = '';
+        }
+
+        $sql = "SELECT t.naam, t.hostnaam, t.ref_soort, LOWER(t.macadres)
+        FROM topdesk t
+        LEFT JOIN fixed f ON (t.naam = f.naam)
+        WHERE t.macadres != $binary LOWER(t.macadres)
+        AND f.naam IS NULL";
+
+        return ($this->query($sql));
     }
 
 }
