@@ -59,7 +59,7 @@ new Fixed;
 				    "fnServerParams": function ( aoData ) {
 
 				      	// Hook in serverparams to change search
-				      	aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk != ''" } );
+				      	aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk = ''" } );
 				    }
 				   
 			    } );
@@ -73,12 +73,7 @@ new Fixed;
 			} );
 		</script>
 
-		  <h3>Hardware persoon correcties
-		  	<span id="total-count" class='label label-primary'>…</span>
-		  	<a href="<?=url('admin/dump_xls/hardware_persoon')?>" class="btn btn-default">
-		  		<i class="fa fa-cloud-download"></i> Create persoon export
-		  	</a>
-		  </h3>
+		  <h3>Hardware lokatie correcties <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/dump_csv/hardware_lokatie')?>" class="btn btn-default"><i class="fa fa-cloud-download"></i> Create lokatie export</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
