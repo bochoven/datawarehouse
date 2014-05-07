@@ -12,7 +12,7 @@ class Topdesk extends Model
 		$this->rs['ref_soort'] = '';
 		$this->rs['ref_leverancier'] = '';
 		$this->rs['ref_vestiging'] = '';
-		$this->rs['ref_finbudgethouder'] = '';
+		$this->rs['ref_finbudgethouder'] = ''; // Afkorting bijv. FEW
 		$this->rs['aanschafdatum'] = '';
 		$this->rs['ref_lokatie'] = '';
 		$this->rs['serienummer'] = '';
@@ -31,7 +31,7 @@ class Topdesk extends Model
 		$this->rs['onderhoudtot'] = '';
 		$this->rs['persoonid_naam'] = '';
 		$this->rs['uidaanmk_naam'] = '';
-		$this->rs['vrijeopzoek2_naam'] = '';
+		$this->rs['vrijeopzoek2_naam'] = ''; // Budgetnumber
 		$this->rs['vrijeopzoek1_naam'] = '';
 		$this->rs['statusid_naam'] = '';
 		$this->rs['onderhoudsoortid_tekst'] = '';
