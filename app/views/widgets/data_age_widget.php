@@ -9,21 +9,27 @@
 				</div>
 
 				<ul class="list-group">
-					
-					<?foreach(array('fco', 'nbd', 'outlet_room', 'topdesk') AS $tbl):?>
 
-					<?new $tbl?>
+					<?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
 
-					<?$sql = "SELECT '$tbl' AS tbl, MAX(timestamp) as timestamp FROM $tbl";
+                    <?if( strpos($list_url, 'php')):?>
+
+                    	<?$tbl = ucfirst(strtok($list_url, '.'))?>
+
+                    	<?new $tbl?>
+
+                    	<?$sql = "SELECT '$tbl' AS tbl, MAX(timestamp) as timestamp FROM $tbl";
 					$dbh = getdbh(); $stmt = $dbh->query($sql);?>
-					<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
+						<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-					<li class="list-group-item"><?=$obj->tbl?> <span class="pull-right"><time datetime="<?=$obj->timestamp?>">...</time></span></li>
+						<li class="list-group-item"><?=$obj->tbl?> <span class="pull-right"><time datetime="<?=$obj->timestamp?>">...</time></span></li>
 
-					<?endif?>
+						<?endif?>
 
-					<?endforeach?>
+                    <?endif?>
 
+                  <?endforeach?>
+					
 				</ul>
 
 			</div><!-- /panel -->
