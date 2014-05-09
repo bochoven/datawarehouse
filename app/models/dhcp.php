@@ -7,14 +7,17 @@ class Dhcp extends Model
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
-        $this->rs['mac'] = ''; $this->rt['mac'] = 'CHAR(17) UNIQUE';
+        $this->rs['mac'] = ''; $this->rt['mac'] = 'CHAR(17)';
         $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(30)';
         $this->rs['vlan'] = ''; $this->rt['vlan'] = 'VARCHAR(10)';
+        $this->rs['ip'] = ''; $this->rt['ip'] = 'CHAR(15)';
         $this->rs['timestamp'] = time();
 
         // Add indexes
         $this->idx[] = array('host');
+        $this->idx[] = array('mac');
         $this->idx[] = array('vlan');
+        $this->idx[] = array('ip');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 0;
@@ -48,6 +51,9 @@ class Dhcp extends Model
         // This array hold vlan information
         $vlan = array();
 
+        // This array holds fixed ip info
+        $fixed_array = array();
+
         echo '<pre>';
 
         // Read dhcp data
@@ -56,7 +62,9 @@ class Dhcp extends Model
             if( preg_match('/\s*host\s*(\w+)\s*{/', $data, $matches))
             {
                  $host = $matches[1];
-                 $ether = '';
+                 $ether = $fixed = '';
+
+                 // Search within the host block
                  while (($data = fgets($handle)) !== FALSE)
                  {
                     if( strpos($data, '}') !== FALSE)
@@ -64,25 +72,33 @@ class Dhcp extends Model
                         break;
                     }
 
-                    if( preg_match('/hardware ethernet\s*((\w+[:]){5}(\w+))/', $data, $matches))
+                    if( preg_match('/hardware ethernet\s+((\w+:){5}(\w+))/', $data, $matches))
                     {
                         $ether = strtolower($matches[1]);
                     }
-
-                    // Overwrite host with ddns hostname
-                    if( preg_match('/ddns-hostname\s*"(.+)"/', $data, $matches))
+                    elseif( preg_match('/ddns-hostname\s*"(.+)"/', $data, $matches))
                     {
                         $host = $matches[1];
+                    }
+                    elseif( preg_match('/fixed-address\s+((\d+\.){3}\d+)/', $data, $matches))
+                    {
+                        $fixed = $matches[1];
                     }
 
                  }
 
+                 if($fixed)
+                 {
+                    $fixed_array[$ether] = $fixed;
+                 }
+
+                 // We assume all host entries have an unique ether address
                  $out[$ether] = $host;
 
             }
             elseif( preg_match('/subclass "(.*)" 1:((\w+[:]){5}(\w+));/', $data, $matches))
             {
-                $vlan[strtolower($matches[2])] = $matches[1];
+                $vlan[$matches[1]][] = strtolower($matches[2]);
             }
             //$this->save();
         }
@@ -97,10 +113,31 @@ class Dhcp extends Model
         foreach($out AS $ether => $host)
         {
             $this->id = '';
-            $this->rs['mac'] = $ether;
-            $this->rs['host'] = $host;
-            $this->rs['vlan'] = array_key_exists($ether, $vlan) ? $vlan[$ether] : '';
-            $this->save();
+
+            $fixed = array_key_exists($ether, $fixed_array) ? $fixed_array[$ether] : '';
+
+            foreach($vlan AS $color => $entries)
+            {
+                if( in_array($ether, $entries))
+                {
+                    $this->id = '';
+                    $this->rs['mac'] = $ether;
+                    $this->rs['host'] = $host;
+                    $this->rs['vlan'] = $color;
+                    $this->rs['ip'] = $fixed;
+                    $this->save();
+                }
+            }
+
+            // Check if we found this entry in the vlan array
+            if( ! $this->id )
+            {
+                $this->rs['mac'] = $ether;
+                $this->rs['host'] = $host;
+                $this->rs['vlan'] = '';
+                $this->rs['ip'] = $fixed;
+                $this->save();
+            }
         }
 
         $dbh->commit();

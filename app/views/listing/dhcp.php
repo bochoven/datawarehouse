@@ -48,8 +48,8 @@ new fco;
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
 			        	// Format date
-			        	var date = new Date($('td:eq(3)', nRow).html() * 1000);
-			        	$('td:eq(3)', nRow).html(moment(date).fromNow());
+			        	var date = new Date($('td:eq(4)', nRow).html() * 1000);
+			        	$('td:eq(4)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -101,6 +101,7 @@ new fco;
 		      <tr>
 		      	<th data-colname='dhcp#host'>Hostname</th>
 		      	<th data-colname='dhcp#mac'>MAC Address</th>
+		      	<th data-colname='dhcp#ip'>Fixed IP</th>
 		        <th data-colname='dhcp#vlan'>VLAN</th>
 		    	<th data-colname='dhcp#timestamp'>Timestamp</th>
 		      </tr>
