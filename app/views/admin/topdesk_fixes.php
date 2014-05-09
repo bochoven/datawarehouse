@@ -31,6 +31,14 @@
             Afdelingsafkorting moet matchen met de afkorting in topdesk.</td>
                 </tr>
 
+                <tr class="fco_fix" style="display: none">
+                  <td><a href="<?=url('admin/fix/fco')?>" class="btn btn-default ajax">FCO correctie</a></td>
+                  <td class=""><span class="badge alert-info"></span></td>
+                  <td>Voeg orgeencodes en afkortingen toe aan objecten die <b>niet</b> aan een vunet-id gekoppeld zijn.<br>
+                    Deze correctie maakt gebruik van de FCO tabel, objecten worden gematcht op lokatie.<br>
+            De correctie neemt geen objecten mee die in de ruimte_correctie tabel voorkomen.</td>
+                </tr>
+
                 <tr class="macadres_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Fix Mac adres</a></td>
                   <td class=""><span class="badge alert-info"></span></td>

@@ -130,6 +130,17 @@ class admin extends Controller
 
 				break;
 
+			case 'fco':
+				// Get fco_fix query
+				$queries = conf('queries');
+				$sql = $queries['fco_fix'];
+
+				// Replace vrijeopzoek2_naam with debiteur (orgeencode)
+				$fix_array['vrijeopzoek2_naam'] = 'debiteur';
+				$fix_array['ref_finbudgethouder'] = 'afkorting';
+
+				break;
+
 			case 'ruimte_correctie':
 				// Get the ruimte_correctie query
 				$queries = conf('queries');

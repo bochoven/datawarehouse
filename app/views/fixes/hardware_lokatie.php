@@ -73,7 +73,12 @@ new Fixed;
 			} );
 		</script>
 
-		  <h3>Hardware lokatie correcties <span id="total-count" class='label label-primary'>…</span> <a href="<?=url('admin/dump_csv/hardware_lokatie')?>" class="btn btn-default"><i class="fa fa-cloud-download"></i> Create lokatie export</a></h3>
+		<h3>Hardware lokatie correcties 
+			<span id="total-count" class='label label-primary'>…</span>
+			<a href="<?=url('admin/dump_csv/hardware_lokatie')?>" class="btn btn-default">
+				<i class="fa fa-cloud-download"></i> Create lokatie export
+			</a>
+		</h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

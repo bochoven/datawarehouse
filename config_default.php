@@ -152,6 +152,20 @@
 		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
 		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
 
+	// FCO correctie
+	$conf['queries']['fco_fix'] =
+		"SELECT t.naam, t.ref_lokatie, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
+			f.debiteur AS debiteur, o.afkorting, r.kostenplaats_special, r.eigenaar 
+		FROM topdesk t 
+		LEFT JOIN fco f ON (t.ref_lokatie = f.functieplaats) 
+		LEFT JOIN orgeen o ON (f.debiteur = o.org_code) 
+		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
+		LEFT JOIN fixed fx ON (t.naam = fx.naam)
+		WHERE t.persoonid_loginnaamnetwerk = '' 
+		AND f.debiteur IS NOT NULL 
+		AND (t.vrijeopzoek2_naam != f.debiteur OR t.ref_finbudgethouder != o.afkorting)
+		AND r.ruimte_special IS NULL
+		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.ref_finbudgethouder != o.afkorting)";
 	/*
 	|===============================================
 	| Topdesk server url
