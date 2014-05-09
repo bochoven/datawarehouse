@@ -55,7 +55,8 @@ new Topdesk; new Users; new Orgeen;
 		    	// Lijst van machines die op vunetid staan
 		    	// en waarvan het vunetid maar 1 orgeencode heeft
 		    	// en department matcht, maar orgeen is niet ingevuld
-		    	$sql = conf('queries')['orgeen_fix'];
+		    	$queries = conf('queries');
+		    	$sql = $queries['orgeen_fix'];
 		    	?>
 
 		    	<?foreach ($model->query($sql) as $obj):?>
