@@ -143,12 +143,14 @@
 
 	// Find hardware in the ruimte_correctie table
 	$conf['queries']['ruimte_correctie'] = 
-		"SELECT naam, ref_lokatie, ref_finbudgethouder, vrijeopzoek2_naam, 
+		"SELECT t.naam, t.ref_lokatie, t.ref_finbudgethouder, t.vrijeopzoek2_naam, 
 			r.eigenaar, r.kostenplaats_special 
 		FROM topdesk t 
-		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special) 
-		WHERE ref_finbudgethouder IS NOT NULL 
-		AND (vrijeopzoek2_naam != kostenplaats_special OR ref_finbudgethouder != eigenaar)";
+		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE t.ref_finbudgethouder IS NOT NULL 
+		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
+		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
 
 	/*
 	|===============================================
