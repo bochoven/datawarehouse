@@ -110,7 +110,9 @@
 			'',
 			'',
 			'',
-			'')
+			''),
+		'dhcp' => array (
+			'# DHCP Server Configuration file.')
 		);
 	
 	// Lijst van machines die op vunetid staan
