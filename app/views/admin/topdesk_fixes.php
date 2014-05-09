@@ -4,7 +4,7 @@
 
 <div class="container">
       <div class="row">
-          <h3 class="col-lg-12"><i class="icon-wrench"></i> Topdesk fixes <a href="<?=url('admin/dump_xls')?>" class="btn btn-default">Create export</a></h3>
+          <h3 class="col-lg-12"><i class="icon-wrench"></i> Topdesk correcties</h3>
       </div><!--/row-->
 
 
