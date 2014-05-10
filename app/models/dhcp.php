@@ -134,7 +134,7 @@ class Dhcp extends Model
             {
                 $this->rs['mac'] = $ether;
                 $this->rs['host'] = $host;
-                $this->rs['vlan'] = '';
+                $this->rs['vlan'] = 'EMPTY';
                 $this->rs['ip'] = $fixed;
                 $this->save();
             }
