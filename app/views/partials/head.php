@@ -75,7 +75,7 @@
 
               <?$url = 'show/listing/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> Listings <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i> Sources <b class="caret"></b></a>
                 <ul class="dropdown-menu">
 
                   <?foreach(scandir(conf('view_path').'listing') AS $list_url):?>
