@@ -53,7 +53,7 @@
 			'Omschrijving',
 			'Ruimtenr',
 			'Verdiepingsnr',
-			''
+			'Bestandsnaam'
 			),
 		'topdesk' => array(
 			'afschrijftermijn',
