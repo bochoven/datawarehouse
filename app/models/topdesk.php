@@ -45,6 +45,7 @@ class Topdesk extends Model
         $this->idx[] = array('ref_finbudgethouder');
         $this->idx[] = array('vrijeopzoek2_naam');
         $this->idx[] = array('macadres');
+        $this->idx[] = array('statusid_naam');
 
         // Table version. Increment when creating a db migration
         $this->schema_version = 1;
