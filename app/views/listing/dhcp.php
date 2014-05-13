@@ -102,7 +102,7 @@ new fco;
 		      	<th data-colname='dhcp#host'>Hostname</th>
 		      	<th data-colname='dhcp#mac'>MAC Address</th>
 		      	<th data-colname='dhcp#ip'>Fixed IP</th>
-		        <th data-colname='dhcp#vlan'>VLAN</th>
+		        <th data-colname='dhcp#vlan'>Class</th>
 		    	<th data-colname='dhcp#timestamp'>Timestamp</th>
 		      </tr>
 		    </thead>
