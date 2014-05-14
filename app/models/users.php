@@ -78,6 +78,8 @@ class Users extends Model
             throw new Exception(ldap_error($ldap_conn), 1);   
         }
 
+        $cnt = 0;
+
         $entry = ldap_first_entry($ldap_conn, $ldap_res);
         while ($entry)
         {
@@ -100,10 +102,14 @@ class Users extends Model
 
             $this->save();
 
+            $cnt++;
+
             $entry = ldap_next_entry($ldap_conn, $entry);
         }
 
         $dbh->commit();
+
+        alert('Imported '.$cnt.' LDAP entries');
     }
 
     /**

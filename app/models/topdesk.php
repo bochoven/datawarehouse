@@ -76,6 +76,8 @@ class Topdesk extends Model
         $dbh->exec("DROP table fixed");
         $fixed->create_table($force = TRUE);
 
+        $cnt = 0;
+
         // Wrap in transaction
         $dbh->beginTransaction();
 
@@ -92,10 +94,14 @@ class Topdesk extends Model
             }
             $this->rs['timestamp'] = time();
 
+            $cnt++;
+
             $this->save();
         }
 
         $dbh->commit();
+
+        alert('Imported '.$cnt.' TOPdesk objects', 'success');
     }
 
     /**

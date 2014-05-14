@@ -307,13 +307,14 @@ class admin extends Controller
 		            $dbh = getdbh();
 		            $dbh->rollBack();
 		            $this->errors .= "Failed: " . $e->getMessage();
-		            printf("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage());
-		            return FALSE;
+		            error("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage());
 		        }
 
 		        fclose($handle);
 
-				echo 'Success';
+		        $obj = new View();
+				$obj->view('admin/data_import', array());
+
 
 				return;
 

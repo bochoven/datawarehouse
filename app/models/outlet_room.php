@@ -45,6 +45,9 @@ class Outlet_room extends Model
         // Remove previous data
         $dbh->exec('DELETE FROM '.$this->tablename);
 
+        // Counter
+        $cnt = 0;
+
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
@@ -62,11 +65,14 @@ class Outlet_room extends Model
             {
                 $this->rs['timestamp'] = time();
                 $this->save();
+                $cnt++;
             }
 
         }
 
         $dbh->commit();
+
+        alert('Succesfully inserted '.$cnt.' outlets', 'success');
     
     }
 

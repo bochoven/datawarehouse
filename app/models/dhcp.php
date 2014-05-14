@@ -107,6 +107,8 @@ class Dhcp extends Model
         $dbh->exec("DROP table $this->tablename");
         $this->create_table($force = TRUE);
 
+        $cnt = 0;
+
         // Wrap in transaction
         $dbh->beginTransaction();
 
@@ -126,6 +128,7 @@ class Dhcp extends Model
                     $this->rs['vlan'] = $color;
                     $this->rs['ip'] = $fixed;
                     $this->save();
+                    $cnt++;
                 }
             }
 
@@ -137,10 +140,13 @@ class Dhcp extends Model
                 $this->rs['vlan'] = 'EMPTY';
                 $this->rs['ip'] = $fixed;
                 $this->save();
+                $cnt++;
             }
         }
 
         $dbh->commit();
+
+        alert("Imported $cnt DHCP configuration items", 'success');
     }
 
 }
