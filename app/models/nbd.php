@@ -45,6 +45,7 @@ class Nbd extends Model
         // Get database handle
         $dbh = $this->getdbh();
 
+        $cnt = 0;
 
         // Wrap in transaction
         $dbh->beginTransaction();
@@ -66,9 +67,13 @@ class Nbd extends Model
             $this->rs['timestamp'] = time();
 
             $this->save();
+            $cnt++;
         }
 
         $dbh->commit();
+
+        alert("Imported $cnt network ports", 'success');
+
     
     }
 

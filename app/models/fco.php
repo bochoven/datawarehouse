@@ -49,6 +49,7 @@ class Fco extends Model
         // Get database handle
         $dbh = $this->getdbh();
 
+        $cnt = 0;
 
         // Wrap in transaction
         $dbh->beginTransaction();
@@ -70,9 +71,13 @@ class Fco extends Model
             $this->rs['timestamp'] = time();
 
             $this->save();
+            $cnt++;
         }
 
         $dbh->commit();
+
+        alert("Imported $cnt FCO location items", 'success');
+
     }
 
 }
