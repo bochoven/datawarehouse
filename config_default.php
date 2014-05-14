@@ -112,7 +112,9 @@
 			'',
 			''),
 		'dhcp' => array (
-			'# DHCP Server Configuration file.')
+			'# DHCP Server Configuration file.'),
+		'dhcp_log' => array (
+			'_time,"src_mac","src_ip","src_host"')
 		);
 	
 	// Lijst van machines die op vunetid staan
