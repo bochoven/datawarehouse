@@ -54,6 +54,8 @@ class Dhcp_log extends Model
         $dbh->exec("DROP table IF EXISTS $this->tablename");
         $this->create_table($force = TRUE);
 
+        $cnt = 0;
+
         // Wrap in transaction
         $dbh->beginTransaction();
 
@@ -76,11 +78,15 @@ class Dhcp_log extends Model
             if($this->rs['mac'])
             {
                 $this->save();
+                $cnt++;
             }
 
         }
 
         $dbh->commit();
+
+        alert("Imported $cnt DHCP log items", 'success');
+
     }
 
 }

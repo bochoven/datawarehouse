@@ -54,8 +54,6 @@ class Dhcp extends Model
         // This array holds fixed ip info
         $fixed_array = array();
 
-        echo '<pre>';
-
         // Read dhcp data
         while (($data = fgets($handle)) !== FALSE)
         {
