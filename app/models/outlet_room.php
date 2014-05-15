@@ -57,7 +57,7 @@ class Outlet_room extends Model
             // Loop through fields
             foreach($this->rs as &$value)
             {
-              $value = next($data);
+              $value = trim(next($data));
             }
 
             // Check if this is a valid entry
