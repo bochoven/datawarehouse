@@ -20,7 +20,7 @@
 				$dbh = getdbh(); $stmt = $dbh->query($sql);?>
 				<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-				<a href="<?=url('admin/dump_xls/missing_walloutlets_ruimte_tbl')?>" class="list-group-item">NBD Ports not in FCO table: <span class="badge"><?=$obj->count?></span></a>
+				<a href="<?=url('admin/dump_xls/missing_walloutlets_ruimte_tbl')?>" title="Exporteer als .xls bestand" class="list-group-item">NBD Ports not in FCO table: <span class="badge"><?=$obj->count?></span></a>
 
 				<?endif?>
 
@@ -34,7 +34,7 @@
 				$dbh = getdbh(); $stmt = $dbh->query($sql);?>
 				<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-				<a href="<?=url('admin/dump_xls/duplicate_walloutlets')?>" class="list-group-item">Duplicate outlets in outlet_room: <span class="badge"><?=$obj->count?></span></a>
+				<a href="<?=url('admin/dump_xls/duplicate_walloutlets')?>" title="Exporteer als .xls bestand" class="list-group-item">Duplicate outlets in outlet_room: <span class="badge"><?=$obj->count?></span></a>
 
 				<?endif?>
 
