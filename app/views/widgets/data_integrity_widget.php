@@ -9,17 +9,18 @@
 				</div>
 
 				
-				<ul class="list-group">
+				<div class="list-group">
 
 
 				<?$sql = "SELECT count(1) AS count
 							FROM nbd n 
 							LEFT JOIN outlet_room o ON (n.port = o.datacom)
-							WHERE o.datacom IS NULL";
+							WHERE o.datacom IS NULL
+							AND n.port != '-'";
 				$dbh = getdbh(); $stmt = $dbh->query($sql);?>
 				<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-				<li class="list-group-item">NBD Ports not in FCO table: <span class="badge"><?=$obj->count?></span></li>
+				<a href="<?=url('admin/dump_xls/missing_walloutlets_ruimte_tbl')?>" class="list-group-item">NBD Ports not in FCO table: <span class="badge"><?=$obj->count?></span></a>
 
 				<?endif?>
 
@@ -33,11 +34,11 @@
 				$dbh = getdbh(); $stmt = $dbh->query($sql);?>
 				<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
 
-				<li class="list-group-item">Duplicate outlets in outlet_room: <span class="badge"><?=$obj->count?></span></li>
+				<a href="<?=url('admin/dump_xls/duplicate_walloutlets')?>" class="list-group-item">Duplicate outlets in outlet_room: <span class="badge"><?=$obj->count?></span></a>
 
 				<?endif?>
 
-				</ul>
+				</div>
 
 
 			</div><!-- /panel -->

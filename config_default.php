@@ -241,8 +241,16 @@
 		FROM outlet_room o1
 		LEFT JOIN outlet_room o2 ON o1.datacom = o2.datacom
 		LEFT JOIN fco f ON o1.ruimtenr = f.functieplaats
-		WHERE o1.ruimtenr != o2.ruimtenr
+		WHERE o1.id != o2.id
 		ORDER BY o1.datacom";
+
+	$conf['exports']['missing_walloutlets_ruimte_tbl'] =
+		"SELECT n.port
+		FROM nbd n 
+		LEFT JOIN outlet_room o ON (n.port = o.datacom)
+		WHERE o.datacom IS NULL
+		AND n.port != '-'";
+
 
 	/*
 	|===============================================
