@@ -1,10 +1,95 @@
 // Global functions
 
+function upload(fileInputId, fileIndex)
+{
+	// take the file from the input
+	var file = document.getElementById(fileInputId).files[fileIndex]; 
+	var reader = new FileReader();
+	reader.readAsBinaryString(file); // alternatively you can use readAsDataURL
+	reader.onloadend  = function(evt)
+	{
+			// create XHR instance
+			xhr = new XMLHttpRequest();
+			 
+			// send the file through POST
+			xhr.open("POST", 'upload.php', true);
+ 
+			// make sure we have the sendAsBinary method on all browsers
+			XMLHttpRequest.prototype.mySendAsBinary = function(text){
+				var data = new ArrayBuffer(text.length);
+				var ui8a = new Uint8Array(data, 0);
+				for (var i = 0; i < text.length; i++) ui8a[i] = (text.charCodeAt(i) & 0xff);
+	 
+				if(typeof window.Blob == "function")
+				{
+					 var blob = new Blob([data]);
+				}else{
+					 var bb = new (window.MozBlobBuilder || window.WebKitBlobBuilder || window.BlobBuilder)();
+					 bb.append(data);
+					 var blob = bb.getBlob();
+				}
+ 
+				this.send(blob);
+			}
+			 
+			// let's track upload progress
+			var eventSource = xhr.upload || xhr;
+			eventSource.addEventListener("progress", function(e) {
+				// get percentage of how much of the current file has been sent
+				var position = e.position || e.loaded;
+				var total = e.totalSize || e.total;
+				var percentage = Math.round((position/total)*100);
+				 
+				// here you should write your own code how you wish to proces this
+			});
+			 
+			// state change observer - we need to know when and if the file was successfully uploaded
+			xhr.onreadystatechange = function()
+			{
+				if(xhr.readyState == 4)
+				{
+					if(xhr.status == 200)
+					{
+						// process success
+					}else{
+						// process error
+					}
+				}
+			};
+			 
+			// start sending
+			xhr.mySendAsBinary(evt.target.result);
+	};
+}
+
 // Get topdesk link
 function get_topdesk_link(name, server)
 {
 	var hwpart = '/tas/secure/hardware?lookup=naam&lookupValue=';
+	return '<div class="btn-group" style="width: 80px">' +
+  '<a target="_blank" class="btn btn-xs btn-default" href="' + server + hwpart + name + '">' + name + '</a>' +
+  '<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">' +
+    '<span class="caret"></span>' +
+    '<span class="sr-only">Toggle Dropdown</span>' +
+  '</button>' +
+  '<ul class="dropdown-menu" role="menu">' +
+    '<li><a href="#">Fix now</a></li>' +
+  '</ul>' +
+'</div>';
 	return '<a target="_blank" class="btn btn-xs btn-default" href="' + server + hwpart + name + '">' + name + '</a>';
+}
+
+// Dropdowns are hidden on a responsive table due to overflow
+// Make room in the table for dropdowns
+function responsive_dropdown()
+{
+	var height='100px';
+	$('.table-responsive .btn-group').last().on('show.bs.dropdown', function () {
+		$('.table-responsive').css('padding-bottom', height)
+	});
+	$('.table-responsive .btn-group').last().on('hide.bs.dropdown', function () {
+		$('.table-responsive').css('padding-bottom', '0px')
+	});
 }
 
 // Update time in <time> tags
@@ -34,10 +119,10 @@ function delete_machine(obj)
 				oTable.fnDraw();
 			});
 		}
-	  	else
-	  	{
-	  		alert('remove failed')
-	  	}
+		else
+		{
+			alert('remove failed')
+		}
 	});
 }
 
@@ -77,25 +162,25 @@ function state(id, data)
 // Debug function to dump js objects
 function dumpj(obj)
   {
-    type = typeof(obj)
-    if(type == 'object')
-    {
-      var out = {}
-      for (var key in obj) {
-        type = typeof(obj[key])
-        if ( type == 'object')
-        {
-          out[key] = 'object'
-        }
-        else{
-          out[key] = obj[key];
-        }
-      }
-    }
-    else{
-      out = obj
-    }
-    alert(JSON.stringify(out));
+	type = typeof(obj)
+	if(type == 'object')
+	{
+	  var out = {}
+	  for (var key in obj) {
+		type = typeof(obj[key])
+		if ( type == 'object')
+		{
+		  out[key] = 'object'
+		}
+		else{
+		  out[key] = obj[key];
+		}
+	  }
+	}
+	else{
+	  out = obj
+	}
+	alert(JSON.stringify(out));
   }
 
 // Filesize formatter
@@ -109,7 +194,7 @@ function fileSize(size, decimals) {
 String.prototype.pluralize = function(count, plural)
 {
   if (plural == null)
-    plural = this + 's';
+	plural = this + 's';
 
   return (count == 1 ? this : plural) 
 }
@@ -166,13 +251,13 @@ function getScale()
 		context = canvas.getContext('2d'),
 
 		devicePixelRatio = window.devicePixelRatio || 1,
-	    backingStoreRatio = context.webkitBackingStorePixelRatio ||
-	                        context.mozBackingStorePixelRatio ||
-	                        context.msBackingStorePixelRatio ||
-	                        context.oBackingStorePixelRatio ||
-	                        context.backingStorePixelRatio || 1;
+		backingStoreRatio = context.webkitBackingStorePixelRatio ||
+							context.mozBackingStorePixelRatio ||
+							context.msBackingStorePixelRatio ||
+							context.oBackingStorePixelRatio ||
+							context.backingStorePixelRatio || 1;
 
-	    scale = devicePixelRatio / backingStoreRatio;                    		
+		scale = devicePixelRatio / backingStoreRatio;                    		
 	}
 
 	return scale
@@ -209,13 +294,13 @@ if(typeof window.makeColorGradient !== 'function')
 // Global variables
 var chartObjects = {}, // Holds instantiated chart objects
 	barOptions = {
-		    
-	    	bars: {
-	            show: true,
-	            lineWidth: 0,
-	            fillOpacity: 0.8,
-	            barWidth: 0.9,
-	            lineWidth: 0
+			
+			bars: {
+				show: true,
+				lineWidth: 0,
+				fillOpacity: 0.8,
+				barWidth: 0.9,
+				lineWidth: 0
 			},
 			markers: {
 				show: true,
@@ -233,22 +318,22 @@ var chartObjects = {}, // Holds instantiated chart objects
 			{
 				verticalLines : false
 			},
-		    legend: {
+			legend: {
 				position : 'ne',
 				backgroundColor: 'white',
 				outlineColor: 'white'
 			},
 			shadowSize: 0
 			
-	    },
-	    horBarOptions = {
-		    
-	    	bars: {
-	            show: true,
-	            lineWidth: 0,
-	            fillOpacity: 0.8,
-	            barWidth: 0.9,
-	            horizontal: true
+		},
+		horBarOptions = {
+			
+			bars: {
+				show: true,
+				lineWidth: 0,
+				fillOpacity: 0.8,
+				barWidth: 0.9,
+				horizontal: true
 			},
 			markers: {
 				show: true,
@@ -264,39 +349,39 @@ var chartObjects = {}, // Holds instantiated chart objects
 			},
 			grid:
 			{
-		      horizontalLines : false,
+			  horizontalLines : false,
 			},
-		    legend: {
+			legend: {
 				position : 'ne',
 				backgroundColor: 'white',
 				outlineColor: 'white'
 			},
 			shadowSize: 0
 			
-	    },
+		},
 		pieOptions = {
-				    
-	        pie: {
-	            show: true,
-	            explode: 5,
-	            sizeRatio: .9 / getScale(), // Bug in flotr2
-	            labelRadius: 1/3,
-	            labelFormatter: function(total, value) {
+					
+			pie: {
+				show: true,
+				explode: 5,
+				sizeRatio: .9 / getScale(), // Bug in flotr2
+				labelRadius: 1/3,
+				labelFormatter: function(total, value) {
 					return "<div style='font-size:150%; text-align:center; padding:2px; color:white;'>" + value + "</div>";
 				}
 				
-	        },
-	        shadowSize: 0,
-	        grid : {
-		      verticalLines : false,
-		      horizontalLines : false,
-		      outlineWidth: 0
-		    },
+			},
+			shadowSize: 0,
+			grid : {
+			  verticalLines : false,
+			  horizontalLines : false,
+			  outlineWidth: 0
+			},
 			xaxis : { showLabels : false },
-		    yaxis : { showLabels : false },
-		    legend: {
+			yaxis : { showLabels : false },
+			legend: {
 				position : 'ne',
 				backgroundColor: 'white',
 				outlineColor: 'white'
 			},
-	    };
+		};

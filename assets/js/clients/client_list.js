@@ -40,6 +40,9 @@ $(document).ready(function() {
 		  // Customize select
 		  $('select').addClass('form-control input-sm');
 
+			// Initialize responsive dropdown
+			responsive_dropdown();
+
 		},
         "fnDrawCallback": function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
