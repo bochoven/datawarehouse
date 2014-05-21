@@ -152,7 +152,17 @@ class admin extends Controller
 					'vrijeopzoek2_naam' => 'kostenplaats_special'
 				);
 
-				break;				
+				break;
+
+			case 'walloutlet_location':
+				// Get the walloutlet_location query
+				$queries = conf('queries');
+				$sql = $queries['walloutlet_location_fix'];
+
+				// Replace ref_lokatie with fco ruimtenr
+				$fix_array['ref_lokatie'] = 'ruimtenr';
+
+				break;						
 			
 			default:
 				return;
@@ -343,66 +353,49 @@ class admin extends Controller
 	function dump_csv($what = 'hardware_gebouw')
 	{
 		
+		$export_queries = conf('exports');
 
-		$data['sql'] = 
-			"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
-			 objecttype AS Type, specificatie AS Specificatie, 
-			 serienummer AS Serienummer,
-			 ref_finbudgethouder AS Klant_gebruik, ref_leverancier AS Leverancier,
-			 aanschafdatum AS Aanschafdatum, 
-			 garantiedatum AS Garantie_tot, 
-			 aankoopbedrag AS Aankoopbedrag, 
-			 afschrijftermijn AS Afschrijftermijn, 
-			 ref_vestiging AS Gebouw, ref_lokatie AS Kamer, statusid_naam AS Status, 
-			 onderhoudsoortid_tekst AS Soort_onderhoud, 
-			 onderhoudtot AS Onderhoud_tot, 
-			 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 
-			 hostnaam AS Hostname, ipadres AS IP_adres, macadres AS MAC_adres, 
-			 vrijeopzoek1_naam AS Eigenaar, 
-			 vrijeopzoek2_naam AS Kostenplaats, vrijetekst1 AS Wall_Outlet
-			 FROM fixed
-			 WHERE persoonid_loginnaamnetwerk = ''";
-
-		$data['filename'] = $what;
+		if(array_key_exists($what, $export_queries))
+		{
+			$data['sql'] = $export_queries[$what];
+			$data['filename'] = $what;
+			$view = 'export/export_csv';
+		}
+		else
+		{
+			$data['status_code'] = 'Export unknown: '.$what;
+			$view = 'error/client_error'; //FIXME
+		}
 
 		$obj = new View();
-		$obj->view('topdesk/export_csv', $data);
+		$obj->view($view, $data);
 
 	}
 
-		/**
-	 * Dump csv
+	/**
+	 * Dump xls
 	 *
 	 * @return void
 	 * @author 
 	 **/
 	function dump_xls($what = 'hardware_persoon')
 	{
-		$data['sql'] = 
-			"SELECT naam,
-			persoonid_loginnaamnetwerk AS koppelid5,
-			hostnaam,
-			ref_finbudgethouder AS budgethouderid,
-			ref_soort AS soortid, ref_merk AS merkid,
-			objecttype AS objecttype, specificatie, 
-			serienummer, macadres,
-			'' AS aanspreekpuntid, '' AS ordernummer,
-			ref_leverancier AS leverancierid,
-			aanschafdatum, garantiedatum, '' AS verzekerdatum,
-			aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn,
-			statusid_naam AS statusid, ipadres,
-			attentieid_naam AS 'Type attentie',
-			opmerking AS 'Opmerking bij attentie',
-			vrijetekst1 AS 'Wall outlet',
-			vrijeopzoek1_naam AS Eigenaar,
-			vrijeopzoek2_naam AS Kostenplaats
-			FROM fixed
-			WHERE persoonid_loginnaamnetwerk != ''";
+		$export_queries = conf('exports');
 
-		$data['filename'] = $what;
+		if(array_key_exists($what, $export_queries))
+		{
+			$data['sql'] = $export_queries[$what];
+			$data['filename'] = $what;
+			$view = 'export/export_xls';
+		}
+		else
+		{
+			$data['status_code'] = 'Export unknown: '.$what;
+			$view = 'error/client_error'; //FIXME
+		}
 
 		$obj = new View();
-		$obj->view('topdesk/export_xls', $data);
+		$obj->view($view, $data);
 
 	}
 

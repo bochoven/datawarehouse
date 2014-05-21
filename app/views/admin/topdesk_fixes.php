@@ -51,6 +51,14 @@
                   <td>Zoek hardware in de ruimtecorrectie tabel.</td>
                 </tr>
 
+
+                <tr class="walloutlet_location_fix" style="display: none">
+                  <td>                <a href="<?=url('admin/fix/walloutlet_location')?>" class="btn btn-default ajax">Lokatie correctie</a></td>
+                  <td><span class="badge alert-info"></span></td>
+                  <td>Pas de lokatie aan op grond van de walloutlet.<br>
+            Walloutlet wordt gedetecteerd in de NBD tabel.</td>
+                </tr>
+
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>
@@ -58,6 +66,9 @@
             Hiermee reset je alle topdesk fixes
             Dit gaat automatisch als een nieuwe topdesk tabel wordt geïmporteerd.</td>
                 </tr>
+
+
+                
               </tbody>  
             </table>
 

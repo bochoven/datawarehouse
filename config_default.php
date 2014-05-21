@@ -117,9 +117,15 @@
 			'_time,"src_mac","src_ip","src_host"')
 		);
 	
-	// Lijst van machines die op vunetid staan
-	// en waarvan het vunetid maar 1 orgeencode heeft
-	// en department matcht, maar orgeen is niet ingevuld
+	/*
+	|===============================================
+	| Fix queries 
+	|===============================================
+	|  
+	| Queries that are used to correct the topdesk database
+	| 
+	|
+	*/
 	$conf['queries']['orgeen_fix'] = 
 		"SELECT t.naam, t.hostnaam, t.ref_soort, t.persoonid_loginnaamnetwerk, 
 				comment, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
@@ -156,6 +162,17 @@
 		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
 		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
 
+	// Lokatie correctie
+	$conf['queries']['walloutlet_location_fix'] =
+		"SELECT t.naam, t.hostnaam, t.ref_lokatie, o.ruimtenr 
+		FROM topdesk t 
+		LEFT JOIN nbd n ON (t.macadres = n.mac_address)
+		LEFT JOIN outlet_room o ON (n.port = o.datacom)
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE o.ruimtenr IS NOT NULL 
+		AND o.ruimtenr != t.ref_lokatie
+		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)";
+
 	// FCO correctie
 	$conf['queries']['fco_fix'] =
 		"SELECT t.naam, t.ref_lokatie, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
@@ -170,6 +187,63 @@
 		AND (t.vrijeopzoek2_naam != f.debiteur OR t.ref_finbudgethouder != o.afkorting)
 		AND r.ruimte_special IS NULL
 		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.ref_finbudgethouder != o.afkorting)";
+	
+	/*
+	|===============================================
+	| Export queries
+	|===============================================
+	|  
+	| Queries that are used for exports
+	|
+	*/
+	$conf['exports']['hardware_persoon'] = 
+		"SELECT naam,
+		persoonid_loginnaamnetwerk AS koppelid5,
+		hostnaam,
+		ref_finbudgethouder AS budgethouderid,
+		ref_soort AS soortid, ref_merk AS merkid,
+		objecttype AS objecttype, specificatie, 
+		serienummer, macadres,
+		'' AS aanspreekpuntid, '' AS ordernummer,
+		ref_leverancier AS leverancierid,
+		aanschafdatum, garantiedatum, '' AS verzekerdatum,
+		aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn,
+		statusid_naam AS statusid, ipadres,
+		attentieid_naam AS 'Type attentie',
+		opmerking AS 'Opmerking bij attentie',
+		vrijetekst1 AS 'Wall outlet',
+		vrijeopzoek1_naam AS Eigenaar,
+		vrijeopzoek2_naam AS Kostenplaats
+		FROM fixed
+		WHERE persoonid_loginnaamnetwerk != ''";
+
+	$conf['exports']['hardware_gebouw'] = 
+		"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
+		 objecttype AS Type, specificatie AS Specificatie, 
+		 serienummer AS Serienummer,
+		 ref_finbudgethouder AS Klant_gebruik, ref_leverancier AS Leverancier,
+		 aanschafdatum AS Aanschafdatum, 
+		 garantiedatum AS Garantie_tot, 
+		 aankoopbedrag AS Aankoopbedrag, 
+		 afschrijftermijn AS Afschrijftermijn, 
+		 ref_vestiging AS Gebouw, ref_lokatie AS Kamer, statusid_naam AS Status, 
+		 onderhoudsoortid_tekst AS Soort_onderhoud, 
+		 onderhoudtot AS Onderhoud_tot, 
+		 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 
+		 hostnaam AS Hostname, ipadres AS IP_adres, macadres AS MAC_adres, 
+		 vrijeopzoek1_naam AS Eigenaar, 
+		 vrijeopzoek2_naam AS Kostenplaats, vrijetekst1 AS Wall_Outlet
+		 FROM fixed
+		 WHERE persoonid_loginnaamnetwerk = ''";
+
+	$conf['exports']['duplicate_walloutlets'] =
+		"SELECT o1.datacom, o1.ruimtenr, f.debiteur
+		FROM outlet_room o1
+		LEFT JOIN outlet_room o2 ON o1.datacom = o2.datacom
+		LEFT JOIN fco f ON o1.ruimtenr = f.functieplaats
+		WHERE o1.ruimtenr != o2.ruimtenr
+		ORDER BY o1.datacom";
+
 	/*
 	|===============================================
 	| Topdesk server url

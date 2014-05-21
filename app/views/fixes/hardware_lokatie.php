@@ -52,8 +52,8 @@ new Fixed;
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
-			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
-			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:eq(12)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
+			        	$('td:eq(12)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -87,6 +87,7 @@ new Fixed;
 		      	<th data-colname='fixed#serienummer'>Serienummer</th>
 		      	<th data-colname='fixed#ref_soort'>Soort</th>
 		      	<th data-colname='fixed#ref_merk'>Merk</th>
+		      	<th data-colname='fixed#ref_lokatie'>Lokatie</th>
 		      	<th data-colname='fixed#macadres'>MAC adres</th>
 		      	<th data-colname='fixed#hostnaam'>Hostnaam</th>
 		      	<th data-colname='fixed#attentieid_naam'>Attentie</th>
