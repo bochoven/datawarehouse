@@ -43,6 +43,7 @@ $(document).ready(function() {
 			// Initialize responsive dropdown
 			responsive_dropdown();
 
+
 		},
         "fnDrawCallback": function( oSettings ) {
 			$('#total-count').html(oSettings.fnRecordsTotal());
@@ -57,6 +58,9 @@ $(document).ready(function() {
 				e.preventDefault();
 				delete_machine($(this));
 			});
+
+			// Initialize responsive dropdown
+			responsive_dropdown();
 		},
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
