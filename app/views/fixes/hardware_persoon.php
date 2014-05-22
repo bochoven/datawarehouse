@@ -48,7 +48,10 @@ new Fixed;
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
 			        	var name=$('td:eq(0)', nRow).html();
-			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>")
+			        	var options = {}
+			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix now';
+
+			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>", options)
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date

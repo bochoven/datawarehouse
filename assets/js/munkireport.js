@@ -63,24 +63,43 @@ function upload(fileInputId, fileIndex)
 }
 
 // Get topdesk link
-function get_topdesk_link(name, server)
+function get_topdesk_link(name, server, options)
 {
-	var hwpart = '/tas/secure/hardware?lookup=naam&lookupValue=';
-	return '<div class="btn-group" style="width: 80px">' +
-  '<a target="_blank" class="btn btn-xs btn-default" href="' + server + hwpart + name + '">' + name + '</a>' +
+	var lookup = '/tas/secure/hardware?lookup=naam&lookupValue=' + name;
+	var dropdown = '';
+
+	if (jQuery.isPlainObject( options ))
+	{
+		//Loop through options
+		for(var prop in options){
+		    
+		    dropdown = dropdown + '<li><a target="_blank" href="'+prop+'">'+options[prop]+'</a></li>';
+		}
+		
+	}
+
+	if(dropdown == '') // Just return a lookup link
+	{
+		return '<a target="_blank" class="btn btn-xs btn-default" href="' + server + lookup + '">' + name + '</a>';
+	}
+	else // return a button group
+	{
+		return '<div class="btn-group" style="width: 80px">' +
+  '<a target="_blank" class="btn btn-xs btn-default" href="' + server + lookup + '">' + name + '</a>' +
   '<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">' +
     '<span class="caret"></span>' +
     '<span class="sr-only">Toggle Dropdown</span>' +
   '</button>' +
   '<ul class="dropdown-menu" role="menu">' +
-    '<li><a href="#">Fix now</a></li>' +
+    dropdown +
   '</ul>' +
 '</div>';
-	return '<a target="_blank" class="btn btn-xs btn-default" href="' + server + hwpart + name + '">' + name + '</a>';
+	}
+
 }
 
 // Dropdowns are hidden on a responsive table due to overflow
-// Make room in the table for dropdowns
+// Make room in bottom of the table for dropdowns
 function responsive_dropdown()
 {
 	var height='100px';

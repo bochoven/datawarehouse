@@ -98,6 +98,143 @@ class admin extends Controller
 	}
 
 	/**
+	 * Get fix params and redirect to topdesk edit url
+	 *
+	 * @param lookupvalue
+	 * @author 
+	 **/
+	function topdesk_fix($name)
+	{
+		$fixed = new Fixed;
+		$topdesk = new Topdesk;
+
+		// Skip these key when comparing with fix array
+		$skipthese = array('id', 'datwijzig');
+
+		// Changeable values todo: move to config
+		// When the value is an array this is a ref_field
+		// Otherwise it is a normal field
+		$change_array = array(
+			'vrijeopzoek2_naam' => array('naam'),
+			'lokatieid' => array('naam'),
+			'budgethouderid' => array('naam'),
+			'vestigingid' => array('naam'),
+			'persoonid' => array('loginnaamnetwerk'),
+			'aanschafdatum' => '',
+			'aankoopbedrag' => '',
+			'macadres' => ''
+			);
+
+		// Holds the changed fields
+		$changes = array();
+
+		// Get fixed object
+		if( ! $fixed->retrieve_one('naam=?', $name))
+		{
+			error('Object niet in fixed '.$name);
+		}
+
+		// Get topdesk object
+		if( ! $topdesk->retrieve_one('naam=?', $name))
+		{
+			error('Object niet in topdesk '.$name);
+		}
+
+		// Check for errors
+		if( ! $GLOBALS['alerts'])
+		{
+			foreach($fixed->rs AS $k => $v)
+			{
+				if(in_array($k, $skipthese))
+				{
+					continue;
+				}
+
+				if($topdesk->$k !== $v)
+				{
+					$changes[$k] = $v;
+				} 
+			}
+
+			// Check for changes
+			if($changes)
+			{
+				$params = array();
+				$cnt = 0;
+
+				// Convert changes to params
+				foreach($changes AS $field => $value)
+				{
+					if(array_key_exists($field, $change_array))
+					{
+						
+						$change_format = $change_array[$field];
+
+						// Ref_fields are encoded as array
+						if(is_array($change_format))
+						{
+							$params['replacefield'.$cnt] = $field;
+							$params['searchfield'.$cnt] = $change_format[0];
+							$params['searchvalue'.$cnt] = $value;
+						}
+						else // Regular field
+						{
+							$params['field'.$cnt] = $field;
+							$params['value'.$cnt] = $value;
+						}
+
+						// Increment counter
+						$cnt++;
+					}
+					else
+					{
+						error("Field $field is not listed in change_array");
+						break;
+					}
+				}
+
+				if( ! $GLOBALS['alerts'])
+				{
+					// Add extra params
+					$params['action'] = 'edit';
+					$params['lookup'] = 'naam';
+					$params['lookupValue'] = $name;
+					$params['validate'] = 'true';
+					$params['save'] = 'true';
+
+					// Store changes in topdesk table
+					foreach($changes AS $k => $v)
+					{
+						$topdesk->$k = $v;
+					}
+					$topdesk->save();
+
+					// Delete fixed entry
+					$fixed->delete();
+
+					// echo conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params);
+
+					// Redirect to topdesk and apply fixes
+					redirect(conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params));
+
+				}
+			}
+			else
+			{
+				error('No changes?');
+			}
+		}
+
+
+		$data = array();
+		$obj = new View();
+		$obj->view('admin/data_import', $data);
+
+					
+
+	}
+
+	/**
 	 * Apply fixes
 	 *
 	 * @return void
