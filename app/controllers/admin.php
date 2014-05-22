@@ -115,7 +115,7 @@ class admin extends Controller
 		// When the value is an array this is a ref_field
 		// Otherwise it is a normal field
 		$change_array = array(
-			'vrijeopzoek2' => array('naam'),
+			'vrijeopzoek2_naam' => array('naam'),
 			'lokatieid' => array('naam'),
 			'budgethouderid' => array('naam'),
 			'vestigingid' => array('naam'),
@@ -123,6 +123,11 @@ class admin extends Controller
 			'aanschafdatum' => '',
 			'aankoopbedrag' => '',
 			'macadres' => ''
+			);
+
+		// Some fields have to be renamed :-(
+		$rename_array = array(
+			'vrijeopzoek2_naam' => 'vrijeopzoek2'
 			);
 
 		// Holds the changed fields
@@ -169,6 +174,9 @@ class admin extends Controller
 					{
 						
 						$change_format = $change_array[$field];
+
+						// Rename
+						$field = in_array($field, $rename_array) ? $rename_array[$field] : $field;
 
 						// Ref_fields are encoded as array
 						if(is_array($change_format))
