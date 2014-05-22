@@ -115,7 +115,7 @@ class admin extends Controller
 		// When the value is an array this is a ref_field
 		// Otherwise it is a normal field
 		$change_array = array(
-			'vrijeopzoek2_naam' => array('naam'),
+			'vrijeopzoek2' => array('naam'),
 			'lokatieid' => array('naam'),
 			'budgethouderid' => array('naam'),
 			'vestigingid' => array('naam'),
