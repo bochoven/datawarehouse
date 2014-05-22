@@ -176,7 +176,7 @@ class admin extends Controller
 						$change_format = $change_array[$field];
 
 						// Rename
-						$field = in_array($field, $rename_array) ? $rename_array[$field] : $field;
+						$field = array_key_exists($field, $rename_array) ? $rename_array[$field] : $field;
 
 						// Ref_fields are encoded as array
 						if(is_array($change_format))
