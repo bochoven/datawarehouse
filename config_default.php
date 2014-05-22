@@ -237,14 +237,14 @@
 		 WHERE persoonid_loginnaamnetwerk = ''";
 
 	$conf['exports']['duplicate_walloutlets'] =
-		"SELECT o1.datacom, o1.gebruikersnaam, o1.omschrijving, o1.ruimtenr, o1.verdiepingsnr
+		"SELECT o1.datacom, o1.gebruikersnaam, o1.omschrijving, o1.ruimtenr, o1.verdiepingsnr, o1.bestandsnaam
 		FROM outlet_room o1
 		LEFT JOIN outlet_room o2 ON o1.datacom = o2.datacom
 		WHERE o1.id != o2.id
 		ORDER BY o1.datacom";
 
 	$conf['exports']['missing_walloutlets_ruimte_tbl'] =
-		"SELECT n.port AS datacom, '' AS gebruikersnaam, '' AS omschrijving, '' AS ruimtenr, '' AS verdiepingsnr
+		"SELECT n.port AS datacom, '' AS gebruikersnaam, '' AS omschrijving, '' AS ruimtenr, '' AS verdiepingsnr, '' AS bestandsnaam
 		FROM nbd n 
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		WHERE o.datacom IS NULL

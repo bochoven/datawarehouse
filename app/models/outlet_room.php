@@ -12,6 +12,7 @@ class Outlet_room extends Model
         $this->rs['omschrijving'] = ''; $this->rt['omschrijving'] = 'varchar(100)';
         $this->rs['ruimtenr'] = ''; $this->rt['ruimtenr'] = 'VARCHAR(20)';
         $this->rs['verdiepingsnr'] = ''; $this->rt['verdiepingsnr'] = 'varchar(10)';
+        $this->rs['bestandsnaam'] = '';
         $this->rs['timestamp'] = time();
 
         // Add indexes
@@ -38,12 +39,12 @@ class Outlet_room extends Model
         // Get database handle
         $dbh = $this->getdbh();
 
+        // Drop and recreate table
+        $dbh->exec("DROP table $this->tablename");
+        $this->create_table($force = TRUE);
 
         // Wrap in transaction
         $dbh->beginTransaction();
-
-        // Remove previous data
-        $dbh->exec('DELETE FROM '.$this->tablename);
 
         // Counter
         $cnt = 0;
