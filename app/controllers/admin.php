@@ -103,10 +103,13 @@ class admin extends Controller
 	 * @param lookupvalue
 	 * @author 
 	 **/
-	function topdesk_fix($name)
+	function topdesk_fix($name, $save = '')
 	{
 		$fixed = new Fixed;
 		$topdesk = new Topdesk;
+
+		// Save the record?
+		$save = $save == 'save' ? 'true' : 'false';
 
 		// Skip these key when comparing with fix array
 		$skipthese = array('id', 'datwijzig');
@@ -208,7 +211,7 @@ class admin extends Controller
 					$params['lookup'] = 'naam';
 					$params['lookupValue'] = $name;
 					$params['validate'] = 'true';
-					$params['save'] = 'true';
+					$params['save'] = $save;
 
 					// Store changes in topdesk table
 					foreach($changes AS $k => $v)
@@ -220,7 +223,7 @@ class admin extends Controller
 					// Delete fixed entry
 					$fixed->delete();
 
-					// echo conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params);
+					echo conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params);
 
 					// Redirect to topdesk and apply fixes
 					redirect(conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params));

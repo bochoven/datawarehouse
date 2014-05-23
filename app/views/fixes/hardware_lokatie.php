@@ -49,7 +49,8 @@ new Fixed;
 
 			        	var name=$('td:eq(0)', nRow).html();
 			        	var options = {}
-			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix now';
+			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
+			        	options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
 
 			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>", options)
 			        	$('td:eq(0)', nRow).html(link);
