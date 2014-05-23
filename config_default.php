@@ -102,7 +102,7 @@
 			'Soort',
 			'Prijs',
 			''),
-		'ruimte_correctie' => array ( 
+		'ruimte_correctie' => array( 
 			'Ruimte_special',
 			'Kostenplaats_Special',
 			'Eigenaar',
@@ -111,10 +111,17 @@
 			'',
 			'',
 			''),
-		'dhcp' => array (
+		'dhcp' => array(
 			'# DHCP Server Configuration file.'),
-		'dhcp_log' => array (
-			'_time,"src_mac","src_ip","src_host"')
+		'dhcp_log' => array(
+			'_time,"src_mac","src_ip","src_host"'),
+		'ad_computer' => array(
+			'description',
+			'dn',
+			'lastLogon',
+			'name',
+			'operatingSystem',
+			'')
 		);
 	
 	/*
