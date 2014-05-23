@@ -102,11 +102,20 @@ function get_topdesk_link(name, server, options)
 // Make room in bottom of the table for dropdowns
 function responsive_dropdown()
 {
-	var height='100px';
-	$('.table-responsive .btn-group').last().on('show.bs.dropdown', function () {
+	var height = 34; // Row height
+
+	// Second to last row
+	$('.table-responsive .btn-group').eq(-2).on('show.bs.dropdown', function () {
 		$('.table-responsive').css('padding-bottom', height)
 	});
-	$('.table-responsive .btn-group').last().on('hide.bs.dropdown', function () {
+
+	// Last row
+	$('.table-responsive .btn-group').last().on('show.bs.dropdown', function () {
+		$('.table-responsive').css('padding-bottom', height * 2)
+	});
+
+	// Reset last two rows
+	$('.table-responsive .btn-group').slice(-2).on('hide.bs.dropdown', function () {
 		$('.table-responsive').css('padding-bottom', '0px')
 	});
 }
