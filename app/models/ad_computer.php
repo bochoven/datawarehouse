@@ -53,9 +53,6 @@ class AD_computer extends Model
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
-            // Convert time to timestamp
-            $data[0] = strtotime($data[0]);
-
             // Prepend array with id, account for extra item because of next()
             array_unshift($data, '', ''); 
 
@@ -70,6 +67,10 @@ class AD_computer extends Model
             {
                 // Convert lastlogon to unix timestamp
                 $this->rs['lastlogon'] = $this->rs['lastlogon']/10000000-11644473600;
+            }
+            else
+            {
+                $this->rs['lastlogon'] = 946684800; // 1 jan 2000
             }
 
             $this->save();
