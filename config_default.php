@@ -120,8 +120,7 @@
 			'dn',
 			'lastLogon',
 			'name',
-			'operatingSystem',
-			'')
+			'operatingSystem')
 		);
 	
 	/*

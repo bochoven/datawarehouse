@@ -47,6 +47,8 @@ class AD_computer extends Model
 
         $cnt = 0;
 
+        $time = time();
+
         // Wrap in transaction
         $dbh->beginTransaction();
 
@@ -72,6 +74,8 @@ class AD_computer extends Model
             {
                 $this->rs['lastlogon'] = 946684800; // 1 jan 2000
             }
+
+            $this->rs['timestamp'] = $time;
 
             $this->save();
             $cnt++;
