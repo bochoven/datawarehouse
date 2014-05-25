@@ -115,7 +115,7 @@
 			'# DHCP Server Configuration file.'),
 		'dhcp_log' => array(
 			'_time,"src_mac","src_ip","src_host"'),
-		'ad_computer' => array(
+		'ad_computer' => array( // Active directory computer objects
 			'description',
 			'dn',
 			'lastLogon',
