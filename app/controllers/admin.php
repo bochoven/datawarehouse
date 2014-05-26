@@ -98,6 +98,18 @@ class admin extends Controller
 	}
 
 	/**
+	 * Redirect to TOPdesk hardware card
+	 *
+	 * @author 
+	 **/
+	function topdesk_view($name = '')
+	{
+		$params['lookup'] = 'naam';
+		$params['lookupValue'] = $name;
+		redirect(conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params));
+	}
+
+	/**
 	 * Get fix params and redirect to topdesk edit url
 	 *
 	 * @param lookupvalue

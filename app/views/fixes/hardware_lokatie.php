@@ -49,10 +49,11 @@ new Fixed;
 
 			        	var name=$('td:eq(0)', nRow).html();
 			        	var options = {}
+			        	options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
 			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
 			        	options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
 
-			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>", options)
+			        	var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date

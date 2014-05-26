@@ -49,7 +49,8 @@ new Topdesk;
 
 			        	// Create topdesk link
 			        	var name=$('td:eq(0)', nRow).html();
-			        	var link = get_topdesk_link(name, "<?=conf('topdesk_server')?>")
+			        	var options = {}
+			        	options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';			        	var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date

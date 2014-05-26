@@ -63,9 +63,8 @@ function upload(fileInputId, fileIndex)
 }
 
 // Get topdesk link
-function get_topdesk_link(name, server, options)
+function get_topdesk_link(name, url, options)
 {
-	var lookup = '/tas/secure/hardware?lookup=naam&lookupValue=' + name;
 	var dropdown = '';
 
 	if (jQuery.isPlainObject( options ))
@@ -80,12 +79,12 @@ function get_topdesk_link(name, server, options)
 
 	if(dropdown == '') // Just return a lookup link
 	{
-		return '<a target="_blank" class="btn btn-xs btn-default" href="' + server + lookup + '">' + name + '</a>';
+		return '<a class="btn btn-xs btn-default" href="' + url + '">' + name + '</a>';
 	}
 	else // return a button group
 	{
 		return '<div class="btn-group" style="width: 80px">' +
-  '<a target="_blank" class="btn btn-xs btn-default" href="' + server + lookup + '">' + name + '</a>' +
+  '<a class="btn btn-xs btn-default" href="' + url + '">' + name + '</a>' +
   '<button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">' +
     '<span class="caret"></span>' +
     '<span class="sr-only">Toggle Dropdown</span>' +
@@ -103,19 +102,25 @@ function get_topdesk_link(name, server, options)
 function responsive_dropdown()
 {
 	var height = 34; // Row height
+	var lines = 3 // Number of lines in the dropdown
+
+	// Third to last row
+	$('.table-responsive .btn-group').eq(-3).on('show.bs.dropdown', function () {
+		$('.table-responsive').css('padding-bottom', height * (lines -2))
+	});
 
 	// Second to last row
 	$('.table-responsive .btn-group').eq(-2).on('show.bs.dropdown', function () {
-		$('.table-responsive').css('padding-bottom', height)
+		$('.table-responsive').css('padding-bottom', height * (lines - 1))
 	});
 
 	// Last row
 	$('.table-responsive .btn-group').last().on('show.bs.dropdown', function () {
-		$('.table-responsive').css('padding-bottom', height * 2)
+		$('.table-responsive').css('padding-bottom', height * lines)
 	});
 
 	// Reset last two rows
-	$('.table-responsive .btn-group').slice(-2).on('hide.bs.dropdown', function () {
+	$('.table-responsive .btn-group').slice(-3).on('hide.bs.dropdown', function () {
 		$('.table-responsive').css('padding-bottom', '0px')
 	});
 }

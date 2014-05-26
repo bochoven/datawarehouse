@@ -18,6 +18,27 @@ class show extends Controller
 		
 	}
 
+	function item($identifier = '', $value = '')
+	{
+		$data['identifier'] = $identifier;
+		$data['value'] = $value;
+		$view = 'item/unknown';
+
+		switch ($identifier) {
+			case 'topdesk_id':
+				$view = 'item/topdesk';
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+
+		$obj = new View();
+
+		$obj->view($view, $data);
+	}
+
 	function listing($which = '')
 	{
 		if($which)
