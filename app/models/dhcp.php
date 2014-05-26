@@ -121,7 +121,7 @@ class Dhcp extends Model
                 if( in_array($ether, $entries))
                 {
                     $this->id = '';
-                    $this->rs['mac'] = $ether;
+                    $this->rs['mac'] = strtoupper($ether);
                     $this->rs['host'] = $host;
                     $this->rs['vlan'] = $color;
                     $this->rs['ip'] = $fixed;

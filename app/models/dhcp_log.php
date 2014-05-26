@@ -77,6 +77,7 @@ class Dhcp_log extends Model
             // Check for empty lines
             if($this->rs['mac'])
             {
+                $this->rs['mac'] = strtoupper($this->rs['mac']);
                 $this->save();
                 $cnt++;
             }
