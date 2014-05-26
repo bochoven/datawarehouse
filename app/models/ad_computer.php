@@ -75,8 +75,12 @@ class AD_computer extends Model
                 $this->rs['lastlogon'] = 946684800; // 1 jan 2000
             }
 
+            // Remove superflous dn info
             $this->rs['dn'] = str_replace(',DC=vu,DC=local', '', str_replace('CN='.$this->rs['name'].',', '', $this->rs['dn']));
 
+            // Uppercase name
+            $this->rs['name'] = strtoupper($this->rs['name']);
+            
             $this->rs['timestamp'] = $time;
 
             $this->save();
