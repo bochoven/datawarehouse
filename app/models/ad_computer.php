@@ -68,7 +68,7 @@ class AD_computer extends Model
             if($this->rs['lastlogon'])
             {
                 // Convert lastlogon to unix timestamp
-                $this->rs['lastlogon'] = $this->rs['lastlogon']/10000000-11644473600;
+                $this->rs['lastlogon'] = floor($this->rs['lastlogon']/10000000)-11644473600;
             }
             else
             {
