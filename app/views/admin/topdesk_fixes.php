@@ -42,7 +42,7 @@
                 <tr class="macadres_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Fix Mac adres</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
-                  <td>Maak uppercase mac adressen lowercase.</td>
+                  <td>Maak lowercase mac adressen uppercase.</td>
                 </tr>                
 
                 <tr class="ruimte_correctie" style="display: none">
