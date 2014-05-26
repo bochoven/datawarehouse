@@ -53,6 +53,8 @@ class Nbd extends Model
         // Remove previous data
         $dbh->exec('DELETE FROM '.$this->tablename);
 
+        $time = time();
+
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
@@ -64,7 +66,9 @@ class Nbd extends Model
             {
               $value = next($data);
             }
-            $this->rs['timestamp'] = time();
+            $this->rs['timestamp'] = $time;
+
+            $this->rs['mac_address'] = strtoupper($this->rs['mac_address']);
 
             $this->save();
             $cnt++;
