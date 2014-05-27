@@ -133,7 +133,7 @@ class Dhcp extends Model
             // Check if we found this entry in the vlan array
             if( ! $this->id )
             {
-                $this->rs['mac'] = $ether;
+                $this->rs['mac'] = strtoupper($ether);
                 $this->rs['host'] = $host;
                 $this->rs['vlan'] = 'EMPTY';
                 $this->rs['ip'] = $fixed;
