@@ -32,7 +32,7 @@ class Topdesk extends Model
 		$this->rs['persoonid_naam'] = '';
 		$this->rs['uidaanmk_naam'] = '';
 		$this->rs['vrijeopzoek2_naam'] = ''; // Budgetnumber
-		$this->rs['vrijeopzoek1_naam'] = '';
+		$this->rs['vrijeopzoek1_naam'] = ''; // Eigenaar
 		$this->rs['statusid_naam'] = '';
 		$this->rs['onderhoudsoortid_tekst'] = '';
 		$this->rs['persoonid_loginnaamnetwerk'] = '';  $this->rt['persoonid_loginnaamnetwerk'] = 'CHAR(6)'; //vunet-id

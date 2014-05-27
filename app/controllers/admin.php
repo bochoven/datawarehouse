@@ -130,6 +130,7 @@ class admin extends Controller
 		// When the value is an array this is a ref_field
 		// Otherwise it is a normal field
 		$change_array = array(
+			'vrijeopzoek1_naam' => array('naam'),
 			'vrijeopzoek2_naam' => array('naam'),
 			'lokatieid' => array('naam'),
 			'budgethouderid' => array('naam'),
@@ -144,6 +145,7 @@ class admin extends Controller
 
 		// Some fields have to be renamed :-(
 		$rename_array = array(
+			'vrijeopzoek1_naam' => 'vrijeopzoek1',
 			'vrijeopzoek2_naam' => 'vrijeopzoek2',
 			'ref_finbudgethouder' => 'budgethouderid',
 			'ref_lokatie' => 'lokatieid'
@@ -271,6 +273,10 @@ class admin extends Controller
 	{
 		// Fix array key = fixed field, value = query field.
 		$fix_array = array();
+
+		// Hardcoded values
+		$set_value_array = array();
+
 		switch ($what)
 		{
 			case 'orgeencode':
@@ -326,6 +332,11 @@ class admin extends Controller
 				// Replace ref_lokatie with fco ruimtenr
 				$fix_array['ref_lokatie'] = 'ruimtenr';
 
+				// We zetten daarbij nu een - onder eigenaar zodat we weten dat deze 
+				// hardware niet gezien is bij de inventarisatie maar via een 
+				// Walloutlet op eenheid is gekoppeld
+				$set_value_array['vrijeopzoek1_naam'] = '-';
+
 				break;
 
 			case 'prijs':
@@ -372,8 +383,15 @@ class admin extends Controller
 			}
 
 			// Apply fixes
-			foreach ($fix_array as $target => $source) {
+			foreach ($fix_array as $target => $source)
+			{
 				$fixed->$target = $obj->$source;
+			}
+
+			// Set hardcoded values (if any)
+			foreach ($set_value_array as $target => $value)
+			{
+				$fixed->$target = $value;
 			}
 
 			// Set modified time
