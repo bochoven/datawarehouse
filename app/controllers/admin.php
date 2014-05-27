@@ -135,6 +135,8 @@ class admin extends Controller
 			'budgethouderid' => array('naam'),
 			'vestigingid' => array('naam'),
 			'persoonid' => array('loginnaamnetwerk'),
+			'ref_finbudgethouder' => array('naam'),
+			'ref_lokatie' => array('naam'),
 			'aanschafdatum' => '',
 			'aankoopbedrag' => '',
 			'macadres' => ''
@@ -142,7 +144,9 @@ class admin extends Controller
 
 		// Some fields have to be renamed :-(
 		$rename_array = array(
-			'vrijeopzoek2_naam' => 'vrijeopzoek2'
+			'vrijeopzoek2_naam' => 'vrijeopzoek2',
+			'ref_finbudgethouder' => 'budgethouderid',
+			'ref_lokatie' => 'lokatieid'
 			);
 
 		// Holds the changed fields
