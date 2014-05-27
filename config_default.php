@@ -165,6 +165,7 @@
 		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE t.ref_finbudgethouder IS NOT NULL 
+		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
 		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
 		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
 
@@ -176,6 +177,7 @@
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE o.ruimtenr IS NOT NULL 
+		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
 		AND o.ruimtenr != t.ref_lokatie
 		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)";
 
@@ -188,7 +190,8 @@
 		LEFT JOIN orgeen o ON (f.debiteur = o.org_code) 
 		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
 		LEFT JOIN fixed fx ON (t.naam = fx.naam)
-		WHERE t.persoonid_loginnaamnetwerk = '' 
+		WHERE t.persoonid_loginnaamnetwerk = ''
+		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
 		AND f.debiteur IS NOT NULL 
 		AND (t.vrijeopzoek2_naam != f.debiteur OR t.ref_finbudgethouder != o.afkorting)
 		AND r.ruimte_special IS NULL
