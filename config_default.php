@@ -193,6 +193,16 @@
 		AND (t.vrijeopzoek2_naam != f.debiteur OR t.ref_finbudgethouder != o.afkorting)
 		AND r.ruimte_special IS NULL
 		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.ref_finbudgethouder != o.afkorting)";
+
+	// Prijs correctie
+	$conf['queries']['prijs_fix'] =
+		"SELECT t.naam, t.aankoopbedrag, p.prijs 
+		FROM topdesk t
+		LEFT JOIN prijs p ON (t.ref_soort = p.soort)
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE p.prijs IS NOT NULL 
+		AND p.prijs != t.aankoopbedrag
+		AND (f.naam IS NULL OR f.aankoopbedrag != p.prijs)";
 	
 	/*
 	|===============================================

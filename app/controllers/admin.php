@@ -326,6 +326,16 @@ class admin extends Controller
 				// Replace ref_lokatie with fco ruimtenr
 				$fix_array['ref_lokatie'] = 'ruimtenr';
 
+				break;
+
+			case 'prijs':
+				// Get the walloutlet_location query
+				$queries = conf('queries');
+				$sql = $queries['prijs_fix'];
+
+				// Replace ref_lokatie with fco ruimtenr
+				$fix_array['aankoopbedrag'] = 'prijs';
+
 				break;						
 			
 			default:

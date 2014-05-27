@@ -59,6 +59,12 @@
             Walloutlet wordt gedetecteerd in de NBD tabel.</td>
                 </tr>
 
+                <tr class="prijs_fix" style="display: none">
+                  <td>                <a href="<?=url('admin/fix/prijs')?>" class="btn btn-default ajax">Prijs correctie</a></td>
+                  <td><span class="badge alert-info"></span></td>
+                  <td>Pas de prijs aan op grond van de Prijzentabel.</td>
+                </tr>
+
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>
