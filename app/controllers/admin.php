@@ -62,7 +62,11 @@ class admin extends Controller
 				$queries = conf('queries');
 				if(isset($queries[$what]))
 				{
-					$sql = str_replace('SELECT', 'SELECT COUNT(*) AS count,', $queries[$what]);
+					// Only select t.naam in subquery -> remove others
+					// assumes t represents the topdesk table
+					$subq = preg_replace('/SELECT.+FROM/si', 'SELECT t.naam FROM', $queries[$what]);
+
+					$sql = sprintf("SELECT COUNT(1) as count FROM topdesk WHERE naam IN (%s)", $subq);
 				}
 				else
 				{

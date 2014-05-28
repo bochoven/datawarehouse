@@ -129,6 +129,7 @@
 	|===============================================
 	|  
 	| Queries that are used to correct the topdesk database
+	| Use t for the topdesk table!
 	| 
 	|
 	*/
@@ -180,7 +181,9 @@
 		AND o.ruimtenr != ''
 		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
 		AND o.ruimtenr != t.ref_lokatie
-		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)";
+		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)
+		GROUP BY o.datacom 
+		HAVING COUNT(*) = 1";
 
 	// FCO correctie
 	$conf['queries']['fco_fix'] =
