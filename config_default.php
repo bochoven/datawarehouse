@@ -177,6 +177,7 @@
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE o.ruimtenr IS NOT NULL 
+		AND o.ruimtenr != ''
 		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
 		AND o.ruimtenr != t.ref_lokatie
 		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)";
