@@ -17,7 +17,6 @@ class Nbd extends Model
         $this->rs['room'] = ''; $this->rt['room'] = 'varchar(20)';
         $this->rs['out_mb'] = 0.0;
         $this->rs['in_mb'] = 0.0;
-        $this->rs['poe'] = $this->rt['poe'] = 'varchar(100)';
         $this->rs['timestamp'] = time();
 
 
@@ -45,15 +44,14 @@ class Nbd extends Model
         // Get database handle
         $dbh = $this->getdbh();
 
+        // Drop and recreate table
+        $dbh->exec("DROP table IF EXISTS $this->tablename");
+        $this->create_table($force = TRUE);
+
         $cnt = 0;
 
         // Wrap in transaction
         $dbh->beginTransaction();
-
-        // Remove previous data
-        $dbh->exec('DELETE FROM '.$this->tablename);
-
-        $time = time();
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -66,7 +64,6 @@ class Nbd extends Model
             {
               $value = next($data);
             }
-            $this->rs['timestamp'] = $time;
 
             $this->rs['mac_address'] = strtoupper($this->rs['mac_address']);
 

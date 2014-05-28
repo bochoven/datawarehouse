@@ -48,8 +48,8 @@ new Nbd;
 			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
 
 			        	// Format date
-			        	var date = new Date($('td:eq(11)', nRow).html() * 1000);
-			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
+			        	var date = new Date($('td:eq(10)', nRow).html() * 1000);
+			        	$('td:eq(10)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -109,7 +109,6 @@ new Nbd;
 		        <th data-colname='nbd#room'>Room</th>
 		    	<th data-colname='nbd#out_mb'>Out (MB)</th>
 		    	<th data-colname='nbd#in_mb'>In (MB)</th>
-		    	<th data-colname='nbd#poe'>POE</th>
 		    	<th data-colname='nbd#timestamp'>Timestamp</th>
 		      </tr>
 		    </thead>

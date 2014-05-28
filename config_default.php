@@ -45,7 +45,7 @@
 			'Room',
 			'Out (MB)',
 			'In (MB)',
-			'PoE'
+			'timestamp'
 			),
 		'outlet_room' => array(
 			'Datacom',
