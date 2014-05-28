@@ -56,13 +56,14 @@
                   <td>                <a href="<?=url('admin/fix/walloutlet_location')?>" class="btn btn-default ajax">Lokatie correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
                   <td>Pas de lokatie aan op grond van de walloutlet.<br>
-            Walloutlet wordt gedetecteerd in de NBD tabel.</td>
+            Walloutlet wordt gedetecteerd in de NBD tabel. Via Outlet_room wordt de juiste lokatie bij de outlet gezocht.<br>
+            Outlets met meer dan 1 lokatie worden niet meegenomen.</td>
                 </tr>
 
                 <tr class="prijs_fix" style="display: none">
                   <td>                <a href="<?=url('admin/fix/prijs')?>" class="btn btn-default ajax">Prijs correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
-                  <td>Pas de prijs aan op grond van de Prijzentabel.</td>
+                  <td>Pas de prijs aan op grond van de <a href="<?=url('/show/listing/prijs')?>">Prijzentabel</a>.</td>
                 </tr>
 
                 <tr class="fixed" style="display: none">
