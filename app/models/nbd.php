@@ -15,8 +15,8 @@ class Nbd extends Model
         $this->rs['hostname'] = ''; $this->rt['hostname'] = 'varchar(100)';
         $this->rs['mac_address'] = ''; $this->rt['mac_address'] = 'char(17)';
         $this->rs['room'] = ''; $this->rt['room'] = 'varchar(20)';
-        $this->rs['out_mb'] = 0.0;
-        $this->rs['in_mb'] = 0.0;
+        $this->rs['out_mb'] = 0;
+        $this->rs['in_mb'] = 0;
         $this->rs['timestamp'] = time();
 
 
@@ -64,6 +64,10 @@ class Nbd extends Model
             {
               $value = next($data);
             }
+
+            // Convert Octets to MB
+            $this->rs['out_mb'] = floor($this->rs['out_mb'] / (1024 * 1024));
+            $this->rs['in_mb'] = floor($this->rs['in_mb'] / (1024 * 1024));
 
             $this->rs['mac_address'] = strtoupper($this->rs['mac_address']);
 
