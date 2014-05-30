@@ -38,6 +38,20 @@
 
 				<?endif?>
 
+				<?$sql = "SELECT COUNT(*) AS count
+							 FROM (
+								SELECT mac_address
+								FROM nbd
+								GROUP BY mac_address
+								HAVING COUNT(*) > 1
+							)  AS T2";
+				$dbh = getdbh(); $stmt = $dbh->query($sql);?>
+				<?if($obj = $stmt->fetch(PDO::FETCH_OBJ)):?>
+
+				<a href="<?=url('admin/dump_xls/duplicate_macs')?>" title="Exporteer als .xls bestand" class="list-group-item">MAC addresses seen on more than one port: <span class="badge"><?=$obj->count?></span></a>
+
+				<?endif?>
+
 				</div>
 
 
