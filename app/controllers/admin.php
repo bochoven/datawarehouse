@@ -192,6 +192,9 @@ class admin extends Controller
 				$params = array();
 				$cnt = 0;
 
+				// Contains items for note
+				$item_arr = array();
+
 				// Convert changes to params
 				foreach($changes AS $field => $value)
 				{
@@ -224,16 +227,18 @@ class admin extends Controller
 						error("Field $field is not listed in change_array");
 						break;
 					}
-				}
 
-				// Notes
-				$params['field'.$cnt] = 'aantekeningen';
-				$params['value'.$cnt] = 'Datawarehouse update '.date('Y-m-d H:i:s');
-				$params['append'.$cnt] = 'true';
-				$params['newline'.$cnt] = '2';
+					$item_arr[] = "$field = $value";
+				}
 
 				if( ! $GLOBALS['alerts'])
 				{
+					// Add Note
+					$params['field'.$cnt] = 'aantekeningen';
+					$params['value'.$cnt] = sprintf('%s Datawarehouse updated %s', date('d-m-Y H:i'), implode(', ', $item_arr));
+					$params['append'.$cnt] = 'true';
+					$params['newline'.$cnt] = '2';
+
 					// Add extra params
 					$params['action'] = 'edit';
 					$params['lookup'] = 'naam';
