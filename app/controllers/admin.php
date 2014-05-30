@@ -144,7 +144,8 @@ class admin extends Controller
 			'ref_lokatie' => array('naam'),
 			'aanschafdatum' => '',
 			'aankoopbedrag' => '',
-			'macadres' => ''
+			'macadres' => '',
+			'vrijetekst1' => ''
 			);
 
 		// Some fields have to be renamed :-(
@@ -361,6 +362,16 @@ class admin extends Controller
 
 				// Replace ref_lokatie with fco ruimtenr
 				$fix_array['aankoopbedrag'] = 'prijs';
+
+				break;
+
+			case 'walloutlet':
+				// Get the walloutlet_location query
+				$queries = conf('queries');
+				$sql = $queries['walloutlet_fix'];
+
+				// Replace vrijetekst1 with port string
+				$fix_array['vrijetekst1'] = 'port';
 
 				break;						
 			

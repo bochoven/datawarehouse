@@ -170,7 +170,7 @@
 		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
 		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
 
-	// Lokatie correctie
+	// Walloutlet lokatie correctie
 	$conf['queries']['walloutlet_location_fix'] =
 		"SELECT t.naam, t.hostnaam, t.ref_lokatie, o.ruimtenr 
 		FROM topdesk t 
@@ -210,6 +210,19 @@
 		WHERE p.prijs IS NOT NULL 
 		AND p.prijs != t.aankoopbedrag
 		AND (f.naam IS NULL OR f.aankoopbedrag != p.prijs)";
+
+	$conf['queries']['walloutlet_fix'] =
+		"SELECT t.naam, n.port
+		FROM topdesk t
+		LEFT JOIN nbd n ON t.macadres = n.mac_address
+		LEFT JOIN fixed f ON (t.naam = f.naam)
+		WHERE n.mac_address IS NOT NULL
+		AND n.port != '-'
+		AND t.vrijetekst1 != n.port
+		AND (f.naam IS NULL OR f.vrijetekst1 != n.port)
+		GROUP BY n.mac_address
+		HAVING COUNT(*) = 1";
+
 	
 	/*
 	|===============================================

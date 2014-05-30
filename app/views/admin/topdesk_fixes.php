@@ -66,6 +66,14 @@
                   <td>Pas de prijs aan op grond van de <a href="<?=url('/show/listing/prijs')?>">Prijzentabel</a>.</td>
                 </tr>
 
+                <tr class="walloutlet_fix" style="display: none">
+                  <td>                <a href="<?=url('admin/fix/walloutlet')?>" class="btn btn-default ajax">Walloutlet correctie</a></td>
+                  <td><span class="badge alert-info"></span></td>
+                  <td>Pas de walloutlet aan op grond van het macadres in de <a href="<?=url('/show/listing/nbd')?>">Netwerk tabel</a>.<br>
+                    Wordt alleen toegepast op macadressen die maar op 1 poort zijn gezien.
+                  </td>
+                </tr>
+
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>
                   <td><span class="badge alert-info"></span></td>
