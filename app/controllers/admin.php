@@ -226,6 +226,12 @@ class admin extends Controller
 					}
 				}
 
+				// Notes
+				$params['field'.$cnt] = 'aantekeningen';
+				$params['value'.$cnt] = 'Datawarehouse update '.date('Y-m-d H:i:s');
+				$params['append'.$cnt] = 'true';
+				$params['newline'.$cnt] = '2';
+
 				if( ! $GLOBALS['alerts'])
 				{
 					// Add extra params
