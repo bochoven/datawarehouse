@@ -34,7 +34,7 @@ class auth extends Controller
 		redirect('auth/login');
 	}
 	
-	function login($return = '')
+	function login($return = '', $redirect = 1)
 	{
 		
 		if($this->authorized())
@@ -210,8 +210,15 @@ class auth extends Controller
 		{
 			$_SESSION['user'] = $login;
 			$_SESSION['auth'] = $mechanism;
-			session_regenerate_id();
-			redirect($return);
+
+			if($redirect)
+			{
+				redirect($return);
+			}
+			else
+			{
+				exit('Authentication succeeded');
+			}
 		}
 
 		// If POST and no other alerts, auth has failed
