@@ -253,7 +253,7 @@
 		FROM fixed
 		WHERE persoonid_loginnaamnetwerk != ''";
 
-	$conf['exports']['hardware_gebouw'] = 
+	$conf['exports']['hardware_lokatie'] = 
 		"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
 		 objecttype AS Type, specificatie AS Specificatie, 
 		 serienummer AS Serienummer,
