@@ -21,7 +21,7 @@
 			fwrite($fp, implode(';', array_keys($row))."\r\n");
 			$header = TRUE;
 		}
-		fwrite($fp, implode(';', $row)."\r\n");
+		fwrite($fp, implode(';', str_replace(';', ',', $row))."\r\n");
 	}
 
 	fclose($fp);
