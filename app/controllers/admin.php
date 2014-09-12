@@ -535,7 +535,7 @@ class admin extends Controller
 		            $dbh = getdbh();
 		            $dbh->rollBack();
 		            $this->errors .= "Failed: " . $e->getMessage();
-		            error("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage());
+		            error(sprintf("Failed query: %s; reason: %s", print_r($model_obj->rs, TRUE), $e->getMessage()));
 		        }
 
 		        fclose($handle);

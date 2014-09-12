@@ -10,7 +10,8 @@ class Dhcp_log extends Model
         $this->rs['timestamp'] = time();
         $this->rs['mac'] = ''; $this->rt['mac'] = 'CHAR(17)';
         $this->rs['ip'] = ''; $this->rt['ip'] = 'CHAR(15)';
-        $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(30)';
+        $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(255)';
+        $this->rs['count'] = 0;
 
         // Add indexes
         $this->idx[] = array('host');
@@ -63,7 +64,7 @@ class Dhcp_log extends Model
         while (($data = fgetcsv($handle, 0, ",", '"')) !== FALSE)
         {
             // Convert time to timestamp
-            $data[0] = strtotime($data[0]);
+            //$data[0] = strtotime($data[0]);
 
             // Prepend array with id, account for extra item because of next()
             array_unshift($data, '', ''); 

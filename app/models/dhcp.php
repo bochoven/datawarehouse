@@ -8,7 +8,7 @@ class Dhcp extends Model
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['mac'] = ''; $this->rt['mac'] = 'CHAR(17)';
-        $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(30)';
+        $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(100)';
         $this->rs['vlan'] = ''; $this->rt['vlan'] = 'VARCHAR(10)';
         $this->rs['ip'] = ''; $this->rt['ip'] = 'CHAR(15)';
         $this->rs['timestamp'] = time();
