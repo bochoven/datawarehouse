@@ -8,6 +8,9 @@
 
 	$fixed = new Fixed();
 
+	// No quoting allowed around values, so a simple implode
+	// will be enough
+
 	$stmt = $fixed->prepare( $sql );
 	$fixed->execute( $stmt );
 	$header = FALSE;
@@ -15,10 +18,10 @@
 	{
 		if(! $header)
 		{
-			fputcsv($fp, array_keys($row), ';', '"');
+			fwrite($fp, implode(';', array_keys($row))."\r\n");
 			$header = TRUE;
 		}
-		fputcsv($fp, $row, ';', '"');
+		fwrite($fp, implode(';', str_replace(';', ',', $row))."\r\n");
 	}
 
 	fclose($fp);
