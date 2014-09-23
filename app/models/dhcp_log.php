@@ -12,6 +12,10 @@ class Dhcp_log extends Model
         $this->rs['ip'] = ''; $this->rt['ip'] = 'CHAR(15)';
         $this->rs['host'] = ''; $this->rt['host'] = 'VARCHAR(255)';
         $this->rs['count'] = 0;
+        $this->rs['helper_address'] = ''; $this->rt['helper_address'] = 'CHAR(15)';
+        $this->rs['client_class'] = ''; $this->rt['client_class'] = 'CHAR(15)';
+        $this->rs['building_block'] = ''; $this->rt['building_block'] = 'CHAR(15)';
+        $this->rs['usergroup'] = ''; $this->rt['usergroup'] = 'CHAR(15)';
 
         // Add indexes
         $this->idx[] = array('host');

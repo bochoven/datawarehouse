@@ -103,6 +103,9 @@ new Dhcp_log;
 		      	<th data-colname='dhcp_log#mac'>MAC Address</th>
 		      	<th data-colname='dhcp_log#ip'>IP Address</th>
 		    	<th data-colname='dhcp_log#timestamp'>Last seen</th>
+		    	<th data-colname='dhcp_log#building_block'>Building</th>
+		    	<th data-colname='dhcp_log#client_class'>Client Class</th>
+		    	<th data-colname='dhcp_log#usergroup'>Usergroup</th>
 		    	<th data-colname='dhcp_log#count'>Count</th>
 		      </tr>
 		    </thead>

@@ -114,7 +114,7 @@
 		'dhcp' => array(
 			'# DHCP Server Configuration file.'),
 		'dhcp_log' => array(
-			'last,mac,ip,host,cnt'),
+			'last,mac,ip,host,cnt,"helper_address","client_class","building_block",usergroup'),
 		'ad_computer' => array( // Active directory computer objects
 			'description',
 			'dn',
