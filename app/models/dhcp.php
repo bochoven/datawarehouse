@@ -16,7 +16,9 @@ class Dhcp extends Model
         // Add indexes
         $this->idx[] = array('host');
         $this->idx[] = array('mac');
+        $this->idx[] = array('mac', 'vlan');
         $this->idx[] = array('vlan');
+
         $this->idx[] = array('ip');
 
         // Table version. Increment when creating a db migration
@@ -49,7 +51,7 @@ class Dhcp extends Model
         $out = array();
 
         // This array hold vlan information
-        $vlan = array();
+        $subclass = array();
 
         // This array holds fixed ip info
         $fixed_array = array();
@@ -96,10 +98,12 @@ class Dhcp extends Model
             }
             elseif( preg_match('/subclass "(.*)" 1:((\w+[:]){5}(\w+));/', $data, $matches))
             {
-                $vlan[$matches[1]][] = strtolower($matches[2]);
+                $subclass[$matches[1]][] = strtolower($matches[2]);
             }
             //$this->save();
         }
+
+		//echo '<pre>'; print_r($subclass); echo '</pre>';
 
         // Drop and recreate table
         $dbh->exec("DROP table $this->tablename");
@@ -110,37 +114,23 @@ class Dhcp extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
 
-        foreach($out AS $ether => $host)
-        {
-            $this->id = '';
+		foreach( $subclass AS $client_class => $ethers)
+		{
+			foreach($ethers AS $ether)
+			{
+				$fixed = array_key_exists($ether, $fixed_array) ? $fixed_array[$ether] : '';
+				$host = array_key_exists($ether, $out) ? $out[$ether] : '';
+				
+				$this->id = '';
+				$this->rs['mac'] = strtoupper($ether);
+				$this->rs['host'] = $host;
+				$this->rs['vlan'] = $client_class;
+				$this->rs['ip'] = $fixed;
+				$this->save();
+				$cnt++;
 
-            $fixed = array_key_exists($ether, $fixed_array) ? $fixed_array[$ether] : '';
-
-            foreach($vlan AS $color => $entries)
-            {
-                if( in_array($ether, $entries))
-                {
-                    $this->id = '';
-                    $this->rs['mac'] = strtoupper($ether);
-                    $this->rs['host'] = $host;
-                    $this->rs['vlan'] = $color;
-                    $this->rs['ip'] = $fixed;
-                    $this->save();
-                    $cnt++;
-                }
-            }
-
-            // Check if we found this entry in the vlan array
-            if( ! $this->id )
-            {
-                $this->rs['mac'] = strtoupper($ether);
-                $this->rs['host'] = $host;
-                $this->rs['vlan'] = 'EMPTY';
-                $this->rs['ip'] = $fixed;
-                $this->save();
-                $cnt++;
-            }
-        }
+			}
+		}
 
         $dbh->commit();
 
