@@ -59,7 +59,7 @@ class Dhcp extends Model
         // Read dhcp data
         while (($data = fgets($handle)) !== FALSE)
         {
-            if( preg_match('/\s*host\s*(\w+)\s*{/', $data, $matches))
+            if( preg_match('/\s*host\s*([^\s]+)\s*\{/', $data, $matches))
             {
                  $host = $matches[1];
                  $ether = $fixed = '';
