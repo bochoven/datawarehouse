@@ -289,6 +289,10 @@
 	$conf['exports']['dhcp'] =
 		"SELECT host, mac, ip, vlan, timestamp
 		FROM dhcp";
+		
+	$conf['exports']['dhcp_log'] =
+		"SELECT *
+		FROM dhcp_log";
 
 
 	/*
