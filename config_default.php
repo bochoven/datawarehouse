@@ -285,6 +285,10 @@
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		WHERE o.datacom IS NULL
 		AND n.port != '-'";
+	
+	$conf['exports']['dhcp'] =
+		"SELECT host, mac, ip, vlan, timestamp
+		FROM dhcp";
 
 
 	/*
