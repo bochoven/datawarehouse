@@ -55,15 +55,15 @@
 			'Verdiepingsnr',
 			'Bestandsnaam'
 			),
-		'topdesk' => array(
+		'topdesk_old' => array(
 			'afschrijftermijn',
 			'macadres',
-			'ref_soort',
-			'ref_leverancier',
-			'ref_vestiging',
-			'ref_finbudgethouder',
+			'soortid_naam',
+			'leverancierid_naam',
+			'vestigingid_naam',
+			'budgethouderid_naam',
 			'aanschafdatum',
-			'ref_lokatie',
+			'lokatieid_naam',
 			'serienummer',
 			'opmerking',
 			'specificatie',
@@ -87,6 +87,120 @@
 			'persoonid_loginnaamnetwerk',
 			'uidwijzig_naam',
 			'attentieid_naam'),
+		'topdesk' => array(
+			'vrijeopzoek4_naam',
+			'macadres',
+			'attvrijelogisch4',
+			'attvrijelogisch5',
+			'verhuurtekst',
+			'specificatie',
+			'attvrijelogisch1',
+			'attvrijegetal4',
+			'attvrijegetal5',
+			'attvrijelogisch3',
+			'attvrijegetal2',
+			'attvrijegetal3',
+			'vrijememo1',
+			'attvrijelogisch2',
+			'vrijedatum4',
+			'vrijememo2',
+			'vrijedatum3',
+			'vrijememo3',
+			'hostnaam',
+			'vrijememo4',
+			'aankoopbedrag',
+			'naam',
+			'vrijememo5',
+			'vrijegetal5',
+			'vrijedatum5',
+			'garantiedatum',
+			'vrijegetal4',
+			'vrijegetal3',
+			'vrijedatum2',
+			'vrijegetal2',
+			'vrijedatum1',
+			'vrijegetal1',
+			'rm_specification',
+			'vrijelogisch2',
+			'vrijelogisch1',
+			'attvrijetekst1',
+			'attvrijetekst2',
+			'attvrijetekst3',
+			'onderhoudnummer',
+			'attvrijetekst4',
+			'attvrijetekst5',
+			'attvrijegetal1',
+			'datwijzig',
+			'topsisusername',
+			'attvrijedatum4',
+			'attvrijedatum5',
+			'attvrijedatum1',
+			'attvrijedatum2',
+			'wburl',
+			'attvrijedatum3',
+			'afschrijftermijn',
+			'reserveerbaarsshd',
+			'verhuurborg',
+			'verzekerdatum',
+			'aanschafdatum',
+			'onderhoudprijs',
+			'onderhoudcontract',
+			'serienummer',
+			'opmerking',
+			'webbrowser',
+			'dataanmk',
+			'ipadres',
+			'vrijelogisch5',
+			'vrijelogisch3',
+			'objecttype',
+			'vrijelogisch4',
+			'reserveerbaarkantooruren',
+			'reserveerbaaractiveerbaar',
+			'restwaarde',
+			'reserveerbaarsecure',
+			'onderhoudvanaf',
+			'verhuurprijssysteem',
+			'reservzichtbaarsshd',
+			'onderhoudresponsietijd',
+			'attvrijememo1',
+			'attvrijememo2',
+			'attvrijememo3',
+			'topsis',
+			'attvrijememo4',
+			'attvrijememo5',
+			'verhuurprijs',
+			'vrijetekst5',
+			'vrijetekst4',
+			'vrijetekst3',
+			'vrijetekst2',
+			'vrijetekst1',
+			'onderhoudtot',
+			'attvrijeopzoek2_naam',
+			'attvrijeopzoek1_naam',
+			'vrijeopzoek2_naam',
+			'vestigingid_naam',
+			'leverancierid_naam',
+			'attvrijeopzoek5_naam',
+			'attvrijeopzoek3_naam',
+			'merkid_naam',
+			'statusid_naam',
+			'onderhoudsoortid_tekst',
+			'budgethouderid_naam',
+			'attentieid_naam',
+			'installatiedoorid_loginnaamnetwerk',
+			'aanspreekpuntid_loginnaamnetwerk',
+			'lokatieid_naam',
+			'attvrijeopzoek4_naam',
+			'vrijeopzoek5_naam',
+			'persoonid_loginnaamnetwerk',
+			'uidwijzig_naam',
+			'vrijeopzoek3_naam',
+			'persoonid_naam',
+			'uidaanmk_naam',
+			'soortid_naam',
+			'onderhoud_doorid_naam',
+			'vrijeopzoek1_naam'
+		),
 		'orgeen' => array(
 		 	'org_code',
 		 	'parentcode',
@@ -134,8 +248,8 @@
 	|
 	*/
 	$conf['queries']['orgeen_fix'] = 
-		"SELECT t.naam, t.hostnaam, t.ref_soort, t.persoonid_loginnaamnetwerk, 
-				comment, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
+		"SELECT t.naam, t.hostnaam, t.soortid_naam, t.persoonid_loginnaamnetwerk, 
+				comment, t.budgethouderid_naam, t.vrijeopzoek2_naam,
 				departmentnumber, 
 			o.afkorting 
 		FROM topdesk t 
@@ -144,13 +258,13 @@
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE t.persoonid_loginnaamnetwerk != ''
 		AND u.comment = ''
-		AND t.ref_finbudgethouder = afkorting
+		AND t.budgethouderid_naam = afkorting
 		AND t.vrijeopzoek2_naam = ''
 		AND f.vrijeopzoek2_naam IS NULL";
 
 	// Find Lowercase macadresses
 	$conf['queries']['macadres_fix'] = 
-		"SELECT t.naam, t.hostnaam, t.ref_soort, UPPER(t.macadres) AS macadres
+		"SELECT t.naam, t.hostnaam, t.soortid_naam, UPPER(t.macadres) AS macadres
 		FROM topdesk t
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE t.macadres IS NOT NULL
@@ -160,52 +274,52 @@
 
 	// Find hardware in the ruimte_correctie table
 	$conf['queries']['ruimte_correctie'] = 
-		"SELECT t.naam, t.ref_lokatie, t.ref_finbudgethouder, t.vrijeopzoek2_naam, 
+		"SELECT t.naam, t.lokatieid_naam, t.budgethouderid_naam, t.vrijeopzoek2_naam, 
 			r.eigenaar, r.kostenplaats_special 
 		FROM topdesk t 
-		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
+		LEFT JOIN ruimte_correctie r ON (t.lokatieid_naam = r.ruimte_special)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
-		WHERE t.ref_finbudgethouder IS NOT NULL 
-		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
-		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.ref_finbudgethouder != eigenaar)
-		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.ref_finbudgethouder != eigenaar)";
+		WHERE t.budgethouderid_naam IS NOT NULL 
+		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
+		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.budgethouderid_naam != eigenaar)
+		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.budgethouderid_naam != eigenaar)";
 
 	// Walloutlet lokatie correctie
 	$conf['queries']['walloutlet_location_fix'] =
-		"SELECT t.naam, t.hostnaam, t.ref_lokatie, o.ruimtenr 
+		"SELECT t.naam, t.hostnaam, t.lokatieid_naam, o.ruimtenr 
 		FROM topdesk t 
 		LEFT JOIN nbd n ON (t.macadres = n.mac_address)
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE o.ruimtenr IS NOT NULL 
 		AND o.ruimtenr != ''
-		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
-		AND o.ruimtenr != t.ref_lokatie
-		AND (f.naam IS NULL OR f.ref_lokatie != o.ruimtenr)
+		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
+		AND o.ruimtenr != t.lokatieid_naam
+		AND (f.naam IS NULL OR f.lokatieid_naam != o.ruimtenr)
 		GROUP BY o.datacom 
 		HAVING COUNT(*) = 1";
 
 	// FCO correctie
 	$conf['queries']['fco_fix'] =
-		"SELECT t.naam, t.ref_lokatie, t.ref_finbudgethouder, t.vrijeopzoek2_naam,
+		"SELECT t.naam, t.lokatieid_naam, t.budgethouderid_naam, t.vrijeopzoek2_naam,
 			f.debiteur AS debiteur, o.afkorting, r.kostenplaats_special, r.eigenaar 
 		FROM topdesk t 
-		LEFT JOIN fco f ON (t.ref_lokatie = f.functieplaats) 
+		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats) 
 		LEFT JOIN orgeen o ON (f.debiteur = o.org_code) 
-		LEFT JOIN ruimte_correctie r ON (t.ref_lokatie = r.ruimte_special)
+		LEFT JOIN ruimte_correctie r ON (t.lokatieid_naam = r.ruimte_special)
 		LEFT JOIN fixed fx ON (t.naam = fx.naam)
 		WHERE t.persoonid_loginnaamnetwerk = ''
-		AND t.ref_soort NOT IN ('Printpaal', 'Multifunctional')
+		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
 		AND f.debiteur IS NOT NULL 
-		AND (t.vrijeopzoek2_naam != f.debiteur OR t.ref_finbudgethouder != o.afkorting)
+		AND (t.vrijeopzoek2_naam != f.debiteur OR t.budgethouderid_naam != o.afkorting)
 		AND r.ruimte_special IS NULL
-		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.ref_finbudgethouder != o.afkorting)";
+		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.budgethouderid_naam != o.afkorting)";
 
 	// Prijs correctie
 	$conf['queries']['prijs_fix'] =
 		"SELECT t.naam, t.aankoopbedrag, p.prijs 
 		FROM topdesk t
-		LEFT JOIN prijs p ON (t.ref_soort = p.soort)
+		LEFT JOIN prijs p ON (t.soortid_naam = p.soort)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE p.prijs IS NOT NULL 
 		AND p.prijs != t.aankoopbedrag
@@ -233,9 +347,9 @@
 	|
 	*/
 $conf['exports']['hardware_update_short'] = 
-		"SELECT naam, ref_soort AS soortid_naam, ref_merk AS merkid_naam, objecttype, specificatie, '' AS installatiedoorid_loginnaamnetwerk, 
-			serienummer, macadres, '' AS aanspreekpuntid_loginnaamnetwerk, ref_vestiging AS vestigingid_naam, ref_lokatie AS lokatieid_naam,
-			'' AS persoonid_loginnaamnetwerk, ref_finbudgethouder AS budgethouderid_naam, ref_leverancier AS leverancierid_naam, aanschafdatum,
+		"SELECT naam, soortid_naam AS soortid_naam, ref_merk AS merkid_naam, objecttype, specificatie, '' AS installatiedoorid_loginnaamnetwerk, 
+			serienummer, macadres, '' AS aanspreekpuntid_loginnaamnetwerk, vestigingid_naam AS vestigingid_naam, lokatieid_naam AS lokatieid_naam,
+			'' AS persoonid_loginnaamnetwerk, budgethouderid_naam AS budgethouderid_naam, leverancierid_naam AS leverancierid_naam, aanschafdatum,
 			'' AS garantiedatum, '' AS verzekerdatum, aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn, statusid_naam, '' AS onderhoudcontract,
 			'' AS onderhoud_doorid_naam, '' AS onderhoudnummer, '' AS onderhoudsoortid_tekst, '' AS onderhoudvanaf, '' AS onderhoudtot, '' AS onderhoudprijs,
 			'' AS onderhoudresponsietijd, attentieid_naam, '' AS opmerking, hostnaam, '' AS ipadres, '' AS webbrowser, '' AS wburl, '' AS topsis, '' AS topsisusername,
@@ -258,12 +372,12 @@ $conf['exports']['hardware_persoon'] =
 		"SELECT naam,
 		persoonid_loginnaamnetwerk AS koppelid5,
 		hostnaam,
-		ref_finbudgethouder AS budgethouderid,
-		ref_soort AS soortid, ref_merk AS merkid,
+		budgethouderid_naam AS budgethouderid,
+		soortid_naam AS soortid, ref_merk AS merkid,
 		objecttype AS objecttype, specificatie, 
 		serienummer, macadres,
 		'' AS aanspreekpuntid, '' AS ordernummer,
-		ref_leverancier AS leverancierid,
+		leverancierid_naam AS leverancierid,
 		aanschafdatum, garantiedatum, '' AS verzekerdatum,
 		aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn,
 		statusid_naam AS statusid, ipadres,
@@ -276,15 +390,15 @@ $conf['exports']['hardware_persoon'] =
 		WHERE persoonid_loginnaamnetwerk != ''";
 
 	$conf['exports']['hardware_lokatie'] = 
-		"SELECT naam AS ObjectID, ref_soort AS Soort, ref_merk AS Merk,
+		"SELECT naam AS ObjectID, soortid_naam AS Soort, ref_merk AS Merk,
 		 objecttype AS Type, specificatie AS Specificatie, 
 		 serienummer AS Serienummer,
-		 ref_finbudgethouder AS Klant_gebruik, ref_leverancier AS Leverancier,
+		 budgethouderid_naam AS Klant_gebruik, leverancierid_naam AS Leverancier,
 		 aanschafdatum AS Aanschafdatum, 
 		 garantiedatum AS Garantie_tot, 
 		 aankoopbedrag AS Aankoopbedrag, 
 		 afschrijftermijn AS Afschrijftermijn, 
-		 ref_vestiging AS Gebouw, ref_lokatie AS Kamer, statusid_naam AS Status, 
+		 vestigingid_naam AS Gebouw, lokatieid_naam AS Kamer, statusid_naam AS Status, 
 		 onderhoudsoortid_tekst AS Soort_onderhoud, 
 		 onderhoudtot AS Onderhoud_tot, 
 		 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 

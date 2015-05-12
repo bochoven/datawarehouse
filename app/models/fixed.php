@@ -9,7 +9,7 @@ class Fixed extends Model
         $this->rs['id'] = '';
 		$this->rs['afschrijftermijn'] = '';
         $this->rs['macadres'] = ''; $this->rt['macadres'] = 'CHAR(20)';
-		$this->rs['ref_soort'] = '';
+		$this->rs['soortid_naam'] = '';
 		$this->rs['ref_leverancier'] = '';
 		$this->rs['ref_vestiging'] = '';
 		$this->rs['ref_finbudgethouder'] = '';

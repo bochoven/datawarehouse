@@ -107,15 +107,15 @@ new Topdesk;
 		      <tr>
 		      	<th data-colname='topdesk#naam'>Naam</th>
 		      	<th data-colname='topdesk#serienummer'>Serienummer</th>
-		      	<th data-colname='topdesk#ref_soort'>Soort</th>
-		      	<th data-colname='topdesk#ref_merk'>Merk</th>
+		      	<th data-colname='topdesk#soortid_naam'>Soort</th>
+		      	<th data-colname='topdesk#merkid_naam'>Merk</th>
 		      	<th data-colname='topdesk#macadres'>MAC adres</th>
 		      	<th data-colname='topdesk#hostnaam'>Hostnaam</th>
 		      	<th data-colname='topdesk#aankoopbedrag'>Aankoopbedrag</th>
 		      	<th data-colname='topdesk#attentieid_naam'>Attentie</th>
 		      	<th data-colname='topdesk#statusid_naam'>Status</th>
 		      	<th data-colname='topdesk#persoonid_loginnaamnetwerk'>Vunet-id</th>
-		      	<th data-colname='topdesk#ref_finbudgethouder'>Budget</th>
+		      	<th data-colname='topdesk#budgethouderid_naam'>Budget</th>
 		      	<th data-colname='topdesk#vrijeopzoek2_naam'>Budgetnr</th>
 
 		    	<th data-colname='topdesk#datwijzig'>Gewijzigd</th>

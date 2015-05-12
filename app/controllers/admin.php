@@ -140,8 +140,8 @@ class admin extends Controller
 			'budgethouderid' => array('naam'),
 			'vestigingid' => array('naam'),
 			'persoonid' => array('loginnaamnetwerk'),
-			'ref_finbudgethouder' => array('naam'),
-			'ref_lokatie' => array('naam'),
+			'budgethouderid_naam' => array('naam'),
+			'lokatieid_naam' => array('naam'),
 			'aanschafdatum' => '',
 			'aankoopbedrag' => '',
 			'macadres' => '',
@@ -152,8 +152,8 @@ class admin extends Controller
 		$rename_array = array(
 			'vrijeopzoek1_naam' => 'vrijeopzoek1',
 			'vrijeopzoek2_naam' => 'vrijeopzoek2',
-			'ref_finbudgethouder' => 'budgethouderid',
-			'ref_lokatie' => 'lokatieid'
+			'budgethouderid_naam' => 'budgethouderid',
+			'lokatieid_naam' => 'lokatieid'
 			);
 
 		// Holds the changed fields
@@ -323,7 +323,7 @@ class admin extends Controller
 
 				// Replace vrijeopzoek2_naam with debiteur (orgeencode)
 				$fix_array['vrijeopzoek2_naam'] = 'debiteur';
-				$fix_array['ref_finbudgethouder'] = 'afkorting';
+				$fix_array['budgethouderid_naam'] = 'afkorting';
 
 				break;
 
@@ -334,7 +334,7 @@ class admin extends Controller
 
 				// Replace fixed.macadres with lowercase macadres
 				$fix_array = array(
-					'ref_finbudgethouder' => 'eigenaar',
+					'budgethouderid_naam' => 'eigenaar',
 					'vrijeopzoek2_naam' => 'kostenplaats_special'
 				);
 
@@ -345,8 +345,8 @@ class admin extends Controller
 				$queries = conf('queries');
 				$sql = $queries['walloutlet_location_fix'];
 
-				// Replace ref_lokatie with fco ruimtenr
-				$fix_array['ref_lokatie'] = 'ruimtenr';
+				// Replace lokatieid_naam with fco ruimtenr
+				$fix_array['lokatieid_naam'] = 'ruimtenr';
 
 				// We zetten daarbij nu een - onder eigenaar zodat we weten dat deze 
 				// hardware niet gezien is bij de inventarisatie maar via een 
@@ -360,7 +360,7 @@ class admin extends Controller
 				$queries = conf('queries');
 				$sql = $queries['prijs_fix'];
 
-				// Replace ref_lokatie with fco ruimtenr
+				// Replace lokatieid_naam with fco ruimtenr
 				$fix_array['aankoopbedrag'] = 'prijs';
 
 				break;

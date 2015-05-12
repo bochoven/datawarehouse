@@ -90,7 +90,7 @@ new Fixed;
 		      <tr>
 		      	<th data-colname='fixed#naam'>Naam</th>
 		      	<th data-colname='fixed#serienummer'>Serienummer</th>
-		      	<th data-colname='fixed#ref_soort'>Soort</th>
+		      	<th data-colname='fixed#soortid_naam'>Soort</th>
 		      	<th data-colname='fixed#ref_merk'>Merk</th>
 		      	<th data-colname='fixed#ref_lokatie'>Lokatie</th>
 		      	<th data-colname='fixed#macadres'>MAC adres</th>
