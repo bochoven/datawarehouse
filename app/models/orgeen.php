@@ -1,5 +1,7 @@
 <?php
 
+use \ForceUTF8\Encoding;
+
 class Orgeen extends Model
 {
     
@@ -50,16 +52,26 @@ class Orgeen extends Model
         // Remove previous data
         $dbh->exec('DELETE FROM '.$this->tablename);
 
+		// Load utf-8 library
+		include_once (APP_PATH . '/lib/forceutf8/src/ForceUTF8/Encoding.php');
+
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
-            // Prepend array with id, account for extra item because of next()
+            
+			// Org code present?
+			if( ! $data[0])
+			{
+				continue;
+			}
+			
+			// Prepend array with id, account for extra item because of next()
             array_unshift($data, '', ''); 
 
             // Loop through fields
             foreach($this->rs as &$value)
             {
-              $value = next($data);
+              $value = Encoding::toUTF8(next($data));
             }
             $this->rs['timestamp'] = time();
 
