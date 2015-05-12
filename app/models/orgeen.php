@@ -54,6 +54,9 @@ class Orgeen extends Model
 
 		// Load utf-8 library
 		include_once (APP_PATH . '/lib/forceutf8/src/ForceUTF8/Encoding.php');
+		
+		$cnt = 0;
+		$skp = 0;
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -62,6 +65,7 @@ class Orgeen extends Model
 			// Org code present?
 			if( ! $data[0])
 			{
+				$skp++;
 				continue;
 			}
 			
@@ -76,9 +80,19 @@ class Orgeen extends Model
             $this->rs['timestamp'] = time();
 
             $this->save();
+
+			$cnt++;
+			
         }
 
         $dbh->commit();
+
+		alert('Imported '.$cnt.' '.$this->tablename.' objects', 'success');
+		
+		if($skp)
+		{
+			alert('Skipped '.$skp.' empty lines', 'warning');
+		}
     }
 
 }
