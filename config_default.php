@@ -232,7 +232,29 @@
 	| Queries that are used for exports
 	|
 	*/
-	$conf['exports']['hardware_persoon'] = 
+$conf['exports']['hardware_update_short'] = 
+		"SELECT naam, ref_soort AS soortid_naam, ref_merk AS merkid_naam, objecttype, specificatie, '' AS installatiedoorid_loginnaamnetwerk, 
+			serienummer, macadres, '' AS aanspreekpuntid_loginnaamnetwerk, ref_vestiging AS vestigingid_naam, ref_lokatie AS lokatieid_naam,
+			'' AS persoonid_loginnaamnetwerk, ref_finbudgethouder AS budgethouderid_naam, ref_leverancier AS leverancierid_naam, aanschafdatum,
+			'' AS garantiedatum, '' AS verzekerdatum, aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn, statusid_naam, '' AS onderhoudcontract,
+			'' AS onderhoud_doorid_naam, '' AS onderhoudnummer, '' AS onderhoudsoortid_tekst, '' AS onderhoudvanaf, '' AS onderhoudtot, '' AS onderhoudprijs,
+			'' AS onderhoudresponsietijd, attentieid_naam, '' AS opmerking, hostnaam, '' AS ipadres, '' AS webbrowser, '' AS wburl, '' AS topsis, '' AS topsisusername,
+			'' AS reserveerbaaractiveerbaar, '' AS reserveerbaarsecure, '' AS reserveerbaarkantooruren, '' AS verhuurprijs, '' AS verhuurprijssysteem, '' AS verhuurborg,
+			'' AS reserveerbaarsshd, '' AS reservzichtbaarsshd, '' AS rm_specification, '' AS verhuurtekst, vrijetekst1, '' AS vrijetekst2, '' AS vrijetekst3,
+			'' AS vrijetekst4, '' AS vrijetekst5, '' AS vrijegetal1, '' AS vrijegetal2, '' AS vrijegetal3, '' AS vrijegetal4, '' AS vrijegetal5, '' AS vrijedatum1,
+			'' AS vrijedatum2, '' AS vrijedatum3, '' AS vrijedatum4, '' AS vrijedatum5, 
+			'' AS vrijeopzoek1_naam, vrijeopzoek2_naam, '' AS vrijeopzoek3_naam, '' AS vrijeopzoek4_naam, '' AS vrijeopzoek5_naam,
+			'' AS vrijelogisch1, '' AS vrijelogisch2, '' AS vrijelogisch3, '' AS vrijelogisch4, '' AS vrijelogisch5,
+			'' AS vrijememo1, '' AS vrijememo2, '' AS vrijememo3, '' AS vrijememo4, '' AS vrijememo5,
+			'' AS attvrijetekst1, '' AS attvrijetekst2, '' AS attvrijetekst3, '' AS attvrijetekst4, '' AS attvrijetekst5,
+			'' AS attvrijegetal1, '' AS attvrijegetal2, '' AS attvrijegetal3, '' AS attvrijegetal4, '' AS attvrijegetal5,
+			'' AS attvrijedatum1, '' AS attvrijedatum2, '' AS attvrijedatum3, '' AS attvrijedatum4, '' AS attvrijedatum5,
+			'' AS attvrijeopzoek1_naam, '' AS attvrijeopzoek2_naam, '' AS attvrijeopzoek3_naam, '' AS attvrijeopzoek4_naam, '' AS attvrijeopzoek5_naam,
+			'' AS attvrijelogisch1, '' AS attvrijelogisch2, '' AS attvrijelogisch3, '' AS attvrijelogisch4, '' AS attvrijelogisch5,
+			'' AS attvrijememo1, '' AS attvrijememo2, '' AS attvrijememo3, '' AS attvrijememo4, '' AS attvrijememo5
+		FROM fixed";
+
+$conf['exports']['hardware_persoon'] = 
 		"SELECT naam,
 		persoonid_loginnaamnetwerk AS koppelid5,
 		hostnaam,
