@@ -94,7 +94,7 @@ new ad_computer;
 			} );
 		</script>
 
-		  <h3>AD Computer report <span id="total-count" class='label label-primary'>…</span></h3>
+		  <h3>AD Computer report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('admin/dump_csv/ad_computer')?>">Download CSV</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

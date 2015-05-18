@@ -363,14 +363,23 @@ $conf['exports']['hardware_update'] =
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		WHERE o.datacom IS NULL
 		AND n.port != '-'";
-	
+
+	// Full table exports
 	$conf['exports']['dhcp'] =
 		"SELECT host, mac, ip, vlan, timestamp
 		FROM dhcp";
-		
+
 	$conf['exports']['dhcp_log'] =
 		"SELECT *
 		FROM dhcp_log";
+
+	$conf['exports']['ad_computer'] =
+		"SELECT *
+		FROM ad_computer";
+		
+	$conf['exports']['nbd'] =
+		"SELECT *
+		FROM nbd";
 
 
 	/*
