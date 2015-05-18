@@ -401,8 +401,9 @@ class admin extends Controller
 			{
 				// Record does not exist, load record from topdesk table
 				$topdesk->retrieve_one('naam=?', $obj->naam);
-				// Copy values to fixed;
-				$fixed->rs = $topdesk->rs;
+				
+				// Set fixed identifier (naam)
+				$fixed->naam = $topdesk->naam;
 
 				// Reset id
 				$fixed->id = '';
