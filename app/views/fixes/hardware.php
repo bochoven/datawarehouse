@@ -80,7 +80,7 @@ new Fixed;
 
 		<h3>Hardware correcties 
 			<span id="total-count" class='label label-primary'>…</span>
-			<a href="<?=url('admin/dump_csv/hardware_update_short')?>" class="btn btn-default">
+			<a href="<?=url('admin/dump_csv/hardware_update')?>" class="btn btn-default">
 				<i class="fa fa-cloud-download"></i> Create short export
 			</a>
 		</h3>
@@ -91,14 +91,14 @@ new Fixed;
 		      	<th data-colname='fixed#naam'>Naam</th>
 		      	<th data-colname='fixed#serienummer'>Serienummer</th>
 		      	<th data-colname='fixed#soortid_naam'>Soort</th>
-		      	<th data-colname='fixed#ref_merk'>Merk</th>
-		      	<th data-colname='fixed#ref_lokatie'>Lokatie</th>
+		      	<th data-colname='fixed#merkid_naam'>Merk</th>
+		      	<th data-colname='fixed#lokatieid_naam'>Lokatie</th>
 		      	<th data-colname='fixed#macadres'>MAC adres</th>
 		      	<th data-colname='fixed#hostnaam'>Hostnaam</th>
 		      	<th data-colname='fixed#attentieid_naam'>Attentie</th>
 		      	<th data-colname='fixed#statusid_naam'>Status</th>
 		      	<th data-colname='fixed#persoonid_loginnaamnetwerk'>Vunet-id</th>
-		      	<th data-colname='fixed#ref_finbudgethouder'>Budget</th>
+		      	<th data-colname='fixed#budgethouderid_naam'>Budget</th>
 		      	<th data-colname='fixed#vrijeopzoek2_naam'>Budgetnr</th>
 		    	<th data-colname='fixed#datwijzig'>Gewijzigd</th>
 		      </tr>

@@ -346,67 +346,9 @@
 	| Queries that are used for exports
 	|
 	*/
-$conf['exports']['hardware_update_short'] = 
-		"SELECT naam, soortid_naam AS soortid_naam, ref_merk AS merkid_naam, objecttype, specificatie, '' AS installatiedoorid_loginnaamnetwerk, 
-			serienummer, macadres, '' AS aanspreekpuntid_loginnaamnetwerk, vestigingid_naam AS vestigingid_naam, lokatieid_naam AS lokatieid_naam,
-			'' AS persoonid_loginnaamnetwerk, budgethouderid_naam AS budgethouderid_naam, leverancierid_naam AS leverancierid_naam, aanschafdatum,
-			'' AS garantiedatum, '' AS verzekerdatum, aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn, statusid_naam, '' AS onderhoudcontract,
-			'' AS onderhoud_doorid_naam, '' AS onderhoudnummer, '' AS onderhoudsoortid_tekst, '' AS onderhoudvanaf, '' AS onderhoudtot, '' AS onderhoudprijs,
-			'' AS onderhoudresponsietijd, attentieid_naam, '' AS opmerking, hostnaam, '' AS ipadres, '' AS webbrowser, '' AS wburl, '' AS topsis, '' AS topsisusername,
-			'' AS reserveerbaaractiveerbaar, '' AS reserveerbaarsecure, '' AS reserveerbaarkantooruren, '' AS verhuurprijs, '' AS verhuurprijssysteem, '' AS verhuurborg,
-			'' AS reserveerbaarsshd, '' AS reservzichtbaarsshd, '' AS rm_specification, '' AS verhuurtekst, vrijetekst1, '' AS vrijetekst2, '' AS vrijetekst3,
-			'' AS vrijetekst4, '' AS vrijetekst5, '' AS vrijegetal1, '' AS vrijegetal2, '' AS vrijegetal3, '' AS vrijegetal4, '' AS vrijegetal5, '' AS vrijedatum1,
-			'' AS vrijedatum2, '' AS vrijedatum3, '' AS vrijedatum4, '' AS vrijedatum5, 
-			'' AS vrijeopzoek1_naam, vrijeopzoek2_naam, '' AS vrijeopzoek3_naam, '' AS vrijeopzoek4_naam, '' AS vrijeopzoek5_naam,
-			'' AS vrijelogisch1, '' AS vrijelogisch2, '' AS vrijelogisch3, '' AS vrijelogisch4, '' AS vrijelogisch5,
-			'' AS vrijememo1, '' AS vrijememo2, '' AS vrijememo3, '' AS vrijememo4, '' AS vrijememo5,
-			'' AS attvrijetekst1, '' AS attvrijetekst2, '' AS attvrijetekst3, '' AS attvrijetekst4, '' AS attvrijetekst5,
-			'' AS attvrijegetal1, '' AS attvrijegetal2, '' AS attvrijegetal3, '' AS attvrijegetal4, '' AS attvrijegetal5,
-			'' AS attvrijedatum1, '' AS attvrijedatum2, '' AS attvrijedatum3, '' AS attvrijedatum4, '' AS attvrijedatum5,
-			'' AS attvrijeopzoek1_naam, '' AS attvrijeopzoek2_naam, '' AS attvrijeopzoek3_naam, '' AS attvrijeopzoek4_naam, '' AS attvrijeopzoek5_naam,
-			'' AS attvrijelogisch1, '' AS attvrijelogisch2, '' AS attvrijelogisch3, '' AS attvrijelogisch4, '' AS attvrijelogisch5,
-			'' AS attvrijememo1, '' AS attvrijememo2, '' AS attvrijememo3, '' AS attvrijememo4, '' AS attvrijememo5
+$conf['exports']['hardware_update'] = 
+		"SELECT vrijeopzoek4_naam, macadres, attvrijelogisch4, attvrijelogisch5, verhuurtekst, specificatie, attvrijelogisch1, attvrijegetal4, attvrijegetal5, attvrijelogisch3, attvrijegetal2, attvrijegetal3, vrijememo1, attvrijelogisch2, vrijedatum4, vrijememo2, vrijedatum3, vrijememo3, hostnaam, vrijememo4, aankoopbedrag, naam, vrijememo5, vrijegetal5, vrijedatum5, garantiedatum, vrijegetal4, vrijegetal3, vrijedatum2, vrijegetal2, vrijedatum1, vrijegetal1, rm_specification, vrijelogisch2, vrijelogisch1, attvrijetekst1, attvrijetekst2, attvrijetekst3, onderhoudnummer, attvrijetekst4, attvrijetekst5, attvrijegetal1, datwijzig, topsisusername, attvrijedatum4, attvrijedatum5, attvrijedatum1, attvrijedatum2, wburl, attvrijedatum3, afschrijftermijn, reserveerbaarsshd, verhuurborg, verzekerdatum, aanschafdatum, onderhoudprijs, onderhoudcontract, serienummer, opmerking, webbrowser, dataanmk, ipadres, vrijelogisch5, vrijelogisch3, objecttype, vrijelogisch4, reserveerbaarkantooruren, reserveerbaaractiveerbaar, restwaarde, reserveerbaarsecure, onderhoudvanaf, verhuurprijssysteem, reservzichtbaarsshd, onderhoudresponsietijd, attvrijememo1, attvrijememo2, attvrijememo3, topsis, attvrijememo4, attvrijememo5, verhuurprijs, vrijetekst5, vrijetekst4, vrijetekst3, vrijetekst2, vrijetekst1, onderhoudtot, attvrijeopzoek2_naam, attvrijeopzoek1_naam, vrijeopzoek2_naam, vestigingid_naam, leverancierid_naam, attvrijeopzoek5_naam, attvrijeopzoek3_naam, merkid_naam, statusid_naam, onderhoudsoortid_tekst, budgethouderid_naam, attentieid_naam, installatiedoorid_loginnaamnetwerk, aanspreekpuntid_loginnaamnetwerk, lokatieid_naam, attvrijeopzoek4_naam, vrijeopzoek5_naam, persoonid_loginnaamnetwerk, uidwijzig_naam, vrijeopzoek3_naam, persoonid_naam, uidaanmk_naam, soortid_naam, onderhoud_doorid_naam, vrijeopzoek1_naam
 		FROM fixed";
-
-$conf['exports']['hardware_persoon'] = 
-		"SELECT naam,
-		persoonid_loginnaamnetwerk AS koppelid5,
-		hostnaam,
-		budgethouderid_naam AS budgethouderid,
-		soortid_naam AS soortid, ref_merk AS merkid,
-		objecttype AS objecttype, specificatie, 
-		serienummer, macadres,
-		'' AS aanspreekpuntid, '' AS ordernummer,
-		leverancierid_naam AS leverancierid,
-		aanschafdatum, garantiedatum, '' AS verzekerdatum,
-		aankoopbedrag, '' AS restwaarde, '' AS afschrijftermijn,
-		statusid_naam AS statusid, ipadres,
-		attentieid_naam AS 'Type attentie',
-		opmerking AS 'Opmerking bij attentie',
-		vrijetekst1 AS 'Wall outlet',
-		vrijeopzoek1_naam AS Eigenaar,
-		vrijeopzoek2_naam AS Kostenplaats
-		FROM fixed
-		WHERE persoonid_loginnaamnetwerk != ''";
-
-	$conf['exports']['hardware_lokatie'] = 
-		"SELECT naam AS ObjectID, soortid_naam AS Soort, ref_merk AS Merk,
-		 objecttype AS Type, specificatie AS Specificatie, 
-		 serienummer AS Serienummer,
-		 budgethouderid_naam AS Klant_gebruik, leverancierid_naam AS Leverancier,
-		 aanschafdatum AS Aanschafdatum, 
-		 garantiedatum AS Garantie_tot, 
-		 aankoopbedrag AS Aankoopbedrag, 
-		 afschrijftermijn AS Afschrijftermijn, 
-		 vestigingid_naam AS Gebouw, lokatieid_naam AS Kamer, statusid_naam AS Status, 
-		 onderhoudsoortid_tekst AS Soort_onderhoud, 
-		 onderhoudtot AS Onderhoud_tot, 
-		 attentieid_naam AS Attentie_soort, opmerking AS Attentie_opmerking, 
-		 hostnaam AS Hostname, ipadres AS IP_adres, macadres AS MAC_adres, 
-		 vrijeopzoek1_naam AS Eigenaar, 
-		 vrijeopzoek2_naam AS Kostenplaats, vrijetekst1 AS Wall_Outlet
-		 FROM fixed
-		 WHERE persoonid_loginnaamnetwerk = ''";
 
 	$conf['exports']['duplicate_walloutlets'] =
 		"SELECT o1.datacom, o1.gebruikersnaam, o1.omschrijving, o1.ruimtenr, o1.verdiepingsnr, o1.bestandsnaam
