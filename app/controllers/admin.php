@@ -128,7 +128,7 @@ class admin extends Controller
 		$save = $save == 'save' ? 'true' : 'false';
 
 		// Skip these key when comparing with fix array
-		$skipthese = array('id', 'datwijzig');
+		$skipthese = array('id', 'datwijzig', 'timestamp');
 
 		// Changeable values todo: move to config
 		// When the value is an array this is a ref_field
@@ -145,15 +145,8 @@ class admin extends Controller
 			'aanschafdatum' => '',
 			'aankoopbedrag' => '',
 			'macadres' => '',
-			'vrijetekst1' => ''
-			);
-
-		// Some fields have to be renamed :-(
-		$rename_array = array(
-			'vrijeopzoek1_naam' => 'vrijeopzoek1',
-			'vrijeopzoek2_naam' => 'vrijeopzoek2',
-			'budgethouderid_naam' => 'budgethouderid',
-			'lokatieid_naam' => 'lokatieid'
+			'vrijetekst1' => '',
+			'vrijegetal1' => ''
 			);
 
 		// Holds the changed fields
@@ -176,6 +169,12 @@ class admin extends Controller
 		{
 			foreach($fixed->rs AS $k => $v)
 			{
+				// Skip empty values
+				if( ! $v)
+				{
+					continue;
+				}
+				
 				if(in_array($k, $skipthese))
 				{
 					continue;
@@ -203,9 +202,6 @@ class admin extends Controller
 					{
 						
 						$change_format = $change_array[$field];
-
-						// Rename
-						$field = array_key_exists($field, $rename_array) ? $rename_array[$field] : $field;
 
 						// Ref_fields are encoded as array
 						if(is_array($change_format))
@@ -257,7 +253,7 @@ class admin extends Controller
 					// Delete fixed entry
 					$fixed->delete();
 
-					echo conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params);
+//					echo conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params);
 
 					// Redirect to topdesk and apply fixes
 					redirect(conf('topdesk_server')."/tas/secure/hardware?".http_build_query($params));
@@ -332,7 +328,7 @@ class admin extends Controller
 				$queries = conf('queries');
 				$sql = $queries['ruimte_correctie'];
 
-				// Replace fixed.macadres with lowercase macadres
+				// Replace vrijeopzoek2_naam with debiteur (orgeencode)
 				$fix_array = array(
 					'budgethouderid_naam' => 'eigenaar',
 					'vrijeopzoek2_naam' => 'kostenplaats_special'
@@ -361,7 +357,7 @@ class admin extends Controller
 				$sql = $queries['prijs_fix'];
 
 				// Replace lokatieid_naam with fco ruimtenr
-				$fix_array['aankoopbedrag'] = 'prijs';
+				$fix_array['vrijegetal1'] = 'prijs';
 
 				break;
 
@@ -422,7 +418,7 @@ class admin extends Controller
 			}
 
 			// Set modified time
-			$fixed->datwijzig = date('Y-m-d H:i:s');
+			$fixed->timestamp = time();
 
 			// Save to db
 			$fixed->save();

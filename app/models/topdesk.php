@@ -38,7 +38,7 @@ class Topdesk extends Model
 		$this->rs['vrijedatum2'] = '';
 		$this->rs['vrijegetal2'] = '';
 		$this->rs['vrijedatum1'] = '';
-		$this->rs['vrijegetal1'] = '';
+		$this->rs['vrijegetal1'] = ''; // Abonnementsprijs
 		$this->rs['rm_specification'] = '';
 		$this->rs['vrijelogisch2'] = '';
 		$this->rs['vrijelogisch1'] = '';

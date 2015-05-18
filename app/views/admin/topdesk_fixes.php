@@ -61,9 +61,9 @@
                 </tr>
 
                 <tr class="prijs_fix" style="display: none">
-                  <td>                <a href="<?=url('admin/fix/prijs')?>" class="btn btn-default ajax">Prijs correctie</a></td>
+                  <td>                <a href="<?=url('admin/fix/prijs')?>" class="btn btn-default ajax">Abonnementsprijs correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
-                  <td>Pas de prijs aan op grond van de <a href="<?=url('/show/listing/prijs')?>">Prijzentabel</a>.</td>
+                  <td>Pas de abonnementsprijs aan op grond van de <a href="<?=url('/show/listing/prijs')?>">Prijzentabel</a>.</td>
                 </tr>
 
                 <tr class="walloutlet_fix" style="display: none">
