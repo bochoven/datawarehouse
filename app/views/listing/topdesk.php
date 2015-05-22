@@ -54,8 +54,8 @@ new Topdesk;
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
-			        	var date = moment($('td:eq(12)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
-			        	$('td:eq(12)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:eq(13)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
+			        	$('td:eq(13)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -117,13 +117,14 @@ new Topdesk;
 		      	<th data-colname='topdesk#persoonid_loginnaamnetwerk'>Vunet-id</th>
 		      	<th data-colname='topdesk#budgethouderid_naam'>Budget</th>
 		      	<th data-colname='topdesk#vrijeopzoek2_naam'>Budgetnr</th>
+		      	<th data-colname='topdesk#lokatieid_naam'>Lokatie</th>
 
 		    	<th data-colname='topdesk#datwijzig'>Gewijzigd</th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="12" class="dataTables_empty">Loading data from server</td>
+					<td colspan="14" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>
