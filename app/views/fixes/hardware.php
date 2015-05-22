@@ -57,14 +57,14 @@ new Fixed;
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
-			        	var date = moment($('td:eq(11)', nRow).html(), 'YYYY-MM-DD HH:mm:ss');
-			        	$('td:eq(11)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:eq(8)', nRow).html(), 'X');
+			        	$('td:eq(8)', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
 
 				      	// Hook in serverparams to change search
-				      	aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk != ''" } );
+				      	//aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk = ''" } );
 				    }
 				   
 			    } );
@@ -78,33 +78,30 @@ new Fixed;
 			} );
 		</script>
 
-		  <h3>Hardware persoon correcties
-		  	<span id="total-count" class='label label-primary'>…</span>
-		  	<a href="<?=url('admin/dump_xls/hardware_persoon')?>" class="btn btn-default">
-		  		<i class="fa fa-cloud-download"></i> Create persoon export
-		  	</a>
-		  </h3>
+		<h3>Hardware correcties 
+			<span id="total-count" class='label label-primary'>…</span>
+			<a href="<?=url('admin/dump_csv/hardware_update')?>" class="btn btn-default">
+				<i class="fa fa-cloud-download"></i> Create short export
+			</a>
+		</h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
 		      	<th data-colname='fixed#naam'>Naam</th>
-		      	<th data-colname='fixed#serienummer'>Serienummer</th>
-		      	<th data-colname='fixed#ref_soort'>Soort</th>
-		      	<th data-colname='fixed#ref_merk'>Merk</th>
-		      	<th data-colname='fixed#macadres'>MAC adres</th>
-		      	<th data-colname='fixed#hostnaam'>Hostnaam</th>
-		      	<th data-colname='fixed#attentieid_naam'>Attentie</th>
-		      	<th data-colname='fixed#statusid_naam'>Status</th>
-		      	<th data-colname='fixed#persoonid_loginnaamnetwerk'>Vunet-id</th>
-		      	<th data-colname='fixed#ref_finbudgethouder'>Budget</th>
 		      	<th data-colname='fixed#vrijeopzoek2_naam'>Budgetnr</th>
+		      	<th data-colname='fixed#budgethouderid_naam'>Budget</th>
+		      	<th data-colname='fixed#lokatieid_naam'>Lokatie</th>
+		      	<th data-colname='fixed#vrijeopzoek1_naam'>Eigenaar</th>
+		      	<th data-colname='fixed#vrijegetal1'>Abonnementsprijs</th>
+		      	<th data-colname='fixed#vrijetekst1'>Walloutlet</th>
+		      	<th data-colname='fixed#macadres'>MAC adres</th>
 		    	<th data-colname='fixed#datwijzig'>Gewijzigd</th>
 		      </tr>
 		    </thead>
 		    <tbody>
 		    	<tr>
-					<td colspan="12" class="dataTables_empty">Loading data from server</td>
+					<td colspan="9" class="dataTables_empty">Loading data from server</td>
 				</tr>
 		    </tbody>
 		  </table>

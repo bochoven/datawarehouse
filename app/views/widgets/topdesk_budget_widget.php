@@ -11,14 +11,14 @@
 				<ul class="list-group scroll-box">
 					
 
-					<?$sql = "SELECT ref_finbudgethouder, COUNT(*) AS count
+					<?$sql = "SELECT budgethouderid_naam, COUNT(*) AS count
 								FROM topdesk
-								GROUP BY ref_finbudgethouder
+								GROUP BY budgethouderid_naam
 								ORDER BY count DESC";
 					$topdesk = new Topdesk();?>
 					<?foreach($topdesk->query($sql) as $obj):?>
 
-					<li class="list-group-item"><?=$obj->ref_finbudgethouder?> <span class="badge"><?=$obj->count?></span></li>
+					<li class="list-group-item"><?=$obj->budgethouderid_naam?> <span class="badge"><?=$obj->count?></span></li>
 
 					<?endforeach?>
 

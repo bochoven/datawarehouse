@@ -24,53 +24,46 @@
               <tbody>
 
                 <tr class="orgeen_fix" style="display: none">
-                  <td><a href="<?=url('admin/fix/orgeencode')?>" class="btn btn-default ajax">Fix Orgeencode</a></td>
+                  <td><a href="<?=url('admin/fix/orgeencode')?>" class="btn btn-default ajax">Orgeencode correctie</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
-                  <td>Voeg orgeencodes toe aan objecten die aan een vunet-id gekoppeld zijn.<br>
-                    Alleen voor vunet-id's die maar onder 1 orgeencode vallen.<br>
-            Afdelingsafkorting moet matchen met de afkorting in topdesk.</td>
+                  <td>Corrigeert Kostenplaats en Faculteit/Dienst op grond van VUnetID (Objecten gekoppeld op naam). Bron(nen): <a href="<?=url('/show/listing/users')?>">Users</a>, <a href="<?=url('/show/listing/orgeen')?>">Orgeen</a></td>
                 </tr>
 
                 <tr class="fco_fix" style="display: none">
                   <td><a href="<?=url('admin/fix/fco')?>" class="btn btn-default ajax">FCO correctie</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
-                  <td>Voeg orgeencodes en afkortingen toe aan objecten die <b>niet</b> aan een vunet-id gekoppeld zijn.<br>
-                    Deze correctie maakt gebruik van de FCO tabel, objecten worden gematcht op lokatie.<br>
-            De correctie neemt geen objecten mee die in de ruimte_correctie tabel voorkomen.</td>
+                  <td>Corrigeert Kostenplaats en Faculteit/Dienst op grond van Kamer (Objecten gekoppeld op locatie). Bron(nen): <a href="<?=url('/show/listing/fco')?>">FCO</a>, <a href="<?=url('/show/listing/orgeen')?>">Orgeen</a>, <a href="<?=url('/show/listing/ruimte_correctie')?>">Ruimte correctie</a></td>
                 </tr>
 
                 <tr class="macadres_fix" style="display: none">
-                  <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Fix Mac adres</a></td>
+                  <td><a href="<?=url('admin/fix/mac')?>" class="btn btn-default ajax">Mac Adres correctie</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
-                  <td>Maak lowercase mac adressen uppercase.</td>
+                  <td>Corrigeert Mac Adres(sen) met lower-case letters. Bron(nen): <a href="<?=url('/show/listing/topdesk')?>">Topdesk</a></td>
                 </tr>                
 
                 <tr class="ruimte_correctie" style="display: none">
                   <td><a href="<?=url('admin/fix/ruimte_correctie')?>" class="btn btn-default ajax">Ruimte correctie</a></td>
                   <td class=""><span class="badge alert-info"></span></td>
-                  <td>Zoek hardware in de ruimtecorrectie tabel.</td>
+                  <td>Zet uitzonderingen (nav update FCO ruimtelijst) in ruimtecorrectietabel. Bron(nen): <a href="<?=url('/show/listing/ruimte_correctie')?>">Ruimte correctie</a></td>
                 </tr>
 
 
                 <tr class="walloutlet_location_fix" style="display: none">
                   <td>                <a href="<?=url('admin/fix/walloutlet_location')?>" class="btn btn-default ajax">Lokatie correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
-                  <td>Pas de lokatie aan op grond van de walloutlet.<br>
-            Walloutlet wordt gedetecteerd in de NBD tabel. Via Outlet_room wordt de juiste lokatie bij de outlet gezocht.<br>
-            Outlets met meer dan 1 lokatie worden niet meegenomen.</td>
+                  <td>Corrigeert Kamer op grond van wall outlet. Bron(nen): <a href="<?=url('/show/listing/nbd')?>">NBD</a>, <a href="<?=url('/show/listing/outlet_room')?>">Outlet_room</a></td>
                 </tr>
 
                 <tr class="prijs_fix" style="display: none">
                   <td>                <a href="<?=url('admin/fix/prijs')?>" class="btn btn-default ajax">Prijs correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
-                  <td>Pas de prijs aan op grond van de <a href="<?=url('/show/listing/prijs')?>">Prijzentabel</a>.</td>
+                  <td>Corrigeert Abonnementsprijs. Bron(nen): <a href="<?=url('/show/listing/prijs')?>">Prijs</a></td>
                 </tr>
 
                 <tr class="walloutlet_fix" style="display: none">
                   <td>                <a href="<?=url('admin/fix/walloutlet')?>" class="btn btn-default ajax">Walloutlet correctie</a></td>
                   <td><span class="badge alert-info"></span></td>
-                  <td>Pas de walloutlet aan op grond van het macadres in de <a href="<?=url('/show/listing/nbd')?>">Netwerk tabel</a>.<br>
-                    Wordt alleen toegepast op macadressen die maar op 1 poort zijn gezien.
+                  <td>Corrigeert wall outlet op grond van mac adres. Bron(nen): <a href="<?=url('/show/listing/nbd')?>">NBD</a>
                   </td>
                 </tr>
 
@@ -79,7 +72,7 @@
                   <td><span class="badge alert-info"></span></td>
                   <td>Maak de fixed tabel leeg.<br>
             Hiermee reset je alle topdesk fixes
-            Dit gaat automatisch als een nieuwe topdesk tabel wordt geïmporteerd.</td>
+            Fixed tabel wordt ook gereset als een nieuwe topdesk tabel wordt geïmporteerd.</td>
                 </tr>
 
 

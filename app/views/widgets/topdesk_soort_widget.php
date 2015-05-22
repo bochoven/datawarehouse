@@ -11,15 +11,19 @@
 				<ul class="list-group scroll-box">
 					
 
-					<?$sql = "SELECT ref_soort, COUNT(*) AS count
+					<?$sql = "SELECT soortid_naam
+, COUNT(*) AS count
 								FROM topdesk
-								GROUP BY ref_soort
+								GROUP BY soortid_naam
+
 								ORDER BY count DESC";
 					$topdesk = new Topdesk();?>
 					<?foreach($topdesk->query($sql) as $obj):?>
 
 					<li class="list-group-item">
-						<?=$obj->ref_soort?$obj->ref_soort:'LEEG VELD'?>
+						<?=$obj->soortid_naam
+?$obj->soortid_naam
+:'LEEG VELD'?>
 						<span class="badge"><?=$obj->count?></span>
 					</li>
 
