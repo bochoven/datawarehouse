@@ -191,3 +191,13 @@ function redirect($uri = '', $method = 'location', $http_response_code = 302)
 	}
 	exit;
 }
+
+/**
+ * Clear value used by array_walk
+ *
+ * @author Bochoven, A.E. van
+ **/
+function clear_value(&$val)
+{
+	$val = '';
+}

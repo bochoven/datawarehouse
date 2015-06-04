@@ -386,10 +386,10 @@ class admin extends Controller
 
 		$cnt = 0;
 		foreach ($model->query($sql) as $obj)
-		{
-			// Reset id
-			$fixed->id = '';
-
+		{			
+			// Reset all properties
+			array_walk($fixed->rs, 'clear_value');
+						
 			// Load record from fixed array;
 			$fixed->retrieve_one('naam=?', $obj->naam);
 
