@@ -1,5 +1,7 @@
 <?php
 
+use \ForceUTF8\Encoding;
+
 class Fco extends Model
 {
     
@@ -54,8 +56,13 @@ class Fco extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
 
-        // Remove previous data
-        $dbh->exec('DELETE FROM '.$this->tablename);
+        // Drop and recreate table
+        $dbh->exec("DROP table $this->tablename");
+        $this->create_table($force = TRUE);
+
+		// Load utf-8 library
+		include_once (APP_PATH . '/lib/forceutf8/src/ForceUTF8/Encoding.php');
+
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -66,7 +73,7 @@ class Fco extends Model
             // Loop through fields
             foreach($this->rs as &$value)
             {
-              $value = next($data);
+              $value = Encoding::toUTF8(next($data));
             }
             $this->rs['timestamp'] = time();
 

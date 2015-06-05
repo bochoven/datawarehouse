@@ -310,7 +310,8 @@
 		LEFT JOIN fixed fx ON (t.naam = fx.naam)
 		WHERE t.persoonid_loginnaamnetwerk = ''
 		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
-		AND f.debiteur IS NOT NULL 
+		AND f.debiteur IS NOT NULL
+		AND f.debiteur != ''
 		AND (t.vrijeopzoek2_naam != f.debiteur OR t.budgethouderid_naam != o.afkorting)
 		AND r.ruimte_special IS NULL
 		AND (fx.naam IS NULL OR fx.vrijeopzoek2_naam != f.debiteur OR fx.budgethouderid_naam != o.afkorting)";
@@ -376,7 +377,11 @@ $conf['exports']['hardware_update'] =
 	$conf['exports']['ad_computer'] =
 		"SELECT *
 		FROM ad_computer";
-		
+
+	$conf['exports']['fco'] =
+		"SELECT *
+		FROM fco";
+			
 	$conf['exports']['nbd'] =
 		"SELECT *
 		FROM nbd";
