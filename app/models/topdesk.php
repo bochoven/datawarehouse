@@ -103,7 +103,7 @@ class Topdesk extends Model
 		$this->rs['attvrijeopzoek3_naam'] = '';
 		$this->rs['merkid_naam'] = '';
 		$this->rs['statusid_naam'] = '';
-		$this->rs['onderhoudsoortid_tekst'] = '';
+		$this->rs['onderhoudsoortid_naam'] = '';
 		$this->rs['budgethouderid_naam'] = '';
 		$this->rs['attentieid_naam'] = '';
 		$this->rs['installatiedoorid_loginnaamnetwerk'] = '';
