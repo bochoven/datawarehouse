@@ -95,13 +95,13 @@ class Tablequery {
 
         // Ordering
         $sOrder = "";
-        if(count($cfg['sort_cols']) > 0)
+        if(count($cfg['order']))
         {
             $sOrder = "ORDER BY  ";
             $order_arr = array();
-            foreach($cfg['sort_cols'] AS $pos => $direction)
+            foreach($cfg['order'] AS $order_entry)
             {
-                $order_arr[] = sprintf('%s %s', $formatted_columns[$pos], $direction);
+                $order_arr[] = sprintf('%s %s', $formatted_columns[$order_entry['column']], $order_entry['dir']);
             }
             $sOrder = "ORDER BY  ".implode(',', $order_arr);
         }

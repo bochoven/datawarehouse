@@ -14,6 +14,7 @@ class datatables extends Controller
 		// Sanitize the GET variables here.
 		$cfg = array(
 			'columns' => array(),
+			'order' => array(),
 			'start' => 0, // Start
 			'length' => 0, // Length
 			'draw' => 0, // Identifier, just return
@@ -22,7 +23,7 @@ class datatables extends Controller
 		);
 		//echo '<pre>';print_r($_GET);return;
 
-		$cols = $sortcols = $searchcols = array();
+		$searchcols = array();
 
 		// Process $_GET array
 		foreach($_GET as $k => $v)
@@ -38,11 +39,9 @@ class datatables extends Controller
 		}// endforeach
 
 		// Add columns to config
-		$cfg['cols'] = $cols;
-		$cfg['sort_cols'] = $sortcols;
 		$cfg['search_cols'] = $searchcols;
 
-		//print_r($cfg);
+		//echo '<pre>';print_r($cfg);
 
 		try
 		{
