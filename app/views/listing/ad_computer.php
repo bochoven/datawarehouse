@@ -13,77 +13,46 @@ new ad_computer;
 
 		$(document).ready(function() {
 
-				// Get modifiers from data attribute
-				var myCols = [], // Colnames
-					mySort = [], // Initial sort
-					hideThese = [], // Hidden columns
-					col = 0; // Column counter
+            // Get modifiers from data attribute
+            var mySort = [], // Initial sort
+                hideThese = [], // Hidden columns
+                col = 0; // Column counter
+                columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
-				$('.table th').map(function(){
+            $('.table th').map(function(){
 
-					  myCols.push({'mData' : $(this).data('colname')});
+                  columnDefs.push({name: $(this).data('colname'), targets: col})
 
-					  if($(this).data('sort'))
-					  {
-					  	mySort.push([col, $(this).data('sort')])
-					  }
+                  if($(this).data('sort'))
+                  {
+                    mySort.push([col, $(this).data('sort')])
+                  }
 
-					  if($(this).data('hide'))
-					  {
-					  	hideThese.push(col);
-					  }
+                  if($(this).data('hide'))
+                  {
+                    hideThese.push(col);
+                  }
 
-					  col++
-				});
-
-			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "sAjaxSource": "<?=url('datatables/data')?>",
-			        "aaSorting": mySort,
-			        "aoColumns": myCols,
-			        "aoColumnDefs": [
-			        	{ 'bVisible': false, "aTargets": hideThese }
-					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+                  col++
+            });
+            
+            oTable = $('.table').dataTable( {
+                processing: true,
+                stateSave: false,
+                serverSide: true,
+                ajax: {
+                    url: "<?=url('datatables/data')?>"
+                },
+                order: mySort,
+                columnDefs: columnDefs,
+                createdRow: function( nRow, aData, iDataIndex ) {
 
 			        	// Format date
 			        	var date = new Date($('td:eq(4)', nRow).html() * 1000);
 			        	$('td:eq(4)', nRow).html(moment(date).fromNow());
 
-				    },
-				    "fnServerParams": function ( aoData ) {
-
-				      	// Hook in serverparams to change search
-				      	// Convert array to dict
-				      	var out = {}
-						for (var i = 0; i < aoData.length; i++) {
-							out[aoData[i]['name']] =  aoData[i]['value']
-						}
-
-						// Look for 'between' statement todo: make generic
-						if(out.sSearch.match(/^\d+ percentage \d+$/))
-						{
-							// Clear global search
-							aoData.push( { "name": "sSearch", "value": "" } );
-
-							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/(\d+) percentage (\d+)/, 'BETWEEN $1 AND $2') } );
-							//dumpj(out)
-						}
-
-						// Look for a bigger/smaller/equal statement
-						if(out.sSearch.match(/^percentage [<>=] \d+$/))
-						{
-							// Clear global search
-							aoData.push( { "name": "sSearch", "value": "" } );
-
-							// Add column specific search
-							aoData.push( { "name": "sSearch_5", "value": out.sSearch.replace(/.*([<>=] \d+)$/, '$1') } );
-							//dumpj(out)
-						}
 				    }
-			    } );
+			    });
 
 			    // Use hash as searchquery
 			    if(window.location.hash.substring(1))
@@ -99,11 +68,11 @@ new ad_computer;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='ad_computer#name'>Name</th>
-		      	<th data-colname='ad_computer#dn'>DN</th>
-		      	<th data-colname='ad_computer#description'>Description</th>
-		      	<th data-colname='ad_computer#operatingsystem'>OS</th>
-		      	<th data-colname='ad_computer#lastlogon'>Lastlogon</th>
+		      	<th data-colname='ad_computer.name'>Name</th>
+		      	<th data-colname='ad_computer.dn'>DN</th>
+		      	<th data-colname='ad_computer.description'>Description</th>
+		      	<th data-colname='ad_computer.operatingsystem'>OS</th>
+		      	<th data-colname='ad_computer.lastlogon'>Lastlogon</th>
 		      </tr>
 		    </thead>
 		    <tbody>

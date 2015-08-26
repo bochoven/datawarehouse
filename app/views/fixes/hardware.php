@@ -14,15 +14,13 @@ new Fixed;
 		$(document).ready(function() {
 
 				// Get modifiers from data attribute
-				var myCols = [], // Colnames
-					mySort = [], // Initial sort
+				var mySort = [], // Initial sort
 					hideThese = [], // Hidden columns
 					col = 0; // Column counter
                     columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
 				$('.table th').map(function(){
 
-					  myCols.push({'mData' : $(this).data('colname')});
                       columnDefs.push({name: $(this).data('colname'), targets: col})
 
 					  if($(this).data('sort'))
@@ -62,13 +60,7 @@ new Fixed;
 			        	var date = moment($('td:last', nRow).html(), 'X');
 			        	$('td:last', nRow).html(moment(date).fromNow());
 
-				    },
-				    "fnServerParams": function ( aoData ) {
-
-				      	// Hook in serverparams to change search
-				      	//aoData.push( { "name": "xWhere", "value": "persoonid_loginnaamnetwerk = ''" } );
 				    }
-				   
 			    } );
 
 			    // Use hash as searchquery
