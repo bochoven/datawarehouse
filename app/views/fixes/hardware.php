@@ -9,68 +9,6 @@ new Fixed;
   <div class="row">
 
   	<div class="col-lg-12">
-		<script type="text/javascript">
-
-		$(document).ready(function() {
-
-				// Get modifiers from data attribute
-				var mySort = [], // Initial sort
-					hideThese = [], // Hidden columns
-					col = 0; // Column counter
-                    columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
-
-				$('.table th').map(function(){
-
-                      columnDefs.push({name: $(this).data('colname'), targets: col})
-
-					  if($(this).data('sort'))
-					  {
-					  	mySort.push([col, $(this).data('sort')])
-					  }
-
-					  if($(this).data('hide'))
-					  {
-					  	hideThese.push(col);
-					  }
-
-					  col++
-				});
-                
-			    oTable = $('.table').dataTable( {
-			        processing: true,
-                    stateSave: false,
-			        serverSide: true,
-			        ajax: {
-                        url: "<?=url('datatables/data')?>"
-                    },
-			        order: mySort,
-			        columnDefs: columnDefs,
-			        createdRow: function( nRow, aData, iDataIndex ) {
-
-                        var name=$('td:eq(0)', nRow).html();
-			        	var options = {}
-			        	options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
-			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
-			        	options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
-
-			        	var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
-			        	$('td:eq(0)', nRow).html(link);
-
-			        	// Format date
-			        	var date = moment($('td:last', nRow).html(), 'X');
-			        	$('td:last', nRow).html(moment(date).fromNow());
-
-				    }
-			    } );
-
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
-			} );
-		</script>
 
 		<h3>Hardware correcties 
 			<span id="total-count" class='label label-primary'>…</span>
@@ -88,9 +26,9 @@ new Fixed;
                 <th data-colname='topdesk.objecttype'>Type</th>
                 <th data-colname='topdesk.rm_specification'>Specificatie</th>
                 <th data-colname='topdesk.serienummer'>Serienummer</th>
-                <th data-colname='fixed.budgethouderid_naam'>Faculteit-Dienst</th>
                 <th data-colname='topdesk.budgethouderid_naam'>Faculteit-Dienst</th>
-                
+                <th data-hide="1" data-colname='fixed.budgethouderid_naam'>Faculteit-Dienst</th>
+
                 <th data-colname='topdesk.leverancierid_naam'>Leverancier</th>
                 <th data-colname='topdesk.aanschafdatum'>Aanschafdatum</th>
                 <th data-colname='topdesk.aankoopbedrag'>Aankoopbedrag</th>
@@ -125,6 +63,79 @@ new Fixed;
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+        // Get modifiers from data attribute
+        var mySort = [], // Initial sort
+            hideThese = [], // Hidden columns
+            col = 0; // Column counter
+            columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+
+        $('.table th').map(function(){
+
+              columnDefs.push({name: $(this).data('colname'), targets: col})
+
+              if($(this).data('sort'))
+              {
+                mySort.push([col, $(this).data('sort')])
+              }
+
+              if($(this).data('hide'))
+              {
+                hideThese.push(col);
+              }
+
+              col++
+        });
+        
+        oTable = $('.table').dataTable( {
+            processing: true,
+            stateSave: false,
+            serverSide: true,
+            ajax: {
+                url: "<?=url('datatables/data')?>"
+            },
+            order: mySort,
+            columnDefs: columnDefs,
+            createdRow: function( nRow, aData, iDataIndex ) {
+
+                //console.log(aData)
+                var name=$('td:eq(0)', nRow).html();
+                var options = {}
+                options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
+                options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
+                options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
+
+                var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
+                $('td:eq(0)', nRow).html(link);
+                
+                // col 7 is fixed.budgethouderid_naam
+                if(aData[7] !== '' && aData[7] !== aData[6]){
+                    $('td:eq(6)', nRow)
+                        .addClass('warning')
+                        .attr('title', 'Original: '+ aData[6])
+                        .html(aData[7])
+                        .tooltip({container: 'body'});
+                }
+
+                // Format date
+                var date = moment($('td:last', nRow).html(), 'X');
+                $('td:last', nRow).html(moment(date).fromNow());
+
+            }
+        } );
+
+        // Use hash as searchquery
+        if(window.location.hash.substring(1))
+        {
+            oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+        }
+
+    } );
+</script>
 
 
 <?$this->view('partials/foot')?>
