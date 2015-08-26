@@ -74,8 +74,8 @@ $(document).ready(function() {
         createdRow: function( nRow, aData, iDataIndex ) {
 
                 // Format date
-                var date = new Date($('td:eq(4)', nRow).html() * 1000);
-                $('td:eq(4)', nRow).html(moment(date).fromNow());
+                var date = new Date($('td:eq(3)', nRow).html() * 1000);
+                $('td:eq(3)', nRow).html(moment(date).fromNow());
 
             }
         });

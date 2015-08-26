@@ -70,9 +70,9 @@ $(document).ready(function() {
         columnDefs: columnDefs,
         createdRow: function( nRow, aData, iDataIndex ) {
 
-                // Format date
-                var date = new Date($('td:eq(4)', nRow).html() * 1000);
-                $('td:eq(4)', nRow).html(moment(date).fromNow());
+            // Format date
+            var date = new Date($('td:last', nRow).html() * 1000);
+            $('td:last', nRow).html(moment(date).fromNow());
 
             }
         });
