@@ -13,59 +13,29 @@ class datatables extends Controller
 	{
 		// Sanitize the GET variables here.
 		$cfg = array(
-			'iDisplayStart' => 0, // Start
-			'iDisplayLength' => 0, // Length
-			'sEcho' => 0, // Identifier, just return
-			'iColumns' => 0, // Number of columns
-			'iSortingCols' => 0, // Amount of sort columns
-			'sSearch' => '', // Search query
-			'xWhere' => '' // Optional where clause
+			'columns' => array(),
+			'start' => 0, // Start
+			'length' => 0, // Length
+			'draw' => 0, // Identifier, just return
+			'search' => '', // Search query
+			'where' => '' // Optional where clause
 		);
+		//echo '<pre>';print_r($_GET);return;
 
 		$cols = $sortcols = $searchcols = array();
 
 		// Process $_GET array
 		foreach($_GET as $k => $v)
 		{
-			if(isset($cfg[$k]))
+			if($k == 'search')
+			{
+				$cfg['search'] = $v['value'];
+			}
+			elseif(isset($cfg[$k]))
 			{
 				$cfg[$k] = $v;
 			}
-			elseif(preg_match('/^mDataProp_(\d+)/', $k, $matches))
-			{
-				// Get colname from mDataProp_xx
-				$cols[$matches[1]] = $v;
-			}
-			elseif(preg_match('/^iSortCol_(\d+)/', $k, $matches))
-			{
-				$col = $matches[1];
-				if( ! isset($_GET["bSortable_$v"]))
-					continue;
-
-				if($_GET["bSortable_$v"] == "true")
-                {
-                    $sortcols[$v] = 'DESC';
-                    if(isset($_GET["sSortDir_$col"]))
-                    {
-                    	if($_GET["sSortDir_$col"] === 'asc')
-                    	{
-                    		$sortcols[$v] = 'ASC';
-                    	}
-                    }
-                }
-            }
-            elseif(preg_match('/^sSearch_(\d+)/', $k, $matches))
-            {
-            	$col = $matches[1];
-				if( ! isset($_GET["bSearchable_$col"]))
-					continue;
-
-				if($_GET["bSearchable_$col"] == "true" && $v)
-                {
-                    $searchcols[$col] = $v;
-                }
-            }
-		}
+		}// endforeach
 
 		// Add columns to config
 		$cfg['cols'] = $cols;
@@ -84,7 +54,7 @@ class datatables extends Controller
 		{
 			echo json_encode(array(
 				'error' => $e->getMessage(),
-				'sEcho' => intval($cfg['sEcho'])
+				'draw' => intval($cfg['draw'])
 			));
 		}
 
