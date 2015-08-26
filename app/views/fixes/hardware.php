@@ -18,10 +18,12 @@ new Fixed;
 					mySort = [], // Initial sort
 					hideThese = [], // Hidden columns
 					col = 0; // Column counter
+                    columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
 				$('.table th').map(function(){
 
 					  myCols.push({'mData' : $(this).data('colname')});
+                      columnDefs.push({name: $(this).data('colname'), targets: col})
 
 					  if($(this).data('sort'))
 					  {
@@ -35,19 +37,19 @@ new Fixed;
 
 					  col++
 				});
-
+                
 			    oTable = $('.table').dataTable( {
-			        "bProcessing": true,
-			        "bServerSide": true,
-			        "sAjaxSource": "<?=url('datatables/data')?>",
-			        "aaSorting": mySort,
-			        "aoColumns": myCols,
-			        "aoColumnDefs": [
-			        	{ 'bVisible': false, "aTargets": hideThese }
-					],
-			        "fnCreatedRow": function( nRow, aData, iDataIndex ) {
+			        processing: true,
+                    stateSave: false,
+			        serverSide: true,
+			        ajax: {
+                        url: "<?=url('datatables/data')?>"
+                    },
+			        order: mySort,
+			        columnDefs: columnDefs,
+			        createdRow: function( nRow, aData, iDataIndex ) {
 
-			        	var name=$('td:eq(0)', nRow).html();
+                        var name=$('td:eq(0)', nRow).html();
 			        	var options = {}
 			        	options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
 			        	options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
@@ -57,8 +59,8 @@ new Fixed;
 			        	$('td:eq(0)', nRow).html(link);
 
 			        	// Format date
-			        	var date = moment($('td:eq(8)', nRow).html(), 'X');
-			        	$('td:eq(8)', nRow).html(moment(date).fromNow());
+			        	var date = moment($('td:last', nRow).html(), 'X');
+			        	$('td:last', nRow).html(moment(date).fromNow());
 
 				    },
 				    "fnServerParams": function ( aoData ) {
@@ -88,15 +90,38 @@ new Fixed;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
-		      	<th data-colname='fixed#naam'>Naam</th>
-		      	<th data-colname='fixed#vrijeopzoek2_naam'>Budgetnr</th>
-		      	<th data-colname='fixed#budgethouderid_naam'>Budget</th>
-		      	<th data-colname='fixed#lokatieid_naam'>Lokatie</th>
-		      	<th data-colname='fixed#vrijeopzoek1_naam'>Eigenaar</th>
-		      	<th data-colname='fixed#vrijegetal1'>Abonnementsprijs</th>
-		      	<th data-colname='fixed#vrijetekst1'>Walloutlet</th>
-		      	<th data-colname='fixed#macadres'>MAC adres</th>
-		    	<th data-colname='fixed#datwijzig'>Gewijzigd</th>
+                <th data-colname='fixed.naam'>Naam</th>
+                <th data-colname='topdesk.soortid_naam'>Soort</th>
+                <th data-colname='topdesk.merkid_naam'>Merk</th>
+                <th data-colname='topdesk.objecttype'>Type</th>
+                <th data-colname='topdesk.rm_specification'>Specificatie</th>
+                <th data-colname='topdesk.serienummer'>Serienummer</th>
+                <th data-colname='fixed.budgethouderid_naam'>Faculteit-Dienst</th>
+                <th data-colname='topdesk.budgethouderid_naam'>Faculteit-Dienst</th>
+                
+                <th data-colname='topdesk.leverancierid_naam'>Leverancier</th>
+                <th data-colname='topdesk.aanschafdatum'>Aanschafdatum</th>
+                <th data-colname='topdesk.aankoopbedrag'>Aankoopbedrag</th>
+
+                <th data-colname='topdesk.vrijegetal1'>Abonnementsprijs</th>
+                <th data-hide="1" data-colname='fixed.vrijegetal1'>Abonnementsprijs</th>
+
+                <th data-colname='topdesk.vestigingid_naam'>Gebouw</th>
+                <th data-colname='fixed.lokatieid_naam'>Kamer</th>
+
+                <th data-colname='topdesk.statusid_naam'>Status</th>
+                <th data-colname='topdesk.attentieid_naam'>Attentie</th>
+
+                <th data-colname='topdesk.hostnaam'>Hostnaam</th>
+                <th data-colname='topdesk.ipadres'>IP adres</th>
+                <th data-colname='topdesk.macadres'>MAC adres</th>
+                <th data-colname='fixed.macadres'>MAC adres</th>
+
+                <th data-colname='fixed.vrijeopzoek1_naam'>Eigenaar</th>
+                <th data-colname='fixed.vrijeopzoek2_naam'>Kostenplaats</th>
+                <th data-colname='fixed.vrijetekst1'>Walloutlet</th>
+                <th data-colname='fixed.timestamp'>Gewijzigd</th>
+
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -108,5 +133,6 @@ new Fixed;
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
+
 
 <?$this->view('partials/foot')?>
