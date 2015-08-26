@@ -4,7 +4,7 @@
 $GLOBALS['app_name'] = 'datawarehouse';
 
 // Webapp version
-$GLOBALS['version'] = '1.0.2';
+$GLOBALS['version'] = '2.0.0';
 
 // Return version without commit count
 function get_version()
