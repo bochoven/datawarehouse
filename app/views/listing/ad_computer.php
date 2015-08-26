@@ -9,59 +9,6 @@ new ad_computer;
   <div class="row">
 
   	<div class="col-lg-12">
-		<script type="text/javascript">
-
-		$(document).ready(function() {
-
-            // Get modifiers from data attribute
-            var mySort = [], // Initial sort
-                hideThese = [], // Hidden columns
-                col = 0; // Column counter
-                columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
-
-            $('.table th').map(function(){
-
-                  columnDefs.push({name: $(this).data('colname'), targets: col})
-
-                  if($(this).data('sort'))
-                  {
-                    mySort.push([col, $(this).data('sort')])
-                  }
-
-                  if($(this).data('hide'))
-                  {
-                    hideThese.push(col);
-                  }
-
-                  col++
-            });
-            
-            oTable = $('.table').dataTable( {
-                processing: true,
-                stateSave: false,
-                serverSide: true,
-                ajax: {
-                    url: "<?=url('datatables/data')?>"
-                },
-                order: mySort,
-                columnDefs: columnDefs,
-                createdRow: function( nRow, aData, iDataIndex ) {
-
-			        	// Format date
-			        	var date = new Date($('td:eq(4)', nRow).html() * 1000);
-			        	$('td:eq(4)', nRow).html(moment(date).fromNow());
-
-				    }
-			    });
-
-			    // Use hash as searchquery
-			    if(window.location.hash.substring(1))
-			    {
-					oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
-			    }
-
-			} );
-		</script>
 
 		  <h3>AD Computer report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('admin/dump_csv/ad_computer')?>">Download CSV</a></h3>
 
@@ -84,5 +31,60 @@ new ad_computer;
     </div> <!-- /span 12 -->
   </div> <!-- /row -->
 </div>  <!-- /container -->
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    // Get modifiers from data attribute
+    var mySort = [], // Initial sort
+        hideThese = [], // Hidden columns
+        col = 0; // Column counter
+        columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
+
+    $('.table th').map(function(){
+
+          columnDefs.push({name: $(this).data('colname'), targets: col})
+
+          if($(this).data('sort'))
+          {
+            mySort.push([col, $(this).data('sort')])
+          }
+
+          if($(this).data('hide'))
+          {
+            hideThese.push(col);
+          }
+
+          col++
+    });
+    
+    oTable = $('.table').dataTable( {
+        processing: true,
+        stateSave: false,
+        serverSide: true,
+        ajax: {
+            url: "<?=url('datatables/data')?>"
+        },
+        order: mySort,
+        columnDefs: columnDefs,
+        createdRow: function( nRow, aData, iDataIndex ) {
+
+                // Format date
+                var date = new Date($('td:eq(4)', nRow).html() * 1000);
+                $('td:eq(4)', nRow).html(moment(date).fromNow());
+
+            }
+        });
+
+        // Use hash as searchquery
+        if(window.location.hash.substring(1))
+        {
+            oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+        }
+
+});
+</script>
+
 
 <?$this->view('partials/foot')?>
