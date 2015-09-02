@@ -59,6 +59,12 @@ class show extends Controller
 
 	function fixes($which = '')
 	{
+		
+		if( ! $this->authorized('admin_tasks'))
+		{
+			redirect('auth/login');
+		}
+		
 		if($which)
 		{
 			$data['page'] = 'fixes';
