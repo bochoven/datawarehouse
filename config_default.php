@@ -13,6 +13,17 @@
 	
 	/*
 	|===============================================
+	| Authorizations
+	|===============================================
+	|
+	| Authorizations for tasks in Datawarehouse, don't override
+	| unless you know what you're doing
+	|
+	*/
+	$conf['authorization']['admin_tasks'] = array('admin');
+	
+	/*
+	|===============================================
 	| csv formats
 	|===============================================
 	|  

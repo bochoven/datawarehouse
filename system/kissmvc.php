@@ -47,15 +47,44 @@ class Controller extends KISS_Controller
 	 * @return boolean TRUE on authorized
 	 * @author AvB
 	 **/
-	function authorized()
-	{
-		ini_set('session.use_cookies', 1);
-		ini_set('session.use_only_cookies', 1);
-		ini_set('session.cookie_path', conf('subdirectory'));
-		session_start();
-
-		return isset($_SESSION['user']);
-	}
+	function authorized($what = '')
+ 	{
+ 		if( ! isset($_SESSION))
+ 		{
+ 			ini_set('session.use_cookies', 1);
+ 			ini_set('session.use_only_cookies', 1);
+ 			ini_set('session.cookie_path', conf('subdirectory'));
+ 			session_start();
+ 		}
+ 
+ 		// Check if we have a valid user
+ 		if( ! isset($_SESSION['role']))
+ 		{
+ 			return FALSE;
+ 		}
+ 
+ 		// Check for a specific authorization item
+ 		if($what)
+ 		{
+ 			foreach(conf('authorization', array()) as $item => $roles)
+ 			{
+ 				if($what === $item)
+ 				{
+ 					// Check if there is a matching role
+ 					if( in_array($_SESSION['role'], $roles))
+ 					{
+ 						return TRUE;
+ 					}
+ 
+ 					// Role not found: unauthorized!
+ 					return FALSE;
+ 				}
+ 			}
+ 		}
+ 
+ 		// There is no matching rule, you're authorized!
+ 		return TRUE;
+ 	}
 }
 
 //===============================================================

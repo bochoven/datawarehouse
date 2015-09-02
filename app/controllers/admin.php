@@ -3,7 +3,7 @@ class admin extends Controller
 {
 	function __construct()
 	{
-		if( ! $this->authorized())
+		if( ! $this->authorized('admin_tasks'))
 		{
 			redirect('auth/login');
 		}
