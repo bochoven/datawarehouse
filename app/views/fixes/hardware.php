@@ -24,7 +24,6 @@ new Fixed;
                 <th data-colname='topdesk.soortid_naam'>Soort</th>
                 <th data-colname='topdesk.merkid_naam'>Merk</th>
                 <th data-colname='topdesk.objecttype'>Type</th>
-                <th data-colname='topdesk.rm_specification'>Specificatie</th>
                 <th data-colname='topdesk.serienummer'>Serienummer</th>
                 
                 <th data-colname='topdesk.budgethouderid_naam'>Faculteit-Dienst</th>
@@ -84,9 +83,10 @@ $(document).ready(function() {
                 // Add warning class and add popover to column that is followed
                 // by an invisible fixed column
                 if(aData[col1+1] !== '' && aData[col1+1] !== aData[col1]){
+                    var original = aData[col1] || 'Leeg';
                     $(where, nRow)
-                        .addClass('warning')
-                        .attr('title', 'Original: '+ aData[col1])
+                        .addClass('success')
+                        .attr('title', 'Original: '+ original)
                         .html(aData[col1+1])
                         .tooltip({container: 'body'});
                 }
@@ -130,22 +130,22 @@ $(document).ready(function() {
                 $('td:eq(0)', nRow).html(link);
                 
                 // col 6 is topdesk.budgethouderid_naam
-                fix(aData, 6, 'td:eq(6)', nRow);
+                fix(aData, 5, 'td:eq(5)', nRow);
                 
                 // col 11 is Abonnementsprijs
-                fix(aData, 11, 'td:eq(10)', nRow);
+                fix(aData, 10, 'td:eq(9)', nRow);
                 
                 // col 14 is Kamer
-                fix(aData, 14, 'td:eq(12)', nRow);
+                fix(aData, 13, 'td:eq(11)', nRow);
                 
                 // col 20 is Mac Adres
-                fix(aData, 20, 'td:eq(17)', nRow);
+                fix(aData, 19, 'td:eq(16)', nRow);
                 
                 // col 22 is Kostenplaats
-                fix(aData, 22, 'td:eq(18)', nRow);
+                fix(aData, 21, 'td:eq(17)', nRow);
                 
                 // col 24 is Walloutlet
-                fix(aData, 24, 'td:eq(19)', nRow);
+                fix(aData, 23, 'td:eq(18)', nRow);
                 
                 // Format date
                 var date = moment($('td:last', nRow).html(), 'X');

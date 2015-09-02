@@ -39,7 +39,7 @@ $(document).ready(function() {
     // Get modifiers from data attribute
     var mySort = [], // Initial sort
         hideThese = [], // Hidden columns
-        col = 0; // Column counter
+        col = 0, // Column counter
         columnDefs = [{ visible: false, targets: hideThese }]; //Column Definitions
 
     $('.table th').map(function(){
