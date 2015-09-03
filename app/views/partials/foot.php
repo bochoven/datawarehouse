@@ -42,7 +42,7 @@
   <script src="<?=conf('custom_js')?>"></script>
   <?endif?>
 
-  <script src="<?=conf('subdirectory')?>assets/js/munkireport.js"></script>
+  <script src="<?=conf('subdirectory')?>assets/js/datawarehouse.js"></script>
 
 </body>
 </html>
