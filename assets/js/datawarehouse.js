@@ -1,5 +1,16 @@
 // Global functions
 
+// Fix common search glitches
+function datatables_search_fix(d){
+	// Trim whitespace
+	d.search.value = d.search.value.trim();
+	
+	// Look for mac adress containing hyphens
+	if(d.search.value.match(/([0-9a-fA-F]{2}[-]){5}([0-9a-fA-F]{2})/)){
+		d.search.value = d.search.value.replace(/-/g, ':');
+	}
+}
+
 function upload(fileInputId, fileIndex)
 {
 	// take the file from the input

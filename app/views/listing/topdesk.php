@@ -74,7 +74,8 @@ $(document).ready(function() {
         stateSave: false,
         serverSide: true,
         ajax: {
-            url: "<?=url('datatables/data')?>"
+            url: "<?=url('datatables/data')?>",
+            data: datatables_search_fix
         },
         order: mySort,
         columnDefs: columnDefs,
