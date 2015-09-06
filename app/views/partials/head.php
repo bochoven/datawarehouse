@@ -91,7 +91,8 @@
                 </ul>
 
               </li>
-
+              
+              <?if ($_SESSION['role'] == 'admin'):?>
               <?$url = 'show/fixes/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Correcties <b class="caret"></b></a>
@@ -110,7 +111,7 @@
                 </ul>
 
               </li>
-
+          
               <?$url = 'admin/panel/'?>
               <li class="dropdown<?=strpos($page, $url)===0?' active':''?>">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i> Admin <b class="caret"></b></a>
@@ -129,6 +130,9 @@
                 </ul>
 
               </li>
+              
+              <?php endif; // end admin if block?>
+               
           </ul>
           <?$auth = conf('auth'); // Hide logout button if auth_noauth
             if( ! array_key_exists('auth_noauth', $auth)):?>
