@@ -16,7 +16,8 @@ new Prijs;
 		    <thead>
 		      <tr>
 		      	<th data-colname='prijs.soort'>Soort</th>
-		      	<th data-colname='prijs.prijs'>Prijs</th>
+                <th data-colname='prijs.prijs'>Prijs</th>
+                <th data-colname='prijs.vervangbedrag'>Vervangbedrag</th>
 		    	<th data-colname='prijs.timestamp'>Timestamp</th>
 		      </tr>
 		    </thead>

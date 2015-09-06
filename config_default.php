@@ -225,8 +225,8 @@
 		 	'domein_student'),
 		'prijs' => array (
 			'Soort',
-			'Prijs',
-			''),
+			'Abonnementsprijs',
+			'Vervangbedrag'),
 		'ruimte_correctie' => array( 
 			'Ruimte_special',
 			'Kostenplaats_Special',

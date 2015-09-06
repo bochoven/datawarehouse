@@ -27,7 +27,7 @@ class Topdesk extends Model
 		$this->rs['vrijememo3'] = '';
 		$this->rs['hostnaam'] = '';
 		$this->rs['vrijememo4'] = '';
-		$this->rs['aankoopbedrag'] = '';
+		$this->rs['aankoopbedrag'] = 0.0;
 		$this->rs['naam'] = ''; $this->rt['naam'] = 'CHAR(6) UNIQUE'; //object-id
 		$this->rs['vrijememo5'] = '';
 		$this->rs['vrijegetal5'] = '';

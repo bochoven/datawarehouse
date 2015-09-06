@@ -8,7 +8,8 @@ class Prijs extends Model
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
         $this->rs['id'] = '';
         $this->rs['soort'] = ''; $this->rt['soort'] = 'varchar(255) UNIQUE';
-        $this->rs['prijs'] = 0;
+        $this->rs['prijs'] = 0.0;
+        $this->rs['vervangbedrag'] = 0.0;
         $this->rs['timestamp'] = time();
 
         // Add indexes
@@ -37,8 +38,9 @@ class Prijs extends Model
         // Wrap in transaction
         $dbh->beginTransaction();
 
-        // Remove previous data
-        $dbh->exec('DELETE FROM '.$this->tablename);
+        // Drop and recreate table
+        $dbh->exec("DROP table IF EXISTS $this->tablename");
+        $this->create_table($force = TRUE);
 
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
@@ -47,9 +49,17 @@ class Prijs extends Model
             array_unshift($data, '', ''); 
 
             // Loop through fields
-            foreach($this->rs as &$value)
+            foreach($this->rs as $key => &$value)
             {
-              $value = next($data);
+                if($key == 'soort')
+                {
+                    $value = next($data);
+                }
+                else
+                {
+                    // Replace comma with dot
+                    $value = str_replace(',', '.', next($data));
+                }
             }
 
             // Check if this is a valid entry
