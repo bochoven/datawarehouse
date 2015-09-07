@@ -549,6 +549,9 @@ class admin extends Controller
 				
 
 			}
+			else {
+				echo "Error: No file submitted\n";
+			}
 		}
 		catch (Exception $e)
 		{

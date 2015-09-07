@@ -33,6 +33,7 @@
 	|
 	*/
 	$conf['csv_formats'] = array(
+		'munki_clients' => array('MUNKIREPORT JSON DATA'),
 		'fco' => array(
 			'Functieplaats',
 			'Deurcode',
