@@ -34,6 +34,7 @@
 	*/
 	$conf['csv_formats'] = array(
 		'munki_clients' => array('MUNKIREPORT JSON DATA'),
+		'client_network' => array('CLIENT_NETWORK JSON DATA'),
 		'fco' => array(
 			'Functieplaats',
 			'Deurcode',
@@ -401,6 +402,10 @@ $conf['exports']['hardware_update'] =
 	$conf['exports']['munki_clients'] =
 		"SELECT *
 		FROM munki_clients";
+
+	$conf['exports']['client_network'] =
+		"SELECT *
+		FROM client_network";
 
 	/*
 	|===============================================
