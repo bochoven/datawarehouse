@@ -398,6 +398,9 @@ $conf['exports']['hardware_update'] =
 		"SELECT *
 		FROM nbd";
 
+	$conf['exports']['munki_clients'] =
+		"SELECT *
+		FROM munki_clients";
 
 	/*
 	|===============================================
