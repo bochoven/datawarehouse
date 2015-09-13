@@ -20,6 +20,7 @@ new Fixed;
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
 		      <tr>
+                <th data-colname='fixed.dw_checked'>Check</th>
                 <th data-colname='fixed.naam'>Naam</th>
                 <th data-colname='topdesk.soortid_naam'>Soort</th>
                 <th data-colname='topdesk.merkid_naam'>Merk</th>
@@ -121,32 +122,48 @@ $(document).ready(function() {
             createdRow: function( nRow, aData, iDataIndex ) {
 
                 //console.log(aData)
-                var name=$('td:eq(0)', nRow).html();
+                                
+                // Create topdesk link
+                var name=$('td:eq(1)', nRow).html();
                 var options = {}
                 options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
                 options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
                 options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
-
                 var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
-                $('td:eq(0)', nRow).html(link);
+                $('td:eq(1)', nRow).html(link);
+                
+                // Render checkbox
+                var check=$('td:eq(0)', nRow).text();
+                $('td:eq(0)', nRow).html(function(){
+                    var checked = "";
+                    if(check == 1){
+                        checked = 'checked';
+                    }
+                    return $('<input type="checkbox" '+checked+'></input>')
+                                .change(function(){
+                                    // Update database
+                                    set_fixed_check(name, $(this).is(':checked'))
+                                    // reload table?
+                                });
+                });
                 
                 // col 6 is topdesk.budgethouderid_naam
-                fix(aData, 5, 'td:eq(5)', nRow);
+                fix(aData, 6, 'td:eq(6)', nRow);
                 
                 // col 11 is Abonnementsprijs
-                fix(aData, 10, 'td:eq(9)', nRow);
+                fix(aData, 11, 'td:eq(10)', nRow);
                 
                 // col 14 is Kamer
-                fix(aData, 13, 'td:eq(11)', nRow);
+                fix(aData, 14, 'td:eq(12)', nRow);
                 
                 // col 20 is Mac Adres
-                fix(aData, 19, 'td:eq(16)', nRow);
+                fix(aData, 20, 'td:eq(17)', nRow);
                 
                 // col 22 is Kostenplaats
-                fix(aData, 21, 'td:eq(17)', nRow);
+                fix(aData, 22, 'td:eq(18)', nRow);
                 
                 // col 24 is Walloutlet
-                fix(aData, 23, 'td:eq(18)', nRow);
+                fix(aData, 24, 'td:eq(19)', nRow);
                 
                 // Format date
                 var date = moment($('td:last', nRow).html(), 'X');

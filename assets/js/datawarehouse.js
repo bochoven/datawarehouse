@@ -1,5 +1,18 @@
 // Global functions
 
+// Set fixed column for item with name
+// Used for bulk operations
+function set_fixed_check(name, state){
+	var url = appUrl + '/admin/set_check_state/' + name + '/' + +state;
+	$.getJSON(url, function(data){
+		alert(data)
+		if(data.success == true)
+		{
+
+		}
+	});
+}
+
 // Fix common search glitches
 function datatables_search_fix(d){
 	// Trim whitespace

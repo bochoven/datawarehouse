@@ -40,6 +40,21 @@ class admin extends Controller
 		$obj = new View();
 		$obj->view($view, $data);
 	}
+	
+	/**
+	 * Set check state on fixed Table
+	 *
+	 * Update check state column on fixed Table
+	 *
+	 * @param string name Name of item
+	 * @param value int state of item
+	 **/
+	public function set_check_state($name, $value)
+	{
+		$fixed = new Fixed();
+		$sql = "UPDATE fixed SET dw_checked = ? WHERE naam = ?";
+		$fixed->query($sql, array(intval($value), $name));
+	}
 
 	//===============================================================
 
@@ -389,6 +404,8 @@ class admin extends Controller
 		{			
 			// Reset all properties
 			array_walk($fixed->rs, 'clear_value');
+			// Set checked to 0
+			$fixed->rs['dw_checked'] = 0;
 						
 			// Load record from fixed array;
 			$fixed->retrieve_one('naam=?', $obj->naam);

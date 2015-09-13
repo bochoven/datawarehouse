@@ -118,7 +118,8 @@ class Fixed extends Model
 		$this->rs['uidaanmk_naam'] = '';
 		$this->rs['soortid_naam'] = '';
 		$this->rs['onderhoud_doorid_naam'] = '';
-		$this->rs['vrijeopzoek1_naam'] = ''; // Eigenaar
+        $this->rs['vrijeopzoek1_naam'] = ''; // Eigenaar
+        $this->rs['dw_checked'] = 0; // Checkbox selected in datawarehouse
 		$this->rs['timestamp'] = time();
 
         // Add indexes

@@ -22,6 +22,11 @@
     foreach($scripts as $script): ?>
   <script src="<?=conf('subdirectory')?>assets/js/<?=$script?>" type="text/javascript"></script>
 <?php endforeach; ?>
+
+<script>
+    var appUrl = "<?=url('')?>"
+</script>
+
 </head>
 
 <body>
