@@ -109,6 +109,8 @@ $(document).ready(function() {
               col++
         });
         
+
+        
         oTable = $('.table').dataTable( {
             processing: true,
             stateSave: false,
@@ -119,6 +121,60 @@ $(document).ready(function() {
             },
             order: mySort,
             columnDefs: columnDefs,
+            initComplete: function(oSettings, json) {
+
+    		  // Wrap table in responsive div
+    		  $(this).wrap('<div class="table-responsive" />'); 
+
+    		  // Customize search box (add clear search field button)
+    		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
+    		    return this.nodeType === 3;
+    		  }).remove();
+    		  $('.dataTables_filter input').addClass('form-control input-sm')
+    		  	.attr('placeholder', 'Search')
+    		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
+    		  	.click(function(e){
+    		  		
+    		  		// Clear hash
+    		  		var loc = window.location;
+    		  		if ("replaceState" in history)
+    			        history.replaceState("", document.title, loc.pathname + loc.search);
+    			    else {
+    			  		window.location.hash = ''
+    			  	}
+
+    		  		// Trigger datatables filter
+    		  		$('.dataTables_filter input').val('').keyup();
+
+    		  	}));
+
+                // Customize select
+                $('select').addClass('form-control input-sm');
+
+                // Initialize responsive dropdown
+                responsive_dropdown();
+                
+                var state = 0
+                var button = $('<button>')
+                    .addClass('btn btn-default btn-sm')
+                    .click(function(){
+                        state = ! state;
+                        set_fixed_check('all', state)
+                        // reload table
+                    })
+                    .append($('<span>')
+                        .addClass('fa fa-check-square-o'));
+                
+                $('#DataTables_Table_0_length')
+                    .parent()
+                    .prepend($('<div>')
+                        .addClass('pull-left')
+                        .css('width', '50px')
+                        .append(button));
+
+
+
+    		},
             createdRow: function( nRow, aData, iDataIndex ) {
 
                 //console.log(aData)

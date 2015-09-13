@@ -52,8 +52,17 @@ class admin extends Controller
 	public function set_check_state($name, $value)
 	{
 		$fixed = new Fixed();
-		$sql = "UPDATE fixed SET dw_checked = ? WHERE naam = ?";
-		$fixed->query($sql, array(intval($value), $name));
+		if($name == 'all')
+		{
+			$sql = "UPDATE fixed SET dw_checked = ?";
+			$bindings = array(intval($value));
+		}
+		else
+		{
+			$sql = "UPDATE fixed SET dw_checked = ? WHERE naam = ?";
+			$bindings = array(intval($value), $name);
+		}
+		$fixed->query($sql, $bindings);
 	}
 
 	//===============================================================

@@ -4,13 +4,12 @@
 // Used for bulk operations
 function set_fixed_check(name, state){
 	var url = appUrl + '/admin/set_check_state/' + name + '/' + +state;
-	$.getJSON(url, function(data){
-		alert(data)
-		if(data.success == true)
-		{
-
-		}
-	});
+	$.getJSON(url)
+		.always(function() {
+			var oTable = $('.table').DataTable();
+			oTable.ajax.reload();
+			return;
+		});
 }
 
 // Fix common search glitches
