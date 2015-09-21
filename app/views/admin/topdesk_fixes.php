@@ -66,6 +66,14 @@
                   <td>Corrigeert wall outlet op grond van mac adres. Bron(nen): <a href="<?=url('/show/listing/nbd')?>">NBD</a>
                   </td>
                 </tr>
+                
+                <tr class="leegstand_fix" style="display: none">
+                  <td>                <a href="<?=url('admin/fix/leegstand')?>" class="btn btn-default ajax">Leegstand correctie</a></td>
+                  <td><span class="badge alert-info"></span></td>
+                  <td>Corrigeert Hardware die in Ruimtes die in de FCO lijst op leegstand en verbouwing staan (LST*), zet deze op status onbekend: <a href="<?=url('/show/listing/fco')?>">FCO</a>
+                  </td>
+                </tr>
+
 
                 <tr class="fixed" style="display: none">
                   <td>                <a href="<?=url('admin/reset/fixed')?>" class="btn btn-default ajax">Leeg fixed tabel</a></td>

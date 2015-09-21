@@ -12,9 +12,27 @@ new Fixed;
 
 		<h3>Hardware correcties 
 			<span id="total-count" class='label label-primary'>…</span>
-			<a href="<?=url('admin/dump_csv/hardware_update')?>" class="btn btn-default">
-				<i class="fa fa-cloud-download"></i> Create short export
-			</a>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Action <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                    <a id="apply-fixes" href="#">
+                        <i class="fa fa-check-square-o"></i>
+                        Apply fixes to checked records
+                    </a>
+                </li>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <a href="<?=url('admin/dump_csv/hardware_update')?>">
+        				<i class="fa fa-cloud-download"></i>
+                        Create export
+        			</a>
+                </li>
+              </ul>
+            </div>
+
 		</h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
@@ -43,6 +61,8 @@ new Fixed;
                 <th data-hide="1" data-colname='fixed.lokatieid_naam'>Kamer</th>
 
                 <th data-colname='topdesk.statusid_naam'>Status</th>
+                <th data-hide="1" data-colname='fixed.statusid_naam'>Status</th>
+
                 <th data-colname='topdesk.attentieid_naam'>Attentie</th>
 
                 <th data-colname='topdesk.hostnaam'>Hostnaam</th>
@@ -74,167 +94,224 @@ new Fixed;
 <script type="text/javascript">
 
 $(document).ready(function() {
-
-        // Get modifiers from data attribute
-        var mySort = [], // Initial sort
-            hideThese = [], // Hidden columns
-            col = 0, // Column counter
-            columnDefs = [{ visible: false, targets: hideThese }], //Column Definitions
-            fix = function(aData, col1, where, nRow){
-                // Add warning class and add popover to column that is followed
-                // by an invisible fixed column
-                if(aData[col1+1] !== '' && aData[col1+1] !== aData[col1]){
-                    var original = aData[col1] || 'Leeg';
-                    $(where, nRow)
-                        .addClass('success')
-                        .attr('title', 'Original: '+ original)
-                        .html(aData[col1+1])
-                        .tooltip({container: 'body'});
-                }
+    
+    // Add trigger to apply fixes
+    $('#apply-fixes').click(function(){
+        //alert('Sure?')
+        // Check if we have a valid session for Topdesk
+        var login_url = '/tas/secure/verify-login',
+            username = 'abn290',
+            password = 'Bl0k=aan';
+        $.ajax({
+            type: 'POST',
+            url: appUrl + '/proxy/topdesk',
+            data: {
+                csurl: 'https://topdesk.uc-it.vu.nl' + login_url,
+                j_username: username,
+                j_password: password,
+                submit: 'Login'
+            },
+            success: function(data, textStatus, request){
+                console.log(request)
+                //alert(request.getResponseHeader('some_header'));
+            },
+            error: function (request, textStatus, errorThrown) {
+                console.log(request)
             }
-        $('.table th').map(function(){
-
-              columnDefs.push({name: $(this).data('colname'), targets: col})
-
-              if($(this).data('sort'))
-              {
-                mySort.push([col, $(this).data('sort')])
-              }
-
-              if($(this).data('hide'))
-              {
-                hideThese.push(col);
-              }
-
-              col++
         });
         
-
-        
-        oTable = $('.table').dataTable( {
-            processing: true,
-            stateSave: false,
-            serverSide: true,
-            ajax: {
-                url: "<?=url('datatables/data')?>",
-                data: datatables_search_fix
+        $.ajax({
+            type: 'GET',
+            url: appUrl + '/proxy/topdesk',
+            data: {csurl: 'https://topdesk.uc-it.vu.nl/tas/secure/hardware?lookup=naam&lookupValue=023563'},
+            success: function(data, textStatus, request){
+                console.log(request.getAllResponseHeaders())
+                //alert(request.getResponseHeader('some_header'));
             },
-            order: mySort,
-            columnDefs: columnDefs,
-            initComplete: function(oSettings, json) {
-
-    		  // Wrap table in responsive div
-    		  $(this).wrap('<div class="table-responsive" />'); 
-
-    		  // Customize search box (add clear search field button)
-    		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
-    		    return this.nodeType === 3;
-    		  }).remove();
-    		  $('.dataTables_filter input').addClass('form-control input-sm')
-    		  	.attr('placeholder', 'Search')
-    		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
-    		  	.click(function(e){
-    		  		
-    		  		// Clear hash
-    		  		var loc = window.location;
-    		  		if ("replaceState" in history)
-    			        history.replaceState("", document.title, loc.pathname + loc.search);
-    			    else {
-    			  		window.location.hash = ''
-    			  	}
-
-    		  		// Trigger datatables filter
-    		  		$('.dataTables_filter input').val('').keyup();
-
-    		  	}));
-
-                // Customize select
-                $('select').addClass('form-control input-sm');
-
-                // Initialize responsive dropdown
-                responsive_dropdown();
-                
-                var state = 0
-                var button = $('<button>')
-                    .addClass('btn btn-default btn-sm')
-                    .click(function(){
-                        state = ! state;
-                        set_fixed_check('all', state)
-                        // reload table
-                    })
-                    .append($('<span>')
-                        .addClass('fa fa-check-square-o'));
-                
-                $('#DataTables_Table_0_length')
-                    .parent()
-                    .prepend($('<div>')
-                        .addClass('pull-left')
-                        .css('width', '50px')
-                        .append(button));
-
-
-
-    		},
-            createdRow: function( nRow, aData, iDataIndex ) {
-
-                //console.log(aData)
-                                
-                // Create topdesk link
-                var name=$('td:eq(1)', nRow).html();
-                var options = {}
-                options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
-                options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
-                options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
-                var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
-                $('td:eq(1)', nRow).html(link);
-                
-                // Render checkbox
-                var check=$('td:eq(0)', nRow).text();
-                $('td:eq(0)', nRow).html(function(){
-                    var checked = "";
-                    if(check == 1){
-                        checked = 'checked';
-                    }
-                    return $('<input type="checkbox" '+checked+'></input>')
-                                .change(function(){
-                                    // Update database
-                                    set_fixed_check(name, $(this).is(':checked'))
-                                    // reload table?
-                                });
-                });
-                
-                // col 6 is topdesk.budgethouderid_naam
-                fix(aData, 6, 'td:eq(6)', nRow);
-                
-                // col 11 is Abonnementsprijs
-                fix(aData, 11, 'td:eq(10)', nRow);
-                
-                // col 14 is Kamer
-                fix(aData, 14, 'td:eq(12)', nRow);
-                
-                // col 20 is Mac Adres
-                fix(aData, 20, 'td:eq(17)', nRow);
-                
-                // col 22 is Kostenplaats
-                fix(aData, 22, 'td:eq(18)', nRow);
-                
-                // col 24 is Walloutlet
-                fix(aData, 24, 'td:eq(19)', nRow);
-                
-                // Format date
-                var date = moment($('td:last', nRow).html(), 'X');
-                $('td:last', nRow).html(moment(date).fromNow());
+            error: function (request, textStatus, errorThrown) {
+                if(request.status == 401){
+                    // Not logged in
+                    
+                    
+                    
+                    
+                }
 
             }
-        } );
+        });
+        // If no, show login dialog
+        
+        // If yes: get checked changes
+        
+        // Loop over changes, check output from Topdesk
+        
+    })
 
-        // Use hash as searchquery
-        if(window.location.hash.substring(1))
-        {
-            oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+    // Get modifiers from data attribute
+    var mySort = [], // Initial sort
+        hideThese = [], // Hidden columns
+        col = 0, // Column counter
+        columnDefs = [{ visible: false, targets: hideThese }], //Column Definitions
+        fix = function(aData, col1, where, nRow){
+            // Add warning class and add popover to column that is followed
+            // by an invisible fixed column
+            if(aData[col1+1] !== '' && aData[col1+1] !== aData[col1]){
+                var original = aData[col1] || 'Leeg';
+                $(where, nRow)
+                    .addClass('success')
+                    .attr('title', 'Original: '+ original)
+                    .html(aData[col1+1])
+                    .tooltip({container: 'body'});
+            }
         }
+    $('.table th').map(function(){
 
+          columnDefs.push({name: $(this).data('colname'), targets: col})
+
+          if($(this).data('sort'))
+          {
+            mySort.push([col, $(this).data('sort')])
+          }
+
+          if($(this).data('hide'))
+          {
+            hideThese.push(col);
+          }
+
+          col++
+    });
+    
+
+    
+    oTable = $('.table').dataTable( {
+        processing: true,
+        stateSave: false,
+        serverSide: true,
+        ajax: {
+            url: "<?=url('datatables/data')?>",
+            data: datatables_search_fix
+        },
+        order: mySort,
+        columnDefs: columnDefs,
+        initComplete: function(oSettings, json) {
+
+		  // Wrap table in responsive div
+		  $(this).wrap('<div class="table-responsive" />'); 
+
+		  // Customize search box (add clear search field button)
+		  $('.dataTables_filter label').addClass('input-group').contents().filter(function(){
+		    return this.nodeType === 3;
+		  }).remove();
+		  $('.dataTables_filter input').addClass('form-control input-sm')
+		  	.attr('placeholder', 'Search')
+		  	.after($('<span style="cursor: pointer; color: #999" class="input-group-addon"><i class="fa fa-times"></i></span>')
+		  	.click(function(e){
+		  		
+		  		// Clear hash
+		  		var loc = window.location;
+		  		if ("replaceState" in history)
+			        history.replaceState("", document.title, loc.pathname + loc.search);
+			    else {
+			  		window.location.hash = ''
+			  	}
+
+		  		// Trigger datatables filter
+		  		$('.dataTables_filter input').val('').keyup();
+
+		  	}));
+
+            // Customize select
+            $('select').addClass('form-control input-sm');
+
+            // Initialize responsive dropdown
+            responsive_dropdown();
+            
+            var state = 0
+            var button = $('<button>')
+                .addClass('btn btn-default btn-sm')
+                .attr('title', 'Check/uncheck all')
+                .tooltip()
+                .click(function(){
+                    state = ! state;
+                    set_fixed_check('all', state)
+                    // reload table
+                })
+                .append($('<span>')
+                    .addClass('fa fa-check-square-o'));
+            
+            $('#DataTables_Table_0_length')
+                .parent()
+                .prepend($('<div>')
+                    .addClass('pull-left')
+                    .css('width', '50px')
+                    .append(button));
+
+
+
+		},
+        createdRow: function( nRow, aData, iDataIndex ) {
+
+            //console.log(aData)
+                            
+            // Create topdesk link
+            var name=$('td:eq(1)', nRow).html();
+            var options = {}
+            options["<?=url('admin/topdesk_view/')?>"+name] = 'View in TOPdesk';
+            options["<?=url('admin/topdesk_fix/')?>"+name] = 'Fix & view';
+            options["<?=url('admin/topdesk_fix/')?>"+name+'/save'] = 'Fix & save';
+            var link = get_topdesk_link(name, "<?=url('/show/item/topdesk_id/')?>" + name, options)
+            $('td:eq(1)', nRow).html(link);
+            
+            // Render checkbox
+            var check=$('td:eq(0)', nRow).text();
+            $('td:eq(0)', nRow).html(function(){
+                var checked = "";
+                if(check == 1){
+                    checked = 'checked';
+                }
+                return $('<input type="checkbox" '+checked+'></input>')
+                            .change(function(){
+                                // Update database
+                                set_fixed_check(name, $(this).is(':checked'))
+                                // reload table?
+                            });
+            });
+            
+            // col 6 is topdesk.budgethouderid_naam
+            fix(aData, 6, 'td:eq(6)', nRow);
+            
+            // col 11 is Abonnementsprijs
+            fix(aData, 11, 'td:eq(10)', nRow);
+            
+            // col 14 is Kamer
+            fix(aData, 14, 'td:eq(12)', nRow);
+            
+            // col 16 is Status
+            fix(aData, 16, 'td:eq(13)', nRow);
+            
+            // col 21 is Mac Adres
+            fix(aData, 21, 'td:eq(17)', nRow);
+            
+            // col 23 is Kostenplaats
+            fix(aData, 23, 'td:eq(18)', nRow);
+            
+            // col 25 is Walloutlet
+            fix(aData, 25, 'td:eq(19)', nRow);
+            
+            // Format date
+            var date = moment($('td:last', nRow).html(), 'X');
+            $('td:last', nRow).html(moment(date).fromNow());
+
+        }
     } );
+
+    // Use hash as searchquery
+    if(window.location.hash.substring(1))
+    {
+        oTable.fnFilter( decodeURIComponent(window.location.hash.substring(1)) );
+    }
+
+} );
 </script>
 
 

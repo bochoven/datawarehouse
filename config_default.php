@@ -351,7 +351,15 @@
 		GROUP BY n.mac_address
 		HAVING COUNT(*) = 1";
 
-	
+	$conf['queries']['leegstand_fix'] =
+		"SELECT t.naam, 'Onbekend' AS onbekend
+		FROM topdesk t
+		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats) 
+		LEFT JOIN fixed fx ON (t.naam = fx.naam)
+		WHERE f.gebruikerstatus LIKE 'LST%'
+		AND t.statusid_naam != 'Onbekend'
+		AND (fx.naam IS NULL OR fx.statusid_naam != 'Onbekend')";
+
 	/*
 	|===============================================
 	| Export queries

@@ -393,8 +393,18 @@ class admin extends Controller
 				// Replace vrijetekst1 with port string
 				$fix_array['vrijetekst1'] = 'port';
 
+				break;
+								
+			case 'leegstand':
+				// Get the leegstand query
+				$queries = conf('queries');
+				$sql = $queries['leegstand_fix'];
+
+				// Replace statusid_naam with 'Onbekend'
+				$fix_array['statusid_naam'] = 'onbekend';
+
 				break;						
-			
+
 			default:
 				return;
 				break;
