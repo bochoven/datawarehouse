@@ -159,6 +159,9 @@ class Topdesk extends Model
         $fixed->create_table($force = TRUE);
 
         $cnt = 0;
+        
+        // Get order of csv fields
+        $topdesk = conf('csv_formats')['topdesk'];
 
         // Wrap in transaction
         $dbh->beginTransaction();
@@ -166,13 +169,14 @@ class Topdesk extends Model
         // Read csv data
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
-            // Prepend array with id, account for extra item because of next()
-            array_unshift($data, '', ''); 
+            // Account for extra item because of next()
+            array_unshift($data, ''); 
 
             // Loop through fields
-            foreach($this->rs as &$value)
+            foreach($topdesk as $field)
             {
-              $value = next($data);
+              $this->rs[$field] = next($data);
+              //printf("%s -> %s <br>", $field, $this->rs[$field]);
             }
             $this->rs['timestamp'] = time();
 
