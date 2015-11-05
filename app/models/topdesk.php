@@ -161,7 +161,8 @@ class Topdesk extends Model
         $cnt = 0;
         
         // Get order of csv fields
-        $topdesk = conf('csv_formats')['topdesk'];
+		$csv = conf('csv_formats');
+        $topdesk = $csv['topdesk'];
 
         // Wrap in transaction
         $dbh->beginTransaction();
@@ -182,6 +183,8 @@ class Topdesk extends Model
 
             $cnt++;
 
+			// Reset id
+			$this->id = '';
             $this->save();
         }
 
