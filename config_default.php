@@ -413,13 +413,13 @@
 
 	// Prijs correctie
 	$conf['queries']['prijs_fix'] =
-		"SELECT t.naam, t.vrijegetal1, t.aankoopbedrag, p.prijs
+		"SELECT t.naam, t.vrijegetal1, p.vervangbedrag, p.prijs
 		FROM topdesk t
 		LEFT JOIN prijs p ON (t.soortid_naam = p.soort)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
 		WHERE p.prijs IS NOT NULL
 		AND (p.prijs != t.vrijegetal1 OR p.vervangbedrag != t.aankoopbedrag)
-		AND (f.naam IS NULL OR f.vrijegetal1 != p.prijs OR f.vervangbedrag != t.aankoopbedrag)";
+		AND (f.naam IS NULL OR f.vrijegetal1 != p.prijs OR f.aankoopbedrag != p.vervangbedrag)";
 
 	$conf['queries']['walloutlet_fix'] =
 		"SELECT t.naam, n.port
