@@ -1,5 +1,5 @@
 <?
-	$filename = sprintf('%s_Topdesk_%s.csv', date("Ymd_Hi"), $filename);
+	$filename = sprintf('%s_%s.csv', date("Ymd_Hi"), $filename);
 
 	header( 'Content-Type: text/csv' );
 	header( 'Content-Disposition: attachment;filename='.$filename);

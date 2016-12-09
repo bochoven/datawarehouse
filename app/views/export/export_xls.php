@@ -1,5 +1,5 @@
 <?
-	$filename = sprintf('%s_Topdesk_%s.xls', date("Ymd_Hi"), $filename);
+	$filename = sprintf('%s_%s.xls', date("Ymd_Hi"), $filename);
 
 	$fixed = new Fixed();
 
