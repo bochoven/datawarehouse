@@ -4,13 +4,13 @@
 	|===============================================
 	| Default settings DON'T CHANGE!
 	|===============================================
-	|  
-	| Please don't edit this file, it will get overwritten 
+	|
+	| Please don't edit this file, it will get overwritten
 	| when a new version gets out. Just add the items you
 	| want to change to config.php and change them there.
 	|
 	*/
-	
+
 	/*
 	|===============================================
 	| Authorizations
@@ -21,15 +21,15 @@
 	|
 	*/
 	$conf['authorization']['admin_tasks'] = array('admin');
-	
+
 	/*
 	|===============================================
 	| csv formats
 	|===============================================
-	|  
+	|
 	| description of csv file headers
 	| if the header matches, the data will be associated with the correct model
-	| 
+	|
 	|
 	*/
 	$conf['csv_formats'] = array(
@@ -311,7 +311,7 @@
 			'Soort',
 			'Abonnementsprijs',
 			'Vervangbedrag'),
-		'ruimte_correctie' => array( 
+		'ruimte_correctie' => array(
 			'Ruimte_special',
 			'Kostenplaats_Special',
 			'Eigenaar',
@@ -331,23 +331,23 @@
 			'name',
 			'operatingSystem')
 		);
-	
+
 	/*
 	|===============================================
-	| Fix queries 
+	| Fix queries
 	|===============================================
-	|  
+	|
 	| Queries that are used to correct the topdesk database
 	| Use t for the topdesk table!
-	| 
+	|
 	|
 	*/
-	$conf['queries']['orgeen_fix'] = 
-		"SELECT t.naam, t.hostnaam, t.soortid_naam, t.persoonid_loginnaamnetwerk, 
+	$conf['queries']['orgeen_fix'] =
+		"SELECT t.naam, t.hostnaam, t.soortid_naam, t.persoonid_loginnaamnetwerk,
 				comment, t.budgethouderid_naam, t.vrijeopzoek2_naam,
-				departmentnumber, 
-			o.afkorting 
-		FROM topdesk t 
+				departmentnumber,
+			o.afkorting
+		FROM topdesk t
 		LEFT JOIN users u ON (t.persoonid_loginnaamnetwerk = u.uid)
 		LEFT JOIN orgeen o ON (u.departmentnumber = o.org_code)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
@@ -358,7 +358,7 @@
 		AND f.vrijeopzoek2_naam IS NULL";
 
 	// Find Lowercase macadresses
-	$conf['queries']['macadres_fix'] = 
+	$conf['queries']['macadres_fix'] =
 		"SELECT t.naam, t.hostnaam, t.soortid_naam, UPPER(t.macadres) AS macadres
 		FROM topdesk t
 		LEFT JOIN fixed f ON (t.naam = f.naam)
@@ -368,39 +368,39 @@
 		AND (f.macadres IS NULL OR f.macadres != UPPER(t.macadres))";
 
 	// Find hardware in the ruimte_correctie table
-	$conf['queries']['ruimte_correctie'] = 
-		"SELECT t.naam, t.lokatieid_naam, t.budgethouderid_naam, t.vrijeopzoek2_naam, 
-			r.eigenaar, r.kostenplaats_special 
-		FROM topdesk t 
+	$conf['queries']['ruimte_correctie'] =
+		"SELECT t.naam, t.lokatieid_naam, t.budgethouderid_naam, t.vrijeopzoek2_naam,
+			r.eigenaar, r.kostenplaats_special
+		FROM topdesk t
 		LEFT JOIN ruimte_correctie r ON (t.lokatieid_naam = r.ruimte_special)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
-		WHERE t.budgethouderid_naam IS NOT NULL 
+		WHERE t.budgethouderid_naam IS NOT NULL
 		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
 		AND (t.vrijeopzoek2_naam != kostenplaats_special OR t.budgethouderid_naam != eigenaar)
 		AND (f.naam IS NULL OR f.vrijeopzoek2_naam != kostenplaats_special OR f.budgethouderid_naam != eigenaar)";
 
 	// Walloutlet lokatie correctie
 	$conf['queries']['walloutlet_location_fix'] =
-		"SELECT t.naam, t.hostnaam, t.lokatieid_naam, o.ruimtenr 
-		FROM topdesk t 
+		"SELECT t.naam, t.hostnaam, t.lokatieid_naam, o.ruimtenr
+		FROM topdesk t
 		LEFT JOIN nbd n ON (t.macadres = n.mac_address)
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
-		WHERE o.ruimtenr IS NOT NULL 
+		WHERE o.ruimtenr IS NOT NULL
 		AND o.ruimtenr != ''
 		AND t.soortid_naam NOT IN ('Printpaal', 'Multifunctional')
 		AND o.ruimtenr != t.lokatieid_naam
 		AND (f.naam IS NULL OR f.lokatieid_naam != o.ruimtenr)
-		GROUP BY o.datacom 
+		GROUP BY o.datacom
 		HAVING COUNT(*) = 1";
 
 	// FCO correctie
 	$conf['queries']['fco_fix'] =
 		"SELECT t.naam, t.lokatieid_naam, t.budgethouderid_naam, t.vrijeopzoek2_naam,
-			f.debiteur AS debiteur, o.afkorting, r.kostenplaats_special, r.eigenaar 
-		FROM topdesk t 
-		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats) 
-		LEFT JOIN orgeen o ON (f.debiteur = o.org_code) 
+			f.debiteur AS debiteur, o.afkorting, r.kostenplaats_special, r.eigenaar
+		FROM topdesk t
+		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats)
+		LEFT JOIN orgeen o ON (f.debiteur = o.org_code)
 		LEFT JOIN ruimte_correctie r ON (t.lokatieid_naam = r.ruimte_special)
 		LEFT JOIN fixed fx ON (t.naam = fx.naam)
 		WHERE t.persoonid_loginnaamnetwerk = ''
@@ -413,13 +413,13 @@
 
 	// Prijs correctie
 	$conf['queries']['prijs_fix'] =
-		"SELECT t.naam, t.vrijegetal1, p.prijs 
+		"SELECT t.naam, t.vrijegetal1, t.aankoopbedrag, p.prijs
 		FROM topdesk t
 		LEFT JOIN prijs p ON (t.soortid_naam = p.soort)
 		LEFT JOIN fixed f ON (t.naam = f.naam)
-		WHERE p.prijs IS NOT NULL 
-		AND p.prijs != t.vrijegetal1
-		AND (f.naam IS NULL OR f.vrijegetal1 != p.prijs)";
+		WHERE p.prijs IS NOT NULL
+		AND (p.prijs != t.vrijegetal1 OR p.vervangbedrag != t.aankoopbedrag)
+		AND (f.naam IS NULL OR f.vrijegetal1 != p.prijs OR f.vervangbedrag != t.aankoopbedrag)";
 
 	$conf['queries']['walloutlet_fix'] =
 		"SELECT t.naam, n.port
@@ -436,7 +436,7 @@
 	$conf['queries']['leegstand_fix'] =
 		"SELECT t.naam, 'Onbekend' AS onbekend
 		FROM topdesk t
-		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats) 
+		LEFT JOIN fco f ON (t.lokatieid_naam = f.functieplaats)
 		LEFT JOIN fixed fx ON (t.naam = fx.naam)
 		WHERE f.gebruikerstatus LIKE 'LST%'
 		AND t.statusid_naam != 'Onbekend'
@@ -446,11 +446,11 @@
 	|===============================================
 	| Export queries
 	|===============================================
-	|  
+	|
 	| Queries that are used for exports
 	|
 	*/
-$conf['exports']['hardware_update'] = 
+$conf['exports']['hardware_update'] =
 		"SELECT vrijeopzoek4_naam, macadres, attvrijelogisch4, attvrijelogisch5, verhuurtekst, specificatie, attvrijelogisch1, attvrijegetal4, attvrijegetal5, attvrijelogisch3, attvrijegetal2, attvrijegetal3, vrijememo1, attvrijelogisch2, vrijedatum4, vrijememo2, vrijedatum3, vrijememo3, hostnaam, vrijememo4, aankoopbedrag, naam, vrijememo5, vrijegetal5, vrijedatum5, garantiedatum, vrijegetal4, vrijegetal3, vrijedatum2, vrijegetal2, vrijedatum1, vrijegetal1, rm_specification, vrijelogisch2, vrijelogisch1, attvrijetekst1, attvrijetekst2, attvrijetekst3, onderhoudnummer, attvrijetekst4, attvrijetekst5, attvrijegetal1, datwijzig, topsisusername, attvrijedatum4, attvrijedatum5, attvrijedatum1, attvrijedatum2, wburl, attvrijedatum3, afschrijftermijn, reserveerbaarsshd, verhuurborg, verzekerdatum, aanschafdatum, onderhoudprijs, onderhoudcontract, serienummer, opmerking, webbrowser, dataanmk, ipadres, vrijelogisch5, vrijelogisch3, objecttype, vrijelogisch4, reserveerbaarkantooruren, reserveerbaaractiveerbaar, restwaarde, reserveerbaarsecure, onderhoudvanaf, verhuurprijssysteem, reservzichtbaarsshd, onderhoudresponsietijd, attvrijememo1, attvrijememo2, attvrijememo3, topsis, attvrijememo4, attvrijememo5, verhuurprijs, vrijetekst5, vrijetekst4, vrijetekst3, vrijetekst2, vrijetekst1, onderhoudtot, attvrijeopzoek2_naam, attvrijeopzoek1_naam, vrijeopzoek2_naam, vestigingid_naam, leverancierid_naam, attvrijeopzoek5_naam, attvrijeopzoek3_naam, merkid_naam, statusid_naam, onderhoudsoortid_naam, budgethouderid_naam, attentieid_naam, installatiedoorid_loginnaamnetwerk, aanspreekpuntid_loginnaamnetwerk, lokatieid_naam, attvrijeopzoek4_naam, vrijeopzoek5_naam, persoonid_loginnaamnetwerk, uidwijzig_naam, vrijeopzoek3_naam, persoonid_naam, uidaanmk_naam, soortid_naam, onderhoud_doorid_naam, vrijeopzoek1_naam
 		FROM fixed";
 
@@ -463,7 +463,7 @@ $conf['exports']['hardware_update'] =
 
 	$conf['exports']['missing_walloutlets_ruimte_tbl'] =
 		"SELECT n.port AS datacom, '' AS gebruikersnaam, '' AS omschrijving, '' AS ruimtenr, '' AS verdiepingsnr, '' AS bestandsnaam
-		FROM nbd n 
+		FROM nbd n
 		LEFT JOIN outlet_room o ON (n.port = o.datacom)
 		WHERE o.datacom IS NULL
 		AND n.port != '-'";
@@ -484,7 +484,7 @@ $conf['exports']['hardware_update'] =
 	$conf['exports']['fco'] =
 		"SELECT *
 		FROM fco";
-			
+
 	$conf['exports']['nbd'] =
 		"SELECT *
 		FROM nbd";
@@ -501,9 +501,9 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Topdesk server url
 	|===============================================
-	|  
+	|
 	| Write the topdesk server url for example
-	| https://topdesk.my.org 
+	| https://topdesk.my.org
 	|
 	*/
 	$conf['topdesk_server'] = "";
@@ -513,27 +513,27 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Index page
 	|===============================================
-	|  
+	|
 	| Default is index.php? which is the most compatible form.
 	| You can leave it blank if you want nicer looking urls.
-	| You will need a server which honors .htaccess (apache) or 
-	| figure out how to rewrite urls in the server of your choice. 
+	| You will need a server which honors .htaccess (apache) or
+	| figure out how to rewrite urls in the server of your choice.
 	|
 	*/
 	$conf['index_page'] = 'index.php?';
-	
+
 	/*
 	|===============================================
 	| Uri protocol
 	|===============================================
 	|
-	| $_SERVER variable that contains the correct request path, 
+	| $_SERVER variable that contains the correct request path,
 	| e.g. 'REQUEST_URI', 'QUERY_STRING', 'PATH_INFO', etc.
 	| defaults to AUTO
 	|
 	*/
 	$conf['uri_protocol'] = 'AUTO';
-	
+
 	/*
 	|===============================================
 	| HTTP host
@@ -541,17 +541,17 @@ $conf['exports']['hardware_update'] =
 	|
 	| The hostname of the webserver, default automatically
 	| determined. no trailing slash
-	| 
+	|
 	*/
 	$conf['webhost'] = (empty($_SERVER['HTTPS']) ? 'http' : 'https')
 		. '://'.$_SERVER[ 'HTTP_HOST' ];
-	
-	
+
+
 	/*
 	|===============================================
 	| Subdirectory
 	|===============================================
-	|  
+	|
 	| Relative to the webroot, with trailing slash.
 	| If you're running datawarehouse from a subdirectory of a website,
 	| enter subdir path here. E.g. if datawarehouse is accessible here:
@@ -566,24 +566,24 @@ $conf['exports']['hardware_update'] =
 	$conf['subdirectory'] = substr(
 					    $_SERVER['PHP_SELF'],
 					    0,
-					    strpos($_SERVER['PHP_SELF'], basename(FC))  
+					    strpos($_SERVER['PHP_SELF'], basename(FC))
 				    );
-	
+
 	/*
 	|===============================================
 	| Sitename
 	|===============================================
-	| 
+	|
 	| Will appear in the title bar of your browser and as heading on each webpage
 	|
 	*/
 	$conf['sitename'] = 'datawarehouse';
-	
+
 	/*
 	|===============================================
 	| Authentication
 	|===============================================
-	| 
+	|
 	| Currently four authentication methods are supported:
 	|
 	|	1) Don't require any authentication: paste the following line in your config.php
@@ -608,7 +608,7 @@ $conf['exports']['hardware_update'] =
 	|		$conf['auth']['auth_ldap']['starttls']    = FALSE; // Set to TRUE to use TLS.
 	|		$conf['auth']['auth_ldap']['referrals']   = FALSE; // Set to TRUE to follow referrals.
 	|		$conf['auth']['auth_ldap']['deref']       = LDAP_DEREF_NEVER; // How to dereference aliases. See http://php.net/ldap_search
-	|		$conf['auth']['auth_ldap']['binddn']      = ''; // Optional bind DN 
+	|		$conf['auth']['auth_ldap']['binddn']      = ''; // Optional bind DN
 	|		$conf['auth']['auth_ldap']['bindpw']      = ''; // Optional bind password
 	|		$conf['auth']['auth_ldap']['userscope']   = 'sub'; // Limit search scope to sub, one or base.
 	|		$conf['auth']['auth_ldap']['groupscope']  = 'sub'; // Limit search scope to sub, one or base.
@@ -634,7 +634,7 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Force secure connection when authorizing
 	|===============================================
-	| 
+	|
 	| Set this value to TRUE to force https when logging in.
 	| This is useful for sites that serve MR both via http and https
 	|
@@ -645,7 +645,7 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Locale
 	|===============================================
-	| 
+	|
 	| You can set the locale string here, this will render certain strings
 	| according to locale specific settings
 	|
@@ -656,7 +656,7 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Language
 	|===============================================
-	| 
+	|
 	| You can set the language here, this will change the user interface
 	| language. See for possible values the 'lang' directory
 	|
@@ -667,10 +667,10 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Migrations
 	|===============================================
-	| 
+	|
 	| When a new version of datawarehouse comes out
 	| it might need to update your database structure
-	| if you want to allow this, set 
+	| if you want to allow this, set
 	| $conf['allow_migrations'] = TRUE;
 	|
 	| There is a small overhead (one database query) when setting allow_migrations
@@ -684,7 +684,7 @@ $conf['exports']['hardware_update'] =
 	|===============================================
 	| Dashboard - Layout
 	|===============================================
-	| 
+	|
 	| Dashboard layout is an array of rows that contain
 	| an array of widgets. Omit the _widget postfix
 	|
@@ -702,9 +702,9 @@ $conf['exports']['hardware_update'] =
 	| the variables below. For enhanced security it is advised to put the
 	| webapp in a directory that is not visible to the internet.
 	*/
-	
+
 	// Path to system folder, with trailing slash
-	$conf['system_path'] = APP_ROOT.'/system/'; 
+	$conf['system_path'] = APP_ROOT.'/system/';
 
 	// Path to app folder, with trailing slash
 	$conf['application_path'] = APP_ROOT.'/app/';
@@ -718,13 +718,13 @@ $conf['exports']['hardware_update'] =
 	// Path to modules directory, with trailing slash
 	$conf['module_path'] = $conf['application_path'] . "modules/";
 
-	
-	
+
+
 	// Routes
 	$conf['routes'] = array();
 	$conf['routes']['module(/.*)?']	= "module/load$1";
-	
-	
+
+
 	/*
 	|===============================================
 	| PDO Datasource
@@ -743,7 +743,7 @@ $conf['exports']['hardware_update'] =
 	$conf['pdo_user'] = '';
 	$conf['pdo_pass'] = '';
 	$conf['pdo_opts'] = array();
-	
+
 	/*
 	|===============================================
 	| Timezone
@@ -753,7 +753,7 @@ $conf['exports']['hardware_update'] =
 	|
 	*/
 	$conf['timezone'] = @date_default_timezone_get();
-	
+
 	/*
 	|===============================================
 	| Custom css and js
@@ -767,7 +767,7 @@ $conf['exports']['hardware_update'] =
 	//$conf['custom_css'] = '/custom.css';
 	//$conf['custom_js'] = '/custom.js';
 
-	
+
 	/*
 	|===============================================
 	| Debugging
@@ -777,5 +777,3 @@ $conf['exports']['hardware_update'] =
 	| FALSE in a production environment
 	*/
 	$conf['debug'] = FALSE;
-	
-	

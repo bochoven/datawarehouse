@@ -7,7 +7,7 @@ class admin extends Controller
 		{
 			redirect('auth/login');
 		}
-	} 
+	}
 
 
 	//===============================================================
@@ -40,7 +40,7 @@ class admin extends Controller
 		$obj = new View();
 		$obj->view($view, $data);
 	}
-	
+
 	/**
 	 * Set check state on fixed Table
 	 *
@@ -70,8 +70,8 @@ class admin extends Controller
 	/**
 	 * Get count of objects
 	 *
-	 * @param string 
-	 * @author 
+	 * @param string
+	 * @author
 	 **/
 	function get_count($what = '')
 	{
@@ -80,7 +80,7 @@ class admin extends Controller
 			case 'fixed':
 				$sql = "SELECT COUNT(*) AS count FROM fixed";
 				break;
-			
+
 			default:
 				// Get queries
 				$queries = conf('queries');
@@ -105,7 +105,7 @@ class admin extends Controller
 		try
 		{
 			$model = new Fixed;
-		
+
 			if($res = $model->query($sql))
 			{
 				$msg['count'] = (int) $res[0]->count;
@@ -116,9 +116,9 @@ class admin extends Controller
 			// TODO: generate an error
 			$msg['error'] = $e->getMessage();
 		}
-		
 
-		
+
+
 		$obj = new View();
 		$obj->view('json', array('msg' => $msg));
 
@@ -128,7 +128,7 @@ class admin extends Controller
 	/**
 	 * Redirect to TOPdesk hardware card
 	 *
-	 * @author 
+	 * @author
 	 **/
 	function topdesk_view($name = '')
 	{
@@ -141,7 +141,7 @@ class admin extends Controller
 	 * Get fix params and redirect to topdesk edit url
 	 *
 	 * @param lookupvalue
-	 * @author 
+	 * @author
 	 **/
 	function topdesk_fix($name, $save = '')
 	{
@@ -198,7 +198,7 @@ class admin extends Controller
 				{
 					continue;
 				}
-				
+
 				if(in_array($k, $skipthese))
 				{
 					continue;
@@ -207,7 +207,7 @@ class admin extends Controller
 				if($topdesk->$k !== $v)
 				{
 					$changes[$k] = $v;
-				} 
+				}
 			}
 
 			// Check for changes
@@ -224,7 +224,7 @@ class admin extends Controller
 				{
 					if(array_key_exists($field, $change_array))
 					{
-						
+
 						$change_format = $change_array[$field];
 
 						// Ref_fields are encoded as array
@@ -295,7 +295,7 @@ class admin extends Controller
 		$obj = new View();
 		$obj->view('admin/data_import', $data);
 
-					
+
 
 	}
 
@@ -303,7 +303,7 @@ class admin extends Controller
 	 * Apply fixes
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function fix($what)
 	{
@@ -368,20 +368,23 @@ class admin extends Controller
 				// Replace lokatieid_naam with fco ruimtenr
 				$fix_array['lokatieid_naam'] = 'ruimtenr';
 
-				// We zetten daarbij nu een - onder eigenaar zodat we weten dat deze 
-				// hardware niet gezien is bij de inventarisatie maar via een 
+				// We zetten daarbij nu een - onder eigenaar zodat we weten dat deze
+				// hardware niet gezien is bij de inventarisatie maar via een
 				// Walloutlet op eenheid is gekoppeld
 				$set_value_array['vrijeopzoek1_naam'] = '-';
 
 				break;
 
 			case 'prijs':
-				// Get the walloutlet_location query
+				// Get the prijs_fix query
 				$queries = conf('queries');
 				$sql = $queries['prijs_fix'];
 
-				// Replace lokatieid_naam with fco ruimtenr
+				// Replace vrijegetal1 with prijs
 				$fix_array['vrijegetal1'] = 'prijs';
+
+				// Replace aankoopbedrag with aankoopbedrag uit prijstabel
+				$fix_array['aankoopbedrag'] = 'aankoopbedrag';
 
 				break;
 
@@ -394,7 +397,7 @@ class admin extends Controller
 				$fix_array['vrijetekst1'] = 'port';
 
 				break;
-								
+
 			case 'leegstand':
 				// Get the leegstand query
 				$queries = conf('queries');
@@ -403,7 +406,7 @@ class admin extends Controller
 				// Replace statusid_naam with 'Onbekend'
 				$fix_array['statusid_naam'] = 'onbekend';
 
-				break;						
+				break;
 
 			default:
 				return;
@@ -420,12 +423,12 @@ class admin extends Controller
 
 		$cnt = 0;
 		foreach ($model->query($sql) as $obj)
-		{			
+		{
 			// Reset all properties
 			array_walk($fixed->rs, 'clear_value');
 			// Set checked to 0
 			$fixed->rs['dw_checked'] = 0;
-						
+
 			// Load record from fixed array;
 			$fixed->retrieve_one('naam=?', $obj->naam);
 
@@ -433,7 +436,7 @@ class admin extends Controller
 			{
 				// Record does not exist, load record from topdesk table
 				$topdesk->retrieve_one('naam=?', $obj->naam);
-				
+
 				// Set fixed identifier (naam)
 				$fixed->naam = $topdesk->naam;
 
@@ -473,11 +476,11 @@ class admin extends Controller
 
 	/**
 	 * Reset table
-	 * 
+	 *
 	 * Drop and recreate table
 	 *
 	 * @param string table name
-	 * @author 
+	 * @author
 	 **/
 	function reset($table = 'fixed')
 	{
@@ -497,12 +500,12 @@ class admin extends Controller
 	function get_users()
 	{
 		$model_obj = new Users();
-		
+
 		try
 		{
 			$model_obj->process();
         }
-        catch (Exception $e) 
+        catch (Exception $e)
         {
             $dbh = getdbh();
             $dbh->rollBack();
@@ -521,7 +524,7 @@ class admin extends Controller
 		{
 			if($_FILES)
 			{
-				
+
 				if( ! isset($_FILES['file']) OR $_FILES['file']['error'] != 0)
 				{
 					require(APP_PATH.'helpers/upload_helper'.EXT);
@@ -538,7 +541,7 @@ class admin extends Controller
 
 				if(($data = fgetcsv($handle, 0, ";", '"')) === FALSE)
 				{
-					throw new Exception("Cannot read first line of csv file", 1);				
+					throw new Exception("Cannot read first line of csv file", 1);
 				}
 
 				$found = '';
@@ -563,7 +566,7 @@ class admin extends Controller
 				{
 					$model_obj->process($handle);
 		        }
-		        catch (Exception $e) 
+		        catch (Exception $e)
 		        {
 		            $dbh = getdbh();
 		            $dbh->rollBack();
@@ -582,7 +585,7 @@ class admin extends Controller
 				// Move excel to downloads folder
 				move_uploaded_file($_FILES['file']['tmp_name'], APP_ROOT . 'downloads/'.$GLOBALS['shortname'].'.xls');
 
-				
+
 
 			}
 			else {
@@ -593,7 +596,7 @@ class admin extends Controller
 		{
 			fatal('Upload failed: '.$e->getMessage());
 		}
-		
+
 
 		//redirect('admin/dashboard');
 	}
@@ -602,11 +605,11 @@ class admin extends Controller
 	 * Dump csv
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function dump_csv($what = 'hardware_gebouw')
 	{
-		
+
 		$export_queries = conf('exports');
 
 		if(array_key_exists($what, $export_queries))
@@ -630,7 +633,7 @@ class admin extends Controller
 	 * Dump xls
 	 *
 	 * @return void
-	 * @author 
+	 * @author
 	 **/
 	function dump_xls($what = 'hardware_persoon')
 	{
