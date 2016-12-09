@@ -1,9 +1,9 @@
 <?
-	$filename = sprintf('Topdesk_%s_%s.csv', $filename, date("Ymd_Hi"));
+	$filename = sprintf('%s_Topdesk_%s.csv', date("Ymd_Hi"), $filename);
 
 	header( 'Content-Type: text/csv' );
 	header( 'Content-Disposition: attachment;filename='.$filename);
-	
+
 	$fp = fopen('php://output', 'w');
 
 	$fixed = new Fixed();
@@ -25,5 +25,3 @@
 	}
 
 	fclose($fp);
-
-

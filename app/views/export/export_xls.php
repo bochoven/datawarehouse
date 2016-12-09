@@ -1,5 +1,5 @@
 <?
-	$filename = sprintf('Topdesk_%s_%s.xls', $filename, date("Ymd_Hi"));	
+	$filename = sprintf('%s_Topdesk_%s.xls', date("Ymd_Hi"), $filename);
 
 	$fixed = new Fixed();
 
@@ -37,7 +37,7 @@
 		$tablerow++;
 	}
 
-	// Write to output 
+	// Write to output
 	header('Content-Type: application/vnd.ms-excel');
 	header('Content-Disposition: attachment;filename="'.$filename.'"');
 	header('Cache-Control: max-age=0');
@@ -52,6 +52,3 @@
 
 	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 	$objWriter->save('php://output');
-
-
-
