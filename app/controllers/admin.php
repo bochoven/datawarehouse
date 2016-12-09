@@ -384,7 +384,7 @@ class admin extends Controller
 				$fix_array['vrijegetal1'] = 'prijs';
 
 				// Replace aankoopbedrag with aankoopbedrag uit prijstabel
-				$fix_array['aankoopbedrag'] = 'aankoopbedrag';
+				$fix_array['aankoopbedrag'] = 'vervangbedrag';
 
 				break;
 
