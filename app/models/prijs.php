@@ -61,9 +61,9 @@ class Prijs extends Model
                     $value = str_replace(',', '.', next($data));
 
                     // Remove 0.0
-                    // if(preg_match('/^0.0+/', $value)){
-                    //     $value = '';
-                    // }
+                    if(preg_match('/^0.0+/', $value)){
+                        $value = '';
+                    }
                 }
             }
 
