@@ -154,10 +154,10 @@ $(document).ready(function() {
         hideThese = [], // Hidden columns
         col = 0, // Column counter
         columnDefs = [{ visible: false, targets: hideThese }], //Column Definitions
-        fix = function(aData, col1, where, nRow){
+        fix = function(aData, col1, where, nRow, canBeEmpty){
             // Add success class and add popover to column that is followed
             // by an invisible fixed column
-            if(aData[col1+1] !== '' && aData[col1+1] !== aData[col1]){
+            if((canBeEmpty || aData[col1+1] !== '') && aData[col1+1] !== aData[col1]){
                 var original = aData[col1] || 'Leeg';
                 $(where, nRow)
                     .addClass('success')
@@ -292,7 +292,7 @@ $(document).ready(function() {
             fix(aData, 6, 'td:eq(6)', nRow);
 
             // col 10 is Aankoopbedrag
-            fix(aData, 10, 'td:eq(9)', nRow);
+            fix(aData, 10, 'td:eq(9)', nRow, true);
 
             // col 12 is Abonnementsprijs
             fix(aData, 12, 'td:eq(10)', nRow);

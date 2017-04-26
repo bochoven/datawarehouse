@@ -2,11 +2,11 @@
 
 class Topdesk extends Model
 {
-    
+
     function __construct()
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
-        $this->rs['id'] = '';		
+        $this->rs['id'] = '';
 		$this->rs['vrijeopzoek4_naam'] = '';
 		$this->rs['macadres'] = ''; $this->rt['macadres'] = 'CHAR(20)';
 		$this->rs['attvrijelogisch4'] = '';
@@ -38,7 +38,7 @@ class Topdesk extends Model
 		$this->rs['vrijedatum2'] = '';
 		$this->rs['vrijegetal2'] = '';
 		$this->rs['vrijedatum1'] = '';
-		$this->rs['vrijegetal1'] = ''; // Abonnementsprijs
+		$this->rs['vrijegetal1'] = 0.0; // Abonnementsprijs
 		$this->rs['rm_specification'] = '';
 		$this->rs['vrijelogisch2'] = '';
 		$this->rs['vrijelogisch1'] = '';
@@ -134,7 +134,7 @@ class Topdesk extends Model
 
 		// Create table if it does not exist
         $this->create_table();
-                
+
         return $this;
     }
 
@@ -142,7 +142,7 @@ class Topdesk extends Model
      * Process uploaded file
      *
      * @return void
-     * @author 
+     * @author
      **/
     function process($handle)
     {
@@ -159,7 +159,7 @@ class Topdesk extends Model
         $fixed->create_table($force = TRUE);
 
         $cnt = 0;
-        
+
         // Get order of csv fields
 		$csv = conf('csv_formats');
         $topdesk = $csv['topdesk'];
@@ -171,7 +171,7 @@ class Topdesk extends Model
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
             // Account for extra item because of next()
-            array_unshift($data, ''); 
+            array_unshift($data, '');
 
             // Loop through fields
             foreach($topdesk as $field)
@@ -197,7 +197,7 @@ class Topdesk extends Model
      * Select uppercase mac addresses
      *
      * @return void
-     * @author 
+     * @author
      **/
     function get_uppercase_mac_adresses()
     {

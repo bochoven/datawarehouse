@@ -2,7 +2,7 @@
 
 class Prijs extends Model
 {
-    
+
     function __construct()
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
@@ -19,7 +19,7 @@ class Prijs extends Model
 
 		// Create table if it does not exist
         $this->create_table();
-        
+
         return $this;
     }
 
@@ -27,7 +27,7 @@ class Prijs extends Model
      * Process uploaded file
      *
      * @return void
-     * @author 
+     * @author
      **/
     function process($handle)
     {
@@ -46,7 +46,7 @@ class Prijs extends Model
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
             // Prepend array with id, account for extra item because of next()
-            array_unshift($data, '', ''); 
+            array_unshift($data, '', '');
 
             // Loop through fields
             foreach($this->rs as $key => &$value)
@@ -59,6 +59,11 @@ class Prijs extends Model
                 {
                     // Replace comma with dot
                     $value = str_replace(',', '.', next($data));
+
+                    // Remove 0.0
+                    if(preg_match('/^0.0+/', $value)){
+                        $value = '';
+                    }
                 }
             }
 
@@ -72,7 +77,7 @@ class Prijs extends Model
         }
 
         $dbh->commit();
-    
+
     }
 
 }

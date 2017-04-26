@@ -2,7 +2,7 @@
 
 class Fixed extends Model
 {
-    
+
     function __construct()
     {
 		parent::__construct('id', strtolower(get_class($this))); //primary key, tablename
@@ -27,7 +27,7 @@ class Fixed extends Model
 		$this->rs['vrijememo3'] = '';
 		$this->rs['hostnaam'] = '';
 		$this->rs['vrijememo4'] = '';
-		$this->rs['aankoopbedrag'] = '';
+		$this->rs['aankoopbedrag'] = 0.0;
 		$this->rs['naam'] = ''; $this->rt['naam'] = 'CHAR(6) UNIQUE'; //object-id
 		$this->rs['vrijememo5'] = '';
 		$this->rs['vrijegetal5'] = '';
@@ -38,7 +38,7 @@ class Fixed extends Model
 		$this->rs['vrijedatum2'] = '';
 		$this->rs['vrijegetal2'] = '';
 		$this->rs['vrijedatum1'] = '';
-		$this->rs['vrijegetal1'] = '';
+		$this->rs['vrijegetal1'] = 0.0;
 		$this->rs['rm_specification'] = '';
 		$this->rs['vrijelogisch2'] = '';
 		$this->rs['vrijelogisch1'] = '';
@@ -133,7 +133,7 @@ class Fixed extends Model
 
 		// Create table if it does not exist
         $this->create_table();
-                
+
         return $this;
     }
 
@@ -141,7 +141,7 @@ class Fixed extends Model
      * Process uploaded file
      *
      * @return void
-     * @author 
+     * @author
      **/
     function process($handle)
     {
@@ -159,7 +159,7 @@ class Fixed extends Model
         while (($data = fgetcsv($handle, 0, ";", '"')) !== FALSE)
         {
             // Prepend array with id, account for extra item because of next()
-            array_unshift($data, '', ''); 
+            array_unshift($data, '', '');
 
             // Loop through fields
             foreach($this->rs as &$value)
