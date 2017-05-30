@@ -202,10 +202,7 @@
 			'Kostenplaats_Special',
 			'Eigenaar',
 			'Type',
-			'',
-			'',
-			'',
-			''),
+			),
 		'dhcp' => array(
 			'# DHCP Server Configuration file.'),
 		'dhcp_log' => array(
