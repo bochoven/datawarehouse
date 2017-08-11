@@ -39,16 +39,16 @@
 							<div class="form-group">
 								<label for="loginpassword" class="col-lg-5 control-label"><?=lang('password')?></label>
 								<div class="col-lg-7">
-									<input type="password" id="loginpassword" name="password" class="form-control">
+									<input type="password" id="loginpassword" name="password" class="form-control" autocomplete="new-password">
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-lg-10 col-lg-offset-3">
-								<button type="submit" class="btn btn-primary"><?=lang('auth_generate')?></button> 
-								<a href="<?=url()?>" class="btn btn-default" data-dismiss="modal"><?=lang('back_to_site')?></a>	
+								<button type="submit" class="btn btn-primary"><?=lang('auth_generate')?></button>
+								<a href="<?=url()?>" class="btn btn-default" data-dismiss="modal"><?=lang('back_to_site')?></a>
 								</div>
 							</div>
-						<?php //endif?>				
+						<?php //endif?>
 			            </fieldset>
 			            <p class="text-right text-muted"><small><?printf(lang('app_version'), $GLOBALS['version'])?></small></p>
 					</form>
