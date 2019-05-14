@@ -10,7 +10,7 @@ new Dhcp_log;
 
   	<div class="col-lg-12">
 
-		  <h3>DHCP Log report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('admin/dump_csv/dhcp_log')?>">Download CSV</a></h3>
+		  <h3>DHCP Log report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('manager/dump_csv/dhcp_log')?>">Download CSV</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

@@ -10,7 +10,7 @@ new ad_computer;
 
   	<div class="col-lg-12">
 
-		  <h3>Network clients report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('admin/dump_csv/client_network')?>">Download CSV</a></h3>
+		  <h3>Network clients report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('manager/dump_csv/client_network')?>">Download CSV</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>

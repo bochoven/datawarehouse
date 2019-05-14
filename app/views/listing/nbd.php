@@ -10,7 +10,7 @@ new Nbd;
 
   	<div class="col-lg-12">
 
-		  <h3>NBD report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('admin/dump_csv/nbd')?>">Download CSV</a></h3>
+		  <h3>NBD report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('manager/dump_csv/nbd')?>">Download CSV</a></h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
