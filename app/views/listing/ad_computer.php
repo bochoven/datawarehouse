@@ -1,4 +1,4 @@
-$authorized_for_download <?$this->view('partials/head')?>
+<?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
 new ad_computer;
