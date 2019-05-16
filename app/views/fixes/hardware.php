@@ -25,7 +25,7 @@ new Fixed;
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                    <a href="<?=url('admin/dump_csv/hardware_update')?>">
+                    <a href="<?=url('manager/dump_csv/hardware_update')?>">
         				<i class="fa fa-cloud-download"></i>
                         Create export
         			</a>

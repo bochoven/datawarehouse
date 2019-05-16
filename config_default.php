@@ -21,6 +21,7 @@
 	|
 	*/
 	$conf['authorization']['admin_tasks'] = array('admin');
+	$conf['authorization']['download_tasks'] = array('admin', 'manager');
 
 	/*
 	|===============================================
