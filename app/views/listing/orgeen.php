@@ -64,7 +64,7 @@ $(document).ready(function() {
 
           col++
     });
-    
+
     oTable = $('.table').dataTable( {
         processing: true,
         stateSave: false,

@@ -9,8 +9,12 @@ new fco;
   <div class="row">
 
   	<div class="col-lg-12">
-	
-		  <h3>DHCP report <span id="total-count" class='label label-primary'>…</span> <a class="btn btn-default" href="<?=url('manager/dump_csv/dhcp')?>">Download CSV</a></h3>
+
+		  <h3>DHCP report <span id="total-count" class='label label-primary'>…</span>
+        <?php if( ! $this->authorized('download_tasks')):?>
+          <a class="btn btn-default" href="<?=url('manager/dump_csv/dhcp')?>">Download CSV</a>
+        <?php endif?>
+      </h3>
 
 		  <table class="table table-striped table-condensed table-bordered">
 		    <thead>
@@ -57,7 +61,7 @@ $(document).ready(function() {
 
           col++
     });
-    
+
     oTable = $('.table').dataTable( {
         processing: true,
         stateSave: false,

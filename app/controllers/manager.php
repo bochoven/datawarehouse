@@ -3,9 +3,14 @@ class Manager extends Controller
 {
 	function __construct()
 	{
-		if( ! $this->authorized('download_tasks'))
+		if( ! $this->authorized())
 		{
 			redirect('auth/login');
+		}
+
+		if( ! $this->authorized('download_tasks'))
+		{
+			echo 'Only people with the admin or manager role can download';
 		}
 	}
 
