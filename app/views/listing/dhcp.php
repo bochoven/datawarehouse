@@ -11,7 +11,7 @@ new fco;
   	<div class="col-lg-12">
 
 		  <h3>DHCP report <span id="total-count" class='label label-primary'>…</span>
-        <?php if( ! $this->authorized('download_tasks')):?>
+        <?php if( $authorized_for_download ):?>
           <a class="btn btn-default" href="<?=url('manager/dump_csv/dhcp')?>">Download CSV</a>
         <?php endif?>
       </h3>

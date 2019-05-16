@@ -1,4 +1,4 @@
-<?$this->view('partials/head')?>
+$authorized_for_download <?$this->view('partials/head')?>
 
 <? //Initialize models needed for the table
 new ad_computer;
@@ -11,7 +11,7 @@ new ad_computer;
   	<div class="col-lg-12">
 
 		  <h3>AD Computer report <span id="total-count" class='label label-primary'>…</span>
-        <?php if( ! $this->authorized('download_tasks')):?>
+        <?php if( $authorized_for_download ):?>
           <a class="btn btn-default" href="<?=url('manager/dump_csv/ad_computer')?>">Download CSV</a>
         <?php endif?>
       </h3>

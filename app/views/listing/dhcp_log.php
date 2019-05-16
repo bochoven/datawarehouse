@@ -11,7 +11,7 @@ new Dhcp_log;
   	<div class="col-lg-12">
 
 		  <h3>DHCP Log report <span id="total-count" class='label label-primary'>…</span>
-        <?php if( ! $this->authorized('download_tasks')):?>
+        <?php if( $authorized_for_download ):?>
           <a class="btn btn-default" href="<?=url('manager/dump_csv/dhcp_log')?>">Download CSV</a
         <?php endif?>
       </h3>

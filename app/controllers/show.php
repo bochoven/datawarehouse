@@ -7,7 +7,7 @@ class show extends Controller
 		{
 			redirect('auth/login');
 		}
-	} 
+	}
 
 	function index()
 	{
@@ -15,7 +15,7 @@ class show extends Controller
 		$obj = new View();
 
 		$obj->view('dashboard/dashboard', $data);
-		
+
 	}
 
 	function item($identifier = '', $value = '')
@@ -28,7 +28,7 @@ class show extends Controller
 			case 'topdesk_id':
 				$view = 'item/topdesk';
 				break;
-			
+
 			default:
 				# code...
 				break;
@@ -45,6 +45,7 @@ class show extends Controller
 		{
 			$data['page'] = 'clients';
 			$data['scripts'] = array("clients/client_list.js");
+			$data['authorized_for_download'] = $this->authorized('download_tasks');
 			$view = 'listing/'.$which;
 		}
 		else
@@ -59,12 +60,12 @@ class show extends Controller
 
 	function fixes($which = '')
 	{
-		
+
 		if( ! $this->authorized('admin_tasks'))
 		{
 			redirect('auth/login');
 		}
-		
+
 		if($which)
 		{
 			$data['page'] = 'fixes';
